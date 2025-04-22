@@ -1,7 +1,14 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,57 +16,31 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { MoreHorizontal, Search, Eye } from "lucide-react"
-import Link from "next/link"
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { MoreHorizontal, Search, Eye } from "lucide-react";
+import Link from "next/link";
+import { format } from "date-fns";
+import { trpc } from "@/lib/trpc/client";
 
 export function BirthsList() {
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Mock data - would be fetched from API in a real app
-  const births = [
-    {
-      id: "1",
-      motherName: "Mimosa",
-      motherTag: "A001",
-      childName: "Filhote 1",
-      childTag: "A010",
-      birthDate: "15/06/2022",
-      gender: "Fêmea",
-      status: "Saudável",
-    },
-    {
-      id: "2",
-      motherName: "Estrela",
-      motherTag: "A002",
-      childName: "Filhote 2",
-      childTag: "A015",
-      birthDate: "20/07/2023",
-      gender: "Macho",
-      status: "Saudável",
-    },
-    {
-      id: "3",
-      motherName: "Boneca",
-      motherTag: "A004",
-      childName: "Filhote 3",
-      childTag: "A020",
-      birthDate: "05/01/2023",
-      gender: "Fêmea",
-      status: "Em tratamento",
-    },
-  ]
+  // Fetch births from the database using tRPC
+  const { data, isLoading } = trpc.births.getAll.useQuery();
 
-  const filteredBirths = births.filter(
+  // Ensure data is an array before filtering
+  const birthsArray = Array.isArray(data) ? data : [];
+
+  const filteredBirths = birthsArray.filter(
     (birth) =>
-      birth.motherName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      birth.motherTag.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      birth.childName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      birth.childTag.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+      birth.mother.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      birth.mother.tag.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      birth.child.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      birth.child.tag.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="space-y-4">
@@ -86,7 +67,13 @@ export function BirthsList() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredBirths.length === 0 ? (
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={7} className="h-24 text-center">
+                  Carregando...
+                </TableCell>
+              </TableRow>
+            ) : filteredBirths.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={7} className="h-24 text-center">
                   Nenhum nascimento encontrado.
@@ -95,24 +82,26 @@ export function BirthsList() {
             ) : (
               filteredBirths.map((birth) => (
                 <TableRow key={birth.id}>
-                  <TableCell>{birth.birthDate}</TableCell>
                   <TableCell>
-                    {birth.motherName} ({birth.motherTag})
+                    {format(new Date(birth.birthDate), "dd/MM/yyyy")}
                   </TableCell>
-                  <TableCell>{birth.childName}</TableCell>
-                  <TableCell>{birth.childTag}</TableCell>
-                  <TableCell>{birth.gender}</TableCell>
+                  <TableCell>
+                    {birth.mother.name} ({birth.mother.tag})
+                  </TableCell>
+                  <TableCell>{birth.child.name}</TableCell>
+                  <TableCell>{birth.child.tag}</TableCell>
+                  <TableCell>{birth.child.gender}</TableCell>
                   <TableCell>
                     <Badge
                       variant={
-                        birth.status === "Saudável"
+                        birth.child.status === "Saudável"
                           ? "default"
-                          : birth.status === "Em tratamento"
-                            ? "destructive"
-                            : "secondary"
+                          : birth.child.status === "Em tratamento"
+                          ? "destructive"
+                          : "secondary"
                       }
                     >
-                      {birth.status}
+                      {birth.child.status}
                     </Badge>
                   </TableCell>
                   <TableCell>
@@ -127,7 +116,7 @@ export function BirthsList() {
                         <DropdownMenuLabel>Ações</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem asChild>
-                          <Link href={`/animais/${birth.id}`}>
+                          <Link href={`/animais/${birth.child.id}`}>
                             <Eye className="mr-2 h-4 w-4" />
                             Ver Filhote
                           </Link>
@@ -142,5 +131,5 @@ export function BirthsList() {
         </Table>
       </div>
     </div>
-  )
+  );
 }

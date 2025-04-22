@@ -1,7 +1,14 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,71 +16,39 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
-import { MoreHorizontal, Search, Edit, Trash, Eye } from "lucide-react"
-import Link from "next/link"
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { MoreHorizontal, Search, Edit, Trash, Eye } from "lucide-react";
+import Link from "next/link";
+import { format } from "date-fns";
+import { trpc } from "@/lib/trpc/client";
 
 export function AnimalsList() {
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Mock data - would be fetched from API in a real app
-  const animals = [
-    {
-      id: "1",
-      name: "Mimosa",
-      tag: "A001",
-      breed: "Nelore",
-      gender: "Fêmea",
-      birthDate: "10/03/2020",
-      status: "Saudável",
-    },
-    {
-      id: "2",
-      name: "Estrela",
-      tag: "A002",
-      breed: "Gir",
-      gender: "Fêmea",
-      birthDate: "15/05/2021",
-      status: "Gestante",
-    },
-    {
-      id: "3",
-      name: "Trovão",
-      tag: "A003",
-      breed: "Angus",
-      gender: "Macho",
-      birthDate: "22/07/2019",
-      status: "Saudável",
-    },
-    {
-      id: "4",
-      name: "Boneca",
-      tag: "A004",
-      breed: "Holandesa",
-      gender: "Fêmea",
-      birthDate: "05/11/2022",
-      status: "Em tratamento",
-    },
-    {
-      id: "5",
-      name: "Sultão",
-      tag: "A005",
-      breed: "Brahman",
-      gender: "Macho",
-      birthDate: "18/02/2018",
-      status: "Saudável",
-    },
-  ]
+  // Fetch animals from the database using tRPC
+  const { data: animalsResponse, isLoading } = trpc.animals.getAll.useQuery({
+    // Keep the input object if your procedure expects it
+    // If getAll doesn't need input, this can be removed
+    // input: { searchTerm },
+  });
 
-  const filteredAnimals = animals.filter(
+  console.log("Animals data from useQuery:", animalsResponse);
+
+  // Access the json property where the actual data is stored
+  const animals = animalsResponse?.json;
+
+  // Ensure animals is an array before filtering
+  const animalsArray = Array.isArray(animals) ? animals : [];
+
+  const filteredAnimals = animalsArray.filter(
     (animal) =>
       animal.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       animal.tag.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      animal.breed.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+      animal.breed.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="space-y-4">
@@ -100,7 +75,13 @@ export function AnimalsList() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredAnimals.length === 0 ? (
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={7} className="h-24 text-center">
+                  Carregando...
+                </TableCell>
+              </TableRow>
+            ) : filteredAnimals.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={7} className="h-24 text-center">
                   Nenhum animal encontrado.
@@ -113,15 +94,17 @@ export function AnimalsList() {
                   <TableCell>{animal.name}</TableCell>
                   <TableCell>{animal.breed}</TableCell>
                   <TableCell>{animal.gender}</TableCell>
-                  <TableCell>{animal.birthDate}</TableCell>
+                  <TableCell>
+                    {format(new Date(animal.birthDate), "dd/MM/yyyy")}
+                  </TableCell>
                   <TableCell>
                     <Badge
                       variant={
                         animal.status === "Saudável"
                           ? "default"
                           : animal.status === "Gestante"
-                            ? "secondary"
-                            : "destructive"
+                          ? "secondary"
+                          : "destructive"
                       }
                     >
                       {animal.status}
@@ -164,5 +147,5 @@ export function AnimalsList() {
         </Table>
       </div>
     </div>
-  )
+  );
 }

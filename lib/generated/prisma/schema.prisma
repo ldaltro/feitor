@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Animal {
+  id        String   @id @default(cuid())
+  name      String
+  tag       String   @unique
+  breed     String
+  gender    String
+  birthDate DateTime
+  status    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  motherOf     Birth[]       @relation("Mother")
+  childOf      Birth?        @relation("Child")
+  transactions Transaction[]
+}
+
+model Birth {
+  id        String   @id @default(cuid())
+  birthDate DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  motherId String
+  mother   Animal @relation("Mother", fields: [motherId], references: [id])
+  childId  String @unique
+  child    Animal @relation("Child", fields: [childId], references: [id])
+}
+
+model Transaction {
+  id        String   @id @default(cuid())
+  type      String // "Compra" or "Venda"
+  date      DateTime
+  value     Float
+  person    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  animalId String
+  animal   Animal @relation(fields: [animalId], references: [id])
+}
