@@ -1,198 +1,168 @@
-import { PrismaClient } from "../lib/generated/prisma";
-import { parse, parseISO } from "date-fns";
+const { PrismaClient } = require("../lib/generated/prisma");
+const { addDays, addWeeks, addMonths } = require("date-fns");
 
 const prisma = new PrismaClient();
 
 async function main() {
-  // Clear existing data
-  await prisma.transaction.deleteMany();
-  await prisma.birth.deleteMany();
-  await prisma.animal.deleteMany();
+  console.log("Seeding database...");
 
-  // Create animals
-  const animals = [
+  // Create some animals if they don't exist
+  const animalsData = [
     {
       name: "Mimosa",
       tag: "A001",
       breed: "Nelore",
       gender: "Fêmea",
-      birthDate: parseDate("10/03/2020"),
-      status: "Saudável",
+      birthDate: new Date("2020-05-10"),
+      status: "Ativo",
     },
     {
       name: "Estrela",
       tag: "A002",
-      breed: "Gir",
+      breed: "Nelore",
       gender: "Fêmea",
-      birthDate: parseDate("15/05/2021"),
-      status: "Gestante",
+      birthDate: new Date("2019-03-15"),
+      status: "Ativo",
     },
     {
       name: "Trovão",
       tag: "A003",
-      breed: "Angus",
+      breed: "Nelore",
       gender: "Macho",
-      birthDate: parseDate("22/07/2019"),
-      status: "Saudável",
+      birthDate: new Date("2018-07-22"),
+      status: "Ativo",
     },
     {
       name: "Boneca",
       tag: "A004",
-      breed: "Holandesa",
+      breed: "Gir",
       gender: "Fêmea",
-      birthDate: parseDate("05/11/2022"),
-      status: "Em tratamento",
+      birthDate: new Date("2021-01-30"),
+      status: "Ativo",
     },
     {
       name: "Sultão",
       tag: "A005",
-      breed: "Brahman",
-      gender: "Macho",
-      birthDate: parseDate("18/02/2018"),
-      status: "Saudável",
-    },
-  ];
-
-  console.log("Seeding animals...");
-  const createdAnimals = await Promise.all(
-    animals.map((animal) =>
-      prisma.animal.create({
-        data: animal,
-      })
-    )
-  );
-  console.log(`Created ${createdAnimals.length} animals.`);
-
-  // Map for animal lookup by tag
-  const animalMap = createdAnimals.reduce((acc, animal) => {
-    acc[animal.tag] = animal;
-    return acc;
-  }, {} as Record<string, (typeof createdAnimals)[0]>);
-
-  // Create children animals for births
-  const childAnimals = [
-    {
-      name: "Filhote 1",
-      tag: "A010",
-      breed: "Nelore",
-      gender: "Fêmea",
-      birthDate: parseDate("15/06/2022"),
-      status: "Saudável",
-    },
-    {
-      name: "Filhote 2",
-      tag: "A015",
       breed: "Gir",
       gender: "Macho",
-      birthDate: parseDate("20/07/2023"),
-      status: "Saudável",
-    },
-    {
-      name: "Filhote 3",
-      tag: "A020",
-      breed: "Holandesa",
-      gender: "Fêmea",
-      birthDate: parseDate("05/01/2023"),
-      status: "Em tratamento",
+      birthDate: new Date("2017-11-05"),
+      status: "Ativo",
     },
   ];
 
-  console.log("Seeding child animals...");
-  const createdChildAnimals = await Promise.all(
-    childAnimals.map((animal) =>
-      prisma.animal.create({
-        data: animal,
-      })
-    )
-  );
-  console.log(`Created ${createdChildAnimals.length} child animals.`);
+  for (const animalData of animalsData) {
+    const existingAnimal = await prisma.animal.findUnique({
+      where: { tag: animalData.tag },
+    });
 
-  // Map mothers to children
-  const births = [
+    if (!existingAnimal) {
+      await prisma.animal.create({
+        data: animalData,
+      });
+      console.log(`Created animal: ${animalData.name} (${animalData.tag})`);
+    }
+  }
+
+  // Get all animals
+  const animals = await prisma.animal.findMany();
+
+  // Delete existing events
+  await prisma.eventAnimal.deleteMany();
+  await prisma.event.deleteMany();
+
+  const now = new Date();
+
+  // Create events distributed across different time periods
+  const eventsData = [
+    // Next week events
     {
-      motherId: animalMap["A001"].id, // Mimosa
-      childId: createdChildAnimals[0].id, // Filhote 1
-      birthDate: parseDate("15/06/2022"),
+      title: "Vacinação",
+      type: "Manejo Sanitário",
+      date: addDays(now, 3),
+      description: "Vacinação contra febre aftosa",
+      animals: [animals[0].id, animals[1].id, animals[3].id],
     },
     {
-      motherId: animalMap["A002"].id, // Estrela
-      childId: createdChildAnimals[1].id, // Filhote 2
-      birthDate: parseDate("20/07/2023"),
+      title: "Pesagem de Bezerros",
+      type: "Pesagem",
+      date: addDays(now, 6),
+      description: "Pesagem de bezerros recém-nascidos",
+      animals: [animals[2].id, animals[4].id],
+    },
+    // Next month events
+    {
+      title: "Inseminação",
+      type: "Manejo Reprodutivo",
+      date: addDays(now, 12),
+      description: "Inseminação artificial",
+      animals: [animals[1].id, animals[3].id],
     },
     {
-      motherId: animalMap["A004"].id, // Boneca
-      childId: createdChildAnimals[2].id, // Filhote 3
-      birthDate: parseDate("05/01/2023"),
+      title: "Pesagem Mensal",
+      type: "Pesagem",
+      date: addDays(now, 20),
+      description: "Pesagem mensal de todos os animais",
+      animals: animals.map((animal: { id: string }) => animal.id),
+    },
+    {
+      title: "Vermifugação",
+      type: "Manejo Sanitário",
+      date: addWeeks(now, 3),
+      description: "Aplicação de vermífugo",
+      animals: [animals[0].id, animals[1].id, animals[2].id, animals[3].id],
+    },
+    // Next 3 months events
+    {
+      title: "Diagnóstico de Gestação",
+      type: "Manejo Reprodutivo",
+      date: addMonths(now, 2),
+      description: "Diagnóstico de gestação por ultrassom",
+      animals: [animals[0].id, animals[1].id, animals[3].id],
+    },
+    {
+      title: "Vacinação Semestral",
+      type: "Manejo Sanitário",
+      date: addMonths(now, 2.5),
+      description: "Vacinação semestral do rebanho",
+      animals: animals.map((animal: { id: string }) => animal.id),
+    },
+    {
+      title: "Avaliação Reprodutiva",
+      type: "Manejo Reprodutivo",
+      date: addMonths(now, 3),
+      description: "Avaliação do estado reprodutivo das matrizes",
+      animals: [animals[0].id, animals[1].id, animals[3].id],
     },
   ];
 
-  console.log("Seeding births...");
-  await Promise.all(
-    births.map((birth) =>
-      prisma.birth.create({
-        data: birth,
-      })
-    )
-  );
-  console.log(`Created ${births.length} birth records.`);
+  for (const eventData of eventsData) {
+    const { animals: animalIds, ...eventInfo } = eventData;
 
-  // Create transactions
-  const transactions = [
-    {
-      type: "Compra",
-      animalId: animalMap["A001"].id, // Mimosa
-      date: parseDate("15/05/2020"),
-      value: 2500.0,
-      person: "João Silva",
-    },
-    {
-      type: "Venda",
-      animalId: animalMap["A003"].id, // Trovão
-      date: parseDate("10/06/2023"),
-      value: 3800.0,
-      person: "Fazenda Boa Vista",
-    },
-    {
-      type: "Compra",
-      animalId: animalMap["A002"].id, // Estrela
-      date: parseDate("20/03/2021"),
-      value: 2200.0,
-      person: "Maria Oliveira",
-    },
-    {
-      type: "Venda",
-      animalId: animalMap["A004"].id, // Boneca
-      date: parseDate("05/08/2023"),
-      value: 2900.0,
-      person: "Carlos Mendes",
-    },
-  ];
+    await prisma.event.create({
+      data: {
+        ...eventInfo,
+        animals: {
+          create: animalIds.map((animalId: string) => ({
+            animal: {
+              connect: {
+                id: animalId,
+              },
+            },
+          })),
+        },
+      },
+    });
+    console.log(`Created event: ${eventData.title}`);
+  }
 
-  console.log("Seeding transactions...");
-  await Promise.all(
-    transactions.map((transaction) =>
-      prisma.transaction.create({
-        data: transaction,
-      })
-    )
-  );
-  console.log(`Created ${transactions.length} transaction records.`);
-
-  console.log("Seeding completed!");
-}
-
-// Helper function to parse dates in format DD/MM/YYYY
-function parseDate(dateString: string): Date {
-  // Parse date in format DD/MM/YYYY
-  return parse(dateString, "dd/MM/yyyy", new Date());
+  console.log("Seeding completed.");
 }
 
 main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error("Error during seeding:", e);
-    await prisma.$disconnect();
+  .catch((e) => {
+    console.error(e);
     process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
   });

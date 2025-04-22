@@ -28,6 +28,16 @@ export type Birth = $Result.DefaultSelection<Prisma.$BirthPayload>
  * 
  */
 export type Transaction = $Result.DefaultSelection<Prisma.$TransactionPayload>
+/**
+ * Model Event
+ * 
+ */
+export type Event = $Result.DefaultSelection<Prisma.$EventPayload>
+/**
+ * Model EventAnimal
+ * 
+ */
+export type EventAnimal = $Result.DefaultSelection<Prisma.$EventAnimalPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -183,6 +193,26 @@ export class PrismaClient<
     * ```
     */
   get transaction(): Prisma.TransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.event`: Exposes CRUD operations for the **Event** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Events
+    * const events = await prisma.event.findMany()
+    * ```
+    */
+  get event(): Prisma.EventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.eventAnimal`: Exposes CRUD operations for the **EventAnimal** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more EventAnimals
+    * const eventAnimals = await prisma.eventAnimal.findMany()
+    * ```
+    */
+  get eventAnimal(): Prisma.EventAnimalDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -625,7 +655,9 @@ export namespace Prisma {
   export const ModelName: {
     Animal: 'Animal',
     Birth: 'Birth',
-    Transaction: 'Transaction'
+    Transaction: 'Transaction',
+    Event: 'Event',
+    EventAnimal: 'EventAnimal'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -644,7 +676,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "animal" | "birth" | "transaction"
+      modelProps: "animal" | "birth" | "transaction" | "event" | "eventAnimal"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -870,6 +902,154 @@ export namespace Prisma {
           }
         }
       }
+      Event: {
+        payload: Prisma.$EventPayload<ExtArgs>
+        fields: Prisma.EventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>
+          }
+          findFirst: {
+            args: Prisma.EventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>
+          }
+          findMany: {
+            args: Prisma.EventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>[]
+          }
+          create: {
+            args: Prisma.EventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>
+          }
+          createMany: {
+            args: Prisma.EventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.EventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>[]
+          }
+          delete: {
+            args: Prisma.EventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>
+          }
+          update: {
+            args: Prisma.EventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>
+          }
+          deleteMany: {
+            args: Prisma.EventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.EventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>[]
+          }
+          upsert: {
+            args: Prisma.EventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>
+          }
+          aggregate: {
+            args: Prisma.EventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEvent>
+          }
+          groupBy: {
+            args: Prisma.EventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EventCountArgs<ExtArgs>
+            result: $Utils.Optional<EventCountAggregateOutputType> | number
+          }
+        }
+      }
+      EventAnimal: {
+        payload: Prisma.$EventAnimalPayload<ExtArgs>
+        fields: Prisma.EventAnimalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EventAnimalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventAnimalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EventAnimalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventAnimalPayload>
+          }
+          findFirst: {
+            args: Prisma.EventAnimalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventAnimalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EventAnimalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventAnimalPayload>
+          }
+          findMany: {
+            args: Prisma.EventAnimalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventAnimalPayload>[]
+          }
+          create: {
+            args: Prisma.EventAnimalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventAnimalPayload>
+          }
+          createMany: {
+            args: Prisma.EventAnimalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.EventAnimalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventAnimalPayload>[]
+          }
+          delete: {
+            args: Prisma.EventAnimalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventAnimalPayload>
+          }
+          update: {
+            args: Prisma.EventAnimalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventAnimalPayload>
+          }
+          deleteMany: {
+            args: Prisma.EventAnimalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EventAnimalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.EventAnimalUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventAnimalPayload>[]
+          }
+          upsert: {
+            args: Prisma.EventAnimalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventAnimalPayload>
+          }
+          aggregate: {
+            args: Prisma.EventAnimalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEventAnimal>
+          }
+          groupBy: {
+            args: Prisma.EventAnimalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EventAnimalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EventAnimalCountArgs<ExtArgs>
+            result: $Utils.Optional<EventAnimalCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -957,6 +1137,8 @@ export namespace Prisma {
     animal?: AnimalOmit
     birth?: BirthOmit
     transaction?: TransactionOmit
+    event?: EventOmit
+    eventAnimal?: EventAnimalOmit
   }
 
   /* Types for Logging */
@@ -1053,11 +1235,13 @@ export namespace Prisma {
   export type AnimalCountOutputType = {
     motherOf: number
     transactions: number
+    events: number
   }
 
   export type AnimalCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     motherOf?: boolean | AnimalCountOutputTypeCountMotherOfArgs
     transactions?: boolean | AnimalCountOutputTypeCountTransactionsArgs
+    events?: boolean | AnimalCountOutputTypeCountEventsArgs
   }
 
   // Custom InputTypes
@@ -1083,6 +1267,44 @@ export namespace Prisma {
    */
   export type AnimalCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TransactionWhereInput
+  }
+
+  /**
+   * AnimalCountOutputType without action
+   */
+  export type AnimalCountOutputTypeCountEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventAnimalWhereInput
+  }
+
+
+  /**
+   * Count Type EventCountOutputType
+   */
+
+  export type EventCountOutputType = {
+    animals: number
+  }
+
+  export type EventCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    animals?: boolean | EventCountOutputTypeCountAnimalsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventCountOutputType
+     */
+    select?: EventCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeCountAnimalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventAnimalWhereInput
   }
 
 
@@ -1289,6 +1511,7 @@ export namespace Prisma {
     motherOf?: boolean | Animal$motherOfArgs<ExtArgs>
     childOf?: boolean | Animal$childOfArgs<ExtArgs>
     transactions?: boolean | Animal$transactionsArgs<ExtArgs>
+    events?: boolean | Animal$eventsArgs<ExtArgs>
     _count?: boolean | AnimalCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["animal"]>
 
@@ -1333,6 +1556,7 @@ export namespace Prisma {
     motherOf?: boolean | Animal$motherOfArgs<ExtArgs>
     childOf?: boolean | Animal$childOfArgs<ExtArgs>
     transactions?: boolean | Animal$transactionsArgs<ExtArgs>
+    events?: boolean | Animal$eventsArgs<ExtArgs>
     _count?: boolean | AnimalCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AnimalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1344,6 +1568,7 @@ export namespace Prisma {
       motherOf: Prisma.$BirthPayload<ExtArgs>[]
       childOf: Prisma.$BirthPayload<ExtArgs> | null
       transactions: Prisma.$TransactionPayload<ExtArgs>[]
+      events: Prisma.$EventAnimalPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1752,6 +1977,7 @@ export namespace Prisma {
     motherOf<T extends Animal$motherOfArgs<ExtArgs> = {}>(args?: Subset<T, Animal$motherOfArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BirthPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     childOf<T extends Animal$childOfArgs<ExtArgs> = {}>(args?: Subset<T, Animal$childOfArgs<ExtArgs>>): Prisma__BirthClient<$Result.GetResult<Prisma.$BirthPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     transactions<T extends Animal$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Animal$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    events<T extends Animal$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Animal$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2240,6 +2466,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TransactionScalarFieldEnum | TransactionScalarFieldEnum[]
+  }
+
+  /**
+   * Animal.events
+   */
+  export type Animal$eventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalInclude<ExtArgs> | null
+    where?: EventAnimalWhereInput
+    orderBy?: EventAnimalOrderByWithRelationInput | EventAnimalOrderByWithRelationInput[]
+    cursor?: EventAnimalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventAnimalScalarFieldEnum | EventAnimalScalarFieldEnum[]
   }
 
   /**
@@ -4468,6 +4718,2164 @@ export namespace Prisma {
 
 
   /**
+   * Model Event
+   */
+
+  export type AggregateEvent = {
+    _count: EventCountAggregateOutputType | null
+    _min: EventMinAggregateOutputType | null
+    _max: EventMaxAggregateOutputType | null
+  }
+
+  export type EventMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    type: string | null
+    date: Date | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type EventMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    type: string | null
+    date: Date | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type EventCountAggregateOutputType = {
+    id: number
+    title: number
+    type: number
+    date: number
+    description: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type EventMinAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    date?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type EventMaxAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    date?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type EventCountAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    date?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type EventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Event to aggregate.
+     */
+    where?: EventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Events to fetch.
+     */
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Events from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Events.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Events
+    **/
+    _count?: true | EventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EventMaxAggregateInputType
+  }
+
+  export type GetEventAggregateType<T extends EventAggregateArgs> = {
+        [P in keyof T & keyof AggregateEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEvent[P]>
+      : GetScalarType<T[P], AggregateEvent[P]>
+  }
+
+
+
+
+  export type EventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventWhereInput
+    orderBy?: EventOrderByWithAggregationInput | EventOrderByWithAggregationInput[]
+    by: EventScalarFieldEnum[] | EventScalarFieldEnum
+    having?: EventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EventCountAggregateInputType | true
+    _min?: EventMinAggregateInputType
+    _max?: EventMaxAggregateInputType
+  }
+
+  export type EventGroupByOutputType = {
+    id: string
+    title: string
+    type: string
+    date: Date
+    description: string
+    createdAt: Date
+    updatedAt: Date
+    _count: EventCountAggregateOutputType | null
+    _min: EventMinAggregateOutputType | null
+    _max: EventMaxAggregateOutputType | null
+  }
+
+  type GetEventGroupByPayload<T extends EventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EventGroupByOutputType[P]>
+            : GetScalarType<T[P], EventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    date?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    animals?: boolean | Event$animalsArgs<ExtArgs>
+    _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["event"]>
+
+  export type EventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    date?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["event"]>
+
+  export type EventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    date?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["event"]>
+
+  export type EventSelectScalar = {
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    date?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "date" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
+  export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    animals?: boolean | Event$animalsArgs<ExtArgs>
+    _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type EventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type EventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $EventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Event"
+    objects: {
+      animals: Prisma.$EventAnimalPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      type: string
+      date: Date
+      description: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["event"]>
+    composites: {}
+  }
+
+  type EventGetPayload<S extends boolean | null | undefined | EventDefaultArgs> = $Result.GetResult<Prisma.$EventPayload, S>
+
+  type EventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<EventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EventCountAggregateInputType | true
+    }
+
+  export interface EventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Event'], meta: { name: 'Event' } }
+    /**
+     * Find zero or one Event that matches the filter.
+     * @param {EventFindUniqueArgs} args - Arguments to find a Event
+     * @example
+     * // Get one Event
+     * const event = await prisma.event.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EventFindUniqueArgs>(args: SelectSubset<T, EventFindUniqueArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Event that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {EventFindUniqueOrThrowArgs} args - Arguments to find a Event
+     * @example
+     * // Get one Event
+     * const event = await prisma.event.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EventFindUniqueOrThrowArgs>(args: SelectSubset<T, EventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Event that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventFindFirstArgs} args - Arguments to find a Event
+     * @example
+     * // Get one Event
+     * const event = await prisma.event.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EventFindFirstArgs>(args?: SelectSubset<T, EventFindFirstArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Event that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventFindFirstOrThrowArgs} args - Arguments to find a Event
+     * @example
+     * // Get one Event
+     * const event = await prisma.event.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EventFindFirstOrThrowArgs>(args?: SelectSubset<T, EventFindFirstOrThrowArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Events that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Events
+     * const events = await prisma.event.findMany()
+     * 
+     * // Get first 10 Events
+     * const events = await prisma.event.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const eventWithIdOnly = await prisma.event.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends EventFindManyArgs>(args?: SelectSubset<T, EventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Event.
+     * @param {EventCreateArgs} args - Arguments to create a Event.
+     * @example
+     * // Create one Event
+     * const Event = await prisma.event.create({
+     *   data: {
+     *     // ... data to create a Event
+     *   }
+     * })
+     * 
+     */
+    create<T extends EventCreateArgs>(args: SelectSubset<T, EventCreateArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Events.
+     * @param {EventCreateManyArgs} args - Arguments to create many Events.
+     * @example
+     * // Create many Events
+     * const event = await prisma.event.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends EventCreateManyArgs>(args?: SelectSubset<T, EventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Events and returns the data saved in the database.
+     * @param {EventCreateManyAndReturnArgs} args - Arguments to create many Events.
+     * @example
+     * // Create many Events
+     * const event = await prisma.event.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Events and only return the `id`
+     * const eventWithIdOnly = await prisma.event.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends EventCreateManyAndReturnArgs>(args?: SelectSubset<T, EventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Event.
+     * @param {EventDeleteArgs} args - Arguments to delete one Event.
+     * @example
+     * // Delete one Event
+     * const Event = await prisma.event.delete({
+     *   where: {
+     *     // ... filter to delete one Event
+     *   }
+     * })
+     * 
+     */
+    delete<T extends EventDeleteArgs>(args: SelectSubset<T, EventDeleteArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Event.
+     * @param {EventUpdateArgs} args - Arguments to update one Event.
+     * @example
+     * // Update one Event
+     * const event = await prisma.event.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends EventUpdateArgs>(args: SelectSubset<T, EventUpdateArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Events.
+     * @param {EventDeleteManyArgs} args - Arguments to filter Events to delete.
+     * @example
+     * // Delete a few Events
+     * const { count } = await prisma.event.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends EventDeleteManyArgs>(args?: SelectSubset<T, EventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Events.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Events
+     * const event = await prisma.event.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends EventUpdateManyArgs>(args: SelectSubset<T, EventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Events and returns the data updated in the database.
+     * @param {EventUpdateManyAndReturnArgs} args - Arguments to update many Events.
+     * @example
+     * // Update many Events
+     * const event = await prisma.event.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Events and only return the `id`
+     * const eventWithIdOnly = await prisma.event.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends EventUpdateManyAndReturnArgs>(args: SelectSubset<T, EventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Event.
+     * @param {EventUpsertArgs} args - Arguments to update or create a Event.
+     * @example
+     * // Update or create a Event
+     * const event = await prisma.event.upsert({
+     *   create: {
+     *     // ... data to create a Event
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Event we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EventUpsertArgs>(args: SelectSubset<T, EventUpsertArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Events.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventCountArgs} args - Arguments to filter Events to count.
+     * @example
+     * // Count the number of Events
+     * const count = await prisma.event.count({
+     *   where: {
+     *     // ... the filter for the Events we want to count
+     *   }
+     * })
+    **/
+    count<T extends EventCountArgs>(
+      args?: Subset<T, EventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Event.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EventAggregateArgs>(args: Subset<T, EventAggregateArgs>): Prisma.PrismaPromise<GetEventAggregateType<T>>
+
+    /**
+     * Group by Event.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EventGroupByArgs['orderBy'] }
+        : { orderBy?: EventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Event model
+   */
+  readonly fields: EventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Event.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    animals<T extends Event$animalsArgs<ExtArgs> = {}>(args?: Subset<T, Event$animalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Event model
+   */
+  interface EventFieldRefs {
+    readonly id: FieldRef<"Event", 'String'>
+    readonly title: FieldRef<"Event", 'String'>
+    readonly type: FieldRef<"Event", 'String'>
+    readonly date: FieldRef<"Event", 'DateTime'>
+    readonly description: FieldRef<"Event", 'String'>
+    readonly createdAt: FieldRef<"Event", 'DateTime'>
+    readonly updatedAt: FieldRef<"Event", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Event findUnique
+   */
+  export type EventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * Filter, which Event to fetch.
+     */
+    where: EventWhereUniqueInput
+  }
+
+  /**
+   * Event findUniqueOrThrow
+   */
+  export type EventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * Filter, which Event to fetch.
+     */
+    where: EventWhereUniqueInput
+  }
+
+  /**
+   * Event findFirst
+   */
+  export type EventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * Filter, which Event to fetch.
+     */
+    where?: EventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Events to fetch.
+     */
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Events.
+     */
+    cursor?: EventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Events from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Events.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Events.
+     */
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+  }
+
+  /**
+   * Event findFirstOrThrow
+   */
+  export type EventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * Filter, which Event to fetch.
+     */
+    where?: EventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Events to fetch.
+     */
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Events.
+     */
+    cursor?: EventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Events from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Events.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Events.
+     */
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+  }
+
+  /**
+   * Event findMany
+   */
+  export type EventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * Filter, which Events to fetch.
+     */
+    where?: EventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Events to fetch.
+     */
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Events.
+     */
+    cursor?: EventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Events from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Events.
+     */
+    skip?: number
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+  }
+
+  /**
+   * Event create
+   */
+  export type EventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Event.
+     */
+    data: XOR<EventCreateInput, EventUncheckedCreateInput>
+  }
+
+  /**
+   * Event createMany
+   */
+  export type EventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Events.
+     */
+    data: EventCreateManyInput | EventCreateManyInput[]
+  }
+
+  /**
+   * Event createManyAndReturn
+   */
+  export type EventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * The data used to create many Events.
+     */
+    data: EventCreateManyInput | EventCreateManyInput[]
+  }
+
+  /**
+   * Event update
+   */
+  export type EventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Event.
+     */
+    data: XOR<EventUpdateInput, EventUncheckedUpdateInput>
+    /**
+     * Choose, which Event to update.
+     */
+    where: EventWhereUniqueInput
+  }
+
+  /**
+   * Event updateMany
+   */
+  export type EventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Events.
+     */
+    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyInput>
+    /**
+     * Filter which Events to update
+     */
+    where?: EventWhereInput
+    /**
+     * Limit how many Events to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Event updateManyAndReturn
+   */
+  export type EventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * The data used to update Events.
+     */
+    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyInput>
+    /**
+     * Filter which Events to update
+     */
+    where?: EventWhereInput
+    /**
+     * Limit how many Events to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Event upsert
+   */
+  export type EventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Event to update in case it exists.
+     */
+    where: EventWhereUniqueInput
+    /**
+     * In case the Event found by the `where` argument doesn't exist, create a new Event with this data.
+     */
+    create: XOR<EventCreateInput, EventUncheckedCreateInput>
+    /**
+     * In case the Event was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EventUpdateInput, EventUncheckedUpdateInput>
+  }
+
+  /**
+   * Event delete
+   */
+  export type EventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * Filter which Event to delete.
+     */
+    where: EventWhereUniqueInput
+  }
+
+  /**
+   * Event deleteMany
+   */
+  export type EventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Events to delete
+     */
+    where?: EventWhereInput
+    /**
+     * Limit how many Events to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Event.animals
+   */
+  export type Event$animalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalInclude<ExtArgs> | null
+    where?: EventAnimalWhereInput
+    orderBy?: EventAnimalOrderByWithRelationInput | EventAnimalOrderByWithRelationInput[]
+    cursor?: EventAnimalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventAnimalScalarFieldEnum | EventAnimalScalarFieldEnum[]
+  }
+
+  /**
+   * Event without action
+   */
+  export type EventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model EventAnimal
+   */
+
+  export type AggregateEventAnimal = {
+    _count: EventAnimalCountAggregateOutputType | null
+    _min: EventAnimalMinAggregateOutputType | null
+    _max: EventAnimalMaxAggregateOutputType | null
+  }
+
+  export type EventAnimalMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    eventId: string | null
+    animalId: string | null
+  }
+
+  export type EventAnimalMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    eventId: string | null
+    animalId: string | null
+  }
+
+  export type EventAnimalCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    eventId: number
+    animalId: number
+    _all: number
+  }
+
+
+  export type EventAnimalMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    eventId?: true
+    animalId?: true
+  }
+
+  export type EventAnimalMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    eventId?: true
+    animalId?: true
+  }
+
+  export type EventAnimalCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    eventId?: true
+    animalId?: true
+    _all?: true
+  }
+
+  export type EventAnimalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EventAnimal to aggregate.
+     */
+    where?: EventAnimalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EventAnimals to fetch.
+     */
+    orderBy?: EventAnimalOrderByWithRelationInput | EventAnimalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EventAnimalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EventAnimals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EventAnimals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned EventAnimals
+    **/
+    _count?: true | EventAnimalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EventAnimalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EventAnimalMaxAggregateInputType
+  }
+
+  export type GetEventAnimalAggregateType<T extends EventAnimalAggregateArgs> = {
+        [P in keyof T & keyof AggregateEventAnimal]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEventAnimal[P]>
+      : GetScalarType<T[P], AggregateEventAnimal[P]>
+  }
+
+
+
+
+  export type EventAnimalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventAnimalWhereInput
+    orderBy?: EventAnimalOrderByWithAggregationInput | EventAnimalOrderByWithAggregationInput[]
+    by: EventAnimalScalarFieldEnum[] | EventAnimalScalarFieldEnum
+    having?: EventAnimalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EventAnimalCountAggregateInputType | true
+    _min?: EventAnimalMinAggregateInputType
+    _max?: EventAnimalMaxAggregateInputType
+  }
+
+  export type EventAnimalGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    eventId: string
+    animalId: string
+    _count: EventAnimalCountAggregateOutputType | null
+    _min: EventAnimalMinAggregateOutputType | null
+    _max: EventAnimalMaxAggregateOutputType | null
+  }
+
+  type GetEventAnimalGroupByPayload<T extends EventAnimalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EventAnimalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EventAnimalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EventAnimalGroupByOutputType[P]>
+            : GetScalarType<T[P], EventAnimalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EventAnimalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    eventId?: boolean
+    animalId?: boolean
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    animal?: boolean | AnimalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["eventAnimal"]>
+
+  export type EventAnimalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    eventId?: boolean
+    animalId?: boolean
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    animal?: boolean | AnimalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["eventAnimal"]>
+
+  export type EventAnimalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    eventId?: boolean
+    animalId?: boolean
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    animal?: boolean | AnimalDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["eventAnimal"]>
+
+  export type EventAnimalSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    eventId?: boolean
+    animalId?: boolean
+  }
+
+  export type EventAnimalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "eventId" | "animalId", ExtArgs["result"]["eventAnimal"]>
+  export type EventAnimalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    animal?: boolean | AnimalDefaultArgs<ExtArgs>
+  }
+  export type EventAnimalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    animal?: boolean | AnimalDefaultArgs<ExtArgs>
+  }
+  export type EventAnimalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    animal?: boolean | AnimalDefaultArgs<ExtArgs>
+  }
+
+  export type $EventAnimalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "EventAnimal"
+    objects: {
+      event: Prisma.$EventPayload<ExtArgs>
+      animal: Prisma.$AnimalPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      eventId: string
+      animalId: string
+    }, ExtArgs["result"]["eventAnimal"]>
+    composites: {}
+  }
+
+  type EventAnimalGetPayload<S extends boolean | null | undefined | EventAnimalDefaultArgs> = $Result.GetResult<Prisma.$EventAnimalPayload, S>
+
+  type EventAnimalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<EventAnimalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EventAnimalCountAggregateInputType | true
+    }
+
+  export interface EventAnimalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['EventAnimal'], meta: { name: 'EventAnimal' } }
+    /**
+     * Find zero or one EventAnimal that matches the filter.
+     * @param {EventAnimalFindUniqueArgs} args - Arguments to find a EventAnimal
+     * @example
+     * // Get one EventAnimal
+     * const eventAnimal = await prisma.eventAnimal.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EventAnimalFindUniqueArgs>(args: SelectSubset<T, EventAnimalFindUniqueArgs<ExtArgs>>): Prisma__EventAnimalClient<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one EventAnimal that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {EventAnimalFindUniqueOrThrowArgs} args - Arguments to find a EventAnimal
+     * @example
+     * // Get one EventAnimal
+     * const eventAnimal = await prisma.eventAnimal.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EventAnimalFindUniqueOrThrowArgs>(args: SelectSubset<T, EventAnimalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EventAnimalClient<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first EventAnimal that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventAnimalFindFirstArgs} args - Arguments to find a EventAnimal
+     * @example
+     * // Get one EventAnimal
+     * const eventAnimal = await prisma.eventAnimal.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EventAnimalFindFirstArgs>(args?: SelectSubset<T, EventAnimalFindFirstArgs<ExtArgs>>): Prisma__EventAnimalClient<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first EventAnimal that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventAnimalFindFirstOrThrowArgs} args - Arguments to find a EventAnimal
+     * @example
+     * // Get one EventAnimal
+     * const eventAnimal = await prisma.eventAnimal.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EventAnimalFindFirstOrThrowArgs>(args?: SelectSubset<T, EventAnimalFindFirstOrThrowArgs<ExtArgs>>): Prisma__EventAnimalClient<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more EventAnimals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventAnimalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all EventAnimals
+     * const eventAnimals = await prisma.eventAnimal.findMany()
+     * 
+     * // Get first 10 EventAnimals
+     * const eventAnimals = await prisma.eventAnimal.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const eventAnimalWithIdOnly = await prisma.eventAnimal.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends EventAnimalFindManyArgs>(args?: SelectSubset<T, EventAnimalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a EventAnimal.
+     * @param {EventAnimalCreateArgs} args - Arguments to create a EventAnimal.
+     * @example
+     * // Create one EventAnimal
+     * const EventAnimal = await prisma.eventAnimal.create({
+     *   data: {
+     *     // ... data to create a EventAnimal
+     *   }
+     * })
+     * 
+     */
+    create<T extends EventAnimalCreateArgs>(args: SelectSubset<T, EventAnimalCreateArgs<ExtArgs>>): Prisma__EventAnimalClient<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many EventAnimals.
+     * @param {EventAnimalCreateManyArgs} args - Arguments to create many EventAnimals.
+     * @example
+     * // Create many EventAnimals
+     * const eventAnimal = await prisma.eventAnimal.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends EventAnimalCreateManyArgs>(args?: SelectSubset<T, EventAnimalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many EventAnimals and returns the data saved in the database.
+     * @param {EventAnimalCreateManyAndReturnArgs} args - Arguments to create many EventAnimals.
+     * @example
+     * // Create many EventAnimals
+     * const eventAnimal = await prisma.eventAnimal.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many EventAnimals and only return the `id`
+     * const eventAnimalWithIdOnly = await prisma.eventAnimal.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends EventAnimalCreateManyAndReturnArgs>(args?: SelectSubset<T, EventAnimalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a EventAnimal.
+     * @param {EventAnimalDeleteArgs} args - Arguments to delete one EventAnimal.
+     * @example
+     * // Delete one EventAnimal
+     * const EventAnimal = await prisma.eventAnimal.delete({
+     *   where: {
+     *     // ... filter to delete one EventAnimal
+     *   }
+     * })
+     * 
+     */
+    delete<T extends EventAnimalDeleteArgs>(args: SelectSubset<T, EventAnimalDeleteArgs<ExtArgs>>): Prisma__EventAnimalClient<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one EventAnimal.
+     * @param {EventAnimalUpdateArgs} args - Arguments to update one EventAnimal.
+     * @example
+     * // Update one EventAnimal
+     * const eventAnimal = await prisma.eventAnimal.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends EventAnimalUpdateArgs>(args: SelectSubset<T, EventAnimalUpdateArgs<ExtArgs>>): Prisma__EventAnimalClient<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more EventAnimals.
+     * @param {EventAnimalDeleteManyArgs} args - Arguments to filter EventAnimals to delete.
+     * @example
+     * // Delete a few EventAnimals
+     * const { count } = await prisma.eventAnimal.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends EventAnimalDeleteManyArgs>(args?: SelectSubset<T, EventAnimalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EventAnimals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventAnimalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many EventAnimals
+     * const eventAnimal = await prisma.eventAnimal.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends EventAnimalUpdateManyArgs>(args: SelectSubset<T, EventAnimalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EventAnimals and returns the data updated in the database.
+     * @param {EventAnimalUpdateManyAndReturnArgs} args - Arguments to update many EventAnimals.
+     * @example
+     * // Update many EventAnimals
+     * const eventAnimal = await prisma.eventAnimal.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more EventAnimals and only return the `id`
+     * const eventAnimalWithIdOnly = await prisma.eventAnimal.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends EventAnimalUpdateManyAndReturnArgs>(args: SelectSubset<T, EventAnimalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one EventAnimal.
+     * @param {EventAnimalUpsertArgs} args - Arguments to update or create a EventAnimal.
+     * @example
+     * // Update or create a EventAnimal
+     * const eventAnimal = await prisma.eventAnimal.upsert({
+     *   create: {
+     *     // ... data to create a EventAnimal
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the EventAnimal we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EventAnimalUpsertArgs>(args: SelectSubset<T, EventAnimalUpsertArgs<ExtArgs>>): Prisma__EventAnimalClient<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of EventAnimals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventAnimalCountArgs} args - Arguments to filter EventAnimals to count.
+     * @example
+     * // Count the number of EventAnimals
+     * const count = await prisma.eventAnimal.count({
+     *   where: {
+     *     // ... the filter for the EventAnimals we want to count
+     *   }
+     * })
+    **/
+    count<T extends EventAnimalCountArgs>(
+      args?: Subset<T, EventAnimalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EventAnimalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a EventAnimal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventAnimalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EventAnimalAggregateArgs>(args: Subset<T, EventAnimalAggregateArgs>): Prisma.PrismaPromise<GetEventAnimalAggregateType<T>>
+
+    /**
+     * Group by EventAnimal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventAnimalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EventAnimalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EventAnimalGroupByArgs['orderBy'] }
+        : { orderBy?: EventAnimalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EventAnimalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEventAnimalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the EventAnimal model
+   */
+  readonly fields: EventAnimalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for EventAnimal.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EventAnimalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    event<T extends EventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EventDefaultArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    animal<T extends AnimalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AnimalDefaultArgs<ExtArgs>>): Prisma__AnimalClient<$Result.GetResult<Prisma.$AnimalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the EventAnimal model
+   */
+  interface EventAnimalFieldRefs {
+    readonly id: FieldRef<"EventAnimal", 'String'>
+    readonly createdAt: FieldRef<"EventAnimal", 'DateTime'>
+    readonly updatedAt: FieldRef<"EventAnimal", 'DateTime'>
+    readonly eventId: FieldRef<"EventAnimal", 'String'>
+    readonly animalId: FieldRef<"EventAnimal", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * EventAnimal findUnique
+   */
+  export type EventAnimalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalInclude<ExtArgs> | null
+    /**
+     * Filter, which EventAnimal to fetch.
+     */
+    where: EventAnimalWhereUniqueInput
+  }
+
+  /**
+   * EventAnimal findUniqueOrThrow
+   */
+  export type EventAnimalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalInclude<ExtArgs> | null
+    /**
+     * Filter, which EventAnimal to fetch.
+     */
+    where: EventAnimalWhereUniqueInput
+  }
+
+  /**
+   * EventAnimal findFirst
+   */
+  export type EventAnimalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalInclude<ExtArgs> | null
+    /**
+     * Filter, which EventAnimal to fetch.
+     */
+    where?: EventAnimalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EventAnimals to fetch.
+     */
+    orderBy?: EventAnimalOrderByWithRelationInput | EventAnimalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EventAnimals.
+     */
+    cursor?: EventAnimalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EventAnimals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EventAnimals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EventAnimals.
+     */
+    distinct?: EventAnimalScalarFieldEnum | EventAnimalScalarFieldEnum[]
+  }
+
+  /**
+   * EventAnimal findFirstOrThrow
+   */
+  export type EventAnimalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalInclude<ExtArgs> | null
+    /**
+     * Filter, which EventAnimal to fetch.
+     */
+    where?: EventAnimalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EventAnimals to fetch.
+     */
+    orderBy?: EventAnimalOrderByWithRelationInput | EventAnimalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EventAnimals.
+     */
+    cursor?: EventAnimalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EventAnimals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EventAnimals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EventAnimals.
+     */
+    distinct?: EventAnimalScalarFieldEnum | EventAnimalScalarFieldEnum[]
+  }
+
+  /**
+   * EventAnimal findMany
+   */
+  export type EventAnimalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalInclude<ExtArgs> | null
+    /**
+     * Filter, which EventAnimals to fetch.
+     */
+    where?: EventAnimalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EventAnimals to fetch.
+     */
+    orderBy?: EventAnimalOrderByWithRelationInput | EventAnimalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing EventAnimals.
+     */
+    cursor?: EventAnimalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EventAnimals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EventAnimals.
+     */
+    skip?: number
+    distinct?: EventAnimalScalarFieldEnum | EventAnimalScalarFieldEnum[]
+  }
+
+  /**
+   * EventAnimal create
+   */
+  export type EventAnimalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalInclude<ExtArgs> | null
+    /**
+     * The data needed to create a EventAnimal.
+     */
+    data: XOR<EventAnimalCreateInput, EventAnimalUncheckedCreateInput>
+  }
+
+  /**
+   * EventAnimal createMany
+   */
+  export type EventAnimalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many EventAnimals.
+     */
+    data: EventAnimalCreateManyInput | EventAnimalCreateManyInput[]
+  }
+
+  /**
+   * EventAnimal createManyAndReturn
+   */
+  export type EventAnimalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * The data used to create many EventAnimals.
+     */
+    data: EventAnimalCreateManyInput | EventAnimalCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * EventAnimal update
+   */
+  export type EventAnimalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalInclude<ExtArgs> | null
+    /**
+     * The data needed to update a EventAnimal.
+     */
+    data: XOR<EventAnimalUpdateInput, EventAnimalUncheckedUpdateInput>
+    /**
+     * Choose, which EventAnimal to update.
+     */
+    where: EventAnimalWhereUniqueInput
+  }
+
+  /**
+   * EventAnimal updateMany
+   */
+  export type EventAnimalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update EventAnimals.
+     */
+    data: XOR<EventAnimalUpdateManyMutationInput, EventAnimalUncheckedUpdateManyInput>
+    /**
+     * Filter which EventAnimals to update
+     */
+    where?: EventAnimalWhereInput
+    /**
+     * Limit how many EventAnimals to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * EventAnimal updateManyAndReturn
+   */
+  export type EventAnimalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * The data used to update EventAnimals.
+     */
+    data: XOR<EventAnimalUpdateManyMutationInput, EventAnimalUncheckedUpdateManyInput>
+    /**
+     * Filter which EventAnimals to update
+     */
+    where?: EventAnimalWhereInput
+    /**
+     * Limit how many EventAnimals to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * EventAnimal upsert
+   */
+  export type EventAnimalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalInclude<ExtArgs> | null
+    /**
+     * The filter to search for the EventAnimal to update in case it exists.
+     */
+    where: EventAnimalWhereUniqueInput
+    /**
+     * In case the EventAnimal found by the `where` argument doesn't exist, create a new EventAnimal with this data.
+     */
+    create: XOR<EventAnimalCreateInput, EventAnimalUncheckedCreateInput>
+    /**
+     * In case the EventAnimal was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EventAnimalUpdateInput, EventAnimalUncheckedUpdateInput>
+  }
+
+  /**
+   * EventAnimal delete
+   */
+  export type EventAnimalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalInclude<ExtArgs> | null
+    /**
+     * Filter which EventAnimal to delete.
+     */
+    where: EventAnimalWhereUniqueInput
+  }
+
+  /**
+   * EventAnimal deleteMany
+   */
+  export type EventAnimalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EventAnimals to delete
+     */
+    where?: EventAnimalWhereInput
+    /**
+     * Limit how many EventAnimals to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * EventAnimal without action
+   */
+  export type EventAnimalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventAnimal
+     */
+    select?: EventAnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventAnimal
+     */
+    omit?: EventAnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventAnimalInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4517,6 +6925,30 @@ export namespace Prisma {
   };
 
   export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
+
+
+  export const EventScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    type: 'type',
+    date: 'date',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+  export const EventAnimalScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    eventId: 'eventId',
+    animalId: 'animalId'
+  };
+
+  export type EventAnimalScalarFieldEnum = (typeof EventAnimalScalarFieldEnum)[keyof typeof EventAnimalScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4579,6 +7011,7 @@ export namespace Prisma {
     motherOf?: BirthListRelationFilter
     childOf?: XOR<BirthNullableScalarRelationFilter, BirthWhereInput> | null
     transactions?: TransactionListRelationFilter
+    events?: EventAnimalListRelationFilter
   }
 
   export type AnimalOrderByWithRelationInput = {
@@ -4594,6 +7027,7 @@ export namespace Prisma {
     motherOf?: BirthOrderByRelationAggregateInput
     childOf?: BirthOrderByWithRelationInput
     transactions?: TransactionOrderByRelationAggregateInput
+    events?: EventAnimalOrderByRelationAggregateInput
   }
 
   export type AnimalWhereUniqueInput = Prisma.AtLeast<{
@@ -4612,6 +7046,7 @@ export namespace Prisma {
     motherOf?: BirthListRelationFilter
     childOf?: XOR<BirthNullableScalarRelationFilter, BirthWhereInput> | null
     transactions?: TransactionListRelationFilter
+    events?: EventAnimalListRelationFilter
   }, "id" | "tag">
 
   export type AnimalOrderByWithAggregationInput = {
@@ -4779,6 +7214,130 @@ export namespace Prisma {
     animalId?: StringWithAggregatesFilter<"Transaction"> | string
   }
 
+  export type EventWhereInput = {
+    AND?: EventWhereInput | EventWhereInput[]
+    OR?: EventWhereInput[]
+    NOT?: EventWhereInput | EventWhereInput[]
+    id?: StringFilter<"Event"> | string
+    title?: StringFilter<"Event"> | string
+    type?: StringFilter<"Event"> | string
+    date?: DateTimeFilter<"Event"> | Date | string
+    description?: StringFilter<"Event"> | string
+    createdAt?: DateTimeFilter<"Event"> | Date | string
+    updatedAt?: DateTimeFilter<"Event"> | Date | string
+    animals?: EventAnimalListRelationFilter
+  }
+
+  export type EventOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    animals?: EventAnimalOrderByRelationAggregateInput
+  }
+
+  export type EventWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: EventWhereInput | EventWhereInput[]
+    OR?: EventWhereInput[]
+    NOT?: EventWhereInput | EventWhereInput[]
+    title?: StringFilter<"Event"> | string
+    type?: StringFilter<"Event"> | string
+    date?: DateTimeFilter<"Event"> | Date | string
+    description?: StringFilter<"Event"> | string
+    createdAt?: DateTimeFilter<"Event"> | Date | string
+    updatedAt?: DateTimeFilter<"Event"> | Date | string
+    animals?: EventAnimalListRelationFilter
+  }, "id">
+
+  export type EventOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: EventCountOrderByAggregateInput
+    _max?: EventMaxOrderByAggregateInput
+    _min?: EventMinOrderByAggregateInput
+  }
+
+  export type EventScalarWhereWithAggregatesInput = {
+    AND?: EventScalarWhereWithAggregatesInput | EventScalarWhereWithAggregatesInput[]
+    OR?: EventScalarWhereWithAggregatesInput[]
+    NOT?: EventScalarWhereWithAggregatesInput | EventScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Event"> | string
+    title?: StringWithAggregatesFilter<"Event"> | string
+    type?: StringWithAggregatesFilter<"Event"> | string
+    date?: DateTimeWithAggregatesFilter<"Event"> | Date | string
+    description?: StringWithAggregatesFilter<"Event"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
+  }
+
+  export type EventAnimalWhereInput = {
+    AND?: EventAnimalWhereInput | EventAnimalWhereInput[]
+    OR?: EventAnimalWhereInput[]
+    NOT?: EventAnimalWhereInput | EventAnimalWhereInput[]
+    id?: StringFilter<"EventAnimal"> | string
+    createdAt?: DateTimeFilter<"EventAnimal"> | Date | string
+    updatedAt?: DateTimeFilter<"EventAnimal"> | Date | string
+    eventId?: StringFilter<"EventAnimal"> | string
+    animalId?: StringFilter<"EventAnimal"> | string
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
+    animal?: XOR<AnimalScalarRelationFilter, AnimalWhereInput>
+  }
+
+  export type EventAnimalOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    eventId?: SortOrder
+    animalId?: SortOrder
+    event?: EventOrderByWithRelationInput
+    animal?: AnimalOrderByWithRelationInput
+  }
+
+  export type EventAnimalWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    eventId_animalId?: EventAnimalEventIdAnimalIdCompoundUniqueInput
+    AND?: EventAnimalWhereInput | EventAnimalWhereInput[]
+    OR?: EventAnimalWhereInput[]
+    NOT?: EventAnimalWhereInput | EventAnimalWhereInput[]
+    createdAt?: DateTimeFilter<"EventAnimal"> | Date | string
+    updatedAt?: DateTimeFilter<"EventAnimal"> | Date | string
+    eventId?: StringFilter<"EventAnimal"> | string
+    animalId?: StringFilter<"EventAnimal"> | string
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
+    animal?: XOR<AnimalScalarRelationFilter, AnimalWhereInput>
+  }, "id" | "eventId_animalId">
+
+  export type EventAnimalOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    eventId?: SortOrder
+    animalId?: SortOrder
+    _count?: EventAnimalCountOrderByAggregateInput
+    _max?: EventAnimalMaxOrderByAggregateInput
+    _min?: EventAnimalMinOrderByAggregateInput
+  }
+
+  export type EventAnimalScalarWhereWithAggregatesInput = {
+    AND?: EventAnimalScalarWhereWithAggregatesInput | EventAnimalScalarWhereWithAggregatesInput[]
+    OR?: EventAnimalScalarWhereWithAggregatesInput[]
+    NOT?: EventAnimalScalarWhereWithAggregatesInput | EventAnimalScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"EventAnimal"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"EventAnimal"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"EventAnimal"> | Date | string
+    eventId?: StringWithAggregatesFilter<"EventAnimal"> | string
+    animalId?: StringWithAggregatesFilter<"EventAnimal"> | string
+  }
+
   export type AnimalCreateInput = {
     id?: string
     name: string
@@ -4792,6 +7351,7 @@ export namespace Prisma {
     motherOf?: BirthCreateNestedManyWithoutMotherInput
     childOf?: BirthCreateNestedOneWithoutChildInput
     transactions?: TransactionCreateNestedManyWithoutAnimalInput
+    events?: EventAnimalCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalUncheckedCreateInput = {
@@ -4807,6 +7367,7 @@ export namespace Prisma {
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
     childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutAnimalInput
+    events?: EventAnimalUncheckedCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalUpdateInput = {
@@ -4822,6 +7383,7 @@ export namespace Prisma {
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
     childOf?: BirthUpdateOneWithoutChildNestedInput
     transactions?: TransactionUpdateManyWithoutAnimalNestedInput
+    events?: EventAnimalUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalUncheckedUpdateInput = {
@@ -4837,6 +7399,7 @@ export namespace Prisma {
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
     childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutAnimalNestedInput
+    events?: EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalCreateManyInput = {
@@ -5012,6 +7575,134 @@ export namespace Prisma {
     animalId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type EventCreateInput = {
+    id?: string
+    title: string
+    type: string
+    date: Date | string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animals?: EventAnimalCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUncheckedCreateInput = {
+    id?: string
+    title: string
+    type: string
+    date: Date | string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animals?: EventAnimalUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animals?: EventAnimalUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animals?: EventAnimalUncheckedUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventCreateManyInput = {
+    id?: string
+    title: string
+    type: string
+    date: Date | string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EventUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventAnimalCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    event: EventCreateNestedOneWithoutAnimalsInput
+    animal: AnimalCreateNestedOneWithoutEventsInput
+  }
+
+  export type EventAnimalUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventId: string
+    animalId: string
+  }
+
+  export type EventAnimalUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    event?: EventUpdateOneRequiredWithoutAnimalsNestedInput
+    animal?: AnimalUpdateOneRequiredWithoutEventsNestedInput
+  }
+
+  export type EventAnimalUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    animalId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EventAnimalCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventId: string
+    animalId: string
+  }
+
+  export type EventAnimalUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventAnimalUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    animalId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -5054,11 +7745,21 @@ export namespace Prisma {
     none?: TransactionWhereInput
   }
 
+  export type EventAnimalListRelationFilter = {
+    every?: EventAnimalWhereInput
+    some?: EventAnimalWhereInput
+    none?: EventAnimalWhereInput
+  }
+
   export type BirthOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type TransactionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type EventAnimalOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5229,6 +7930,70 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type EventCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EventMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    date?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EventScalarRelationFilter = {
+    is?: EventWhereInput
+    isNot?: EventWhereInput
+  }
+
+  export type EventAnimalEventIdAnimalIdCompoundUniqueInput = {
+    eventId: string
+    animalId: string
+  }
+
+  export type EventAnimalCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    eventId?: SortOrder
+    animalId?: SortOrder
+  }
+
+  export type EventAnimalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    eventId?: SortOrder
+    animalId?: SortOrder
+  }
+
+  export type EventAnimalMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    eventId?: SortOrder
+    animalId?: SortOrder
+  }
+
   export type BirthCreateNestedManyWithoutMotherInput = {
     create?: XOR<BirthCreateWithoutMotherInput, BirthUncheckedCreateWithoutMotherInput> | BirthCreateWithoutMotherInput[] | BirthUncheckedCreateWithoutMotherInput[]
     connectOrCreate?: BirthCreateOrConnectWithoutMotherInput | BirthCreateOrConnectWithoutMotherInput[]
@@ -5249,6 +8014,13 @@ export namespace Prisma {
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
   }
 
+  export type EventAnimalCreateNestedManyWithoutAnimalInput = {
+    create?: XOR<EventAnimalCreateWithoutAnimalInput, EventAnimalUncheckedCreateWithoutAnimalInput> | EventAnimalCreateWithoutAnimalInput[] | EventAnimalUncheckedCreateWithoutAnimalInput[]
+    connectOrCreate?: EventAnimalCreateOrConnectWithoutAnimalInput | EventAnimalCreateOrConnectWithoutAnimalInput[]
+    createMany?: EventAnimalCreateManyAnimalInputEnvelope
+    connect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+  }
+
   export type BirthUncheckedCreateNestedManyWithoutMotherInput = {
     create?: XOR<BirthCreateWithoutMotherInput, BirthUncheckedCreateWithoutMotherInput> | BirthCreateWithoutMotherInput[] | BirthUncheckedCreateWithoutMotherInput[]
     connectOrCreate?: BirthCreateOrConnectWithoutMotherInput | BirthCreateOrConnectWithoutMotherInput[]
@@ -5267,6 +8039,13 @@ export namespace Prisma {
     connectOrCreate?: TransactionCreateOrConnectWithoutAnimalInput | TransactionCreateOrConnectWithoutAnimalInput[]
     createMany?: TransactionCreateManyAnimalInputEnvelope
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type EventAnimalUncheckedCreateNestedManyWithoutAnimalInput = {
+    create?: XOR<EventAnimalCreateWithoutAnimalInput, EventAnimalUncheckedCreateWithoutAnimalInput> | EventAnimalCreateWithoutAnimalInput[] | EventAnimalUncheckedCreateWithoutAnimalInput[]
+    connectOrCreate?: EventAnimalCreateOrConnectWithoutAnimalInput | EventAnimalCreateOrConnectWithoutAnimalInput[]
+    createMany?: EventAnimalCreateManyAnimalInputEnvelope
+    connect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5315,6 +8094,20 @@ export namespace Prisma {
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
+  export type EventAnimalUpdateManyWithoutAnimalNestedInput = {
+    create?: XOR<EventAnimalCreateWithoutAnimalInput, EventAnimalUncheckedCreateWithoutAnimalInput> | EventAnimalCreateWithoutAnimalInput[] | EventAnimalUncheckedCreateWithoutAnimalInput[]
+    connectOrCreate?: EventAnimalCreateOrConnectWithoutAnimalInput | EventAnimalCreateOrConnectWithoutAnimalInput[]
+    upsert?: EventAnimalUpsertWithWhereUniqueWithoutAnimalInput | EventAnimalUpsertWithWhereUniqueWithoutAnimalInput[]
+    createMany?: EventAnimalCreateManyAnimalInputEnvelope
+    set?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    disconnect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    delete?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    connect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    update?: EventAnimalUpdateWithWhereUniqueWithoutAnimalInput | EventAnimalUpdateWithWhereUniqueWithoutAnimalInput[]
+    updateMany?: EventAnimalUpdateManyWithWhereWithoutAnimalInput | EventAnimalUpdateManyWithWhereWithoutAnimalInput[]
+    deleteMany?: EventAnimalScalarWhereInput | EventAnimalScalarWhereInput[]
+  }
+
   export type BirthUncheckedUpdateManyWithoutMotherNestedInput = {
     create?: XOR<BirthCreateWithoutMotherInput, BirthUncheckedCreateWithoutMotherInput> | BirthCreateWithoutMotherInput[] | BirthUncheckedCreateWithoutMotherInput[]
     connectOrCreate?: BirthCreateOrConnectWithoutMotherInput | BirthCreateOrConnectWithoutMotherInput[]
@@ -5351,6 +8144,20 @@ export namespace Prisma {
     update?: TransactionUpdateWithWhereUniqueWithoutAnimalInput | TransactionUpdateWithWhereUniqueWithoutAnimalInput[]
     updateMany?: TransactionUpdateManyWithWhereWithoutAnimalInput | TransactionUpdateManyWithWhereWithoutAnimalInput[]
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput = {
+    create?: XOR<EventAnimalCreateWithoutAnimalInput, EventAnimalUncheckedCreateWithoutAnimalInput> | EventAnimalCreateWithoutAnimalInput[] | EventAnimalUncheckedCreateWithoutAnimalInput[]
+    connectOrCreate?: EventAnimalCreateOrConnectWithoutAnimalInput | EventAnimalCreateOrConnectWithoutAnimalInput[]
+    upsert?: EventAnimalUpsertWithWhereUniqueWithoutAnimalInput | EventAnimalUpsertWithWhereUniqueWithoutAnimalInput[]
+    createMany?: EventAnimalCreateManyAnimalInputEnvelope
+    set?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    disconnect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    delete?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    connect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    update?: EventAnimalUpdateWithWhereUniqueWithoutAnimalInput | EventAnimalUpdateWithWhereUniqueWithoutAnimalInput[]
+    updateMany?: EventAnimalUpdateManyWithWhereWithoutAnimalInput | EventAnimalUpdateManyWithWhereWithoutAnimalInput[]
+    deleteMany?: EventAnimalScalarWhereInput | EventAnimalScalarWhereInput[]
   }
 
   export type AnimalCreateNestedOneWithoutMotherOfInput = {
@@ -5401,6 +8208,76 @@ export namespace Prisma {
     upsert?: AnimalUpsertWithoutTransactionsInput
     connect?: AnimalWhereUniqueInput
     update?: XOR<XOR<AnimalUpdateToOneWithWhereWithoutTransactionsInput, AnimalUpdateWithoutTransactionsInput>, AnimalUncheckedUpdateWithoutTransactionsInput>
+  }
+
+  export type EventAnimalCreateNestedManyWithoutEventInput = {
+    create?: XOR<EventAnimalCreateWithoutEventInput, EventAnimalUncheckedCreateWithoutEventInput> | EventAnimalCreateWithoutEventInput[] | EventAnimalUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventAnimalCreateOrConnectWithoutEventInput | EventAnimalCreateOrConnectWithoutEventInput[]
+    createMany?: EventAnimalCreateManyEventInputEnvelope
+    connect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+  }
+
+  export type EventAnimalUncheckedCreateNestedManyWithoutEventInput = {
+    create?: XOR<EventAnimalCreateWithoutEventInput, EventAnimalUncheckedCreateWithoutEventInput> | EventAnimalCreateWithoutEventInput[] | EventAnimalUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventAnimalCreateOrConnectWithoutEventInput | EventAnimalCreateOrConnectWithoutEventInput[]
+    createMany?: EventAnimalCreateManyEventInputEnvelope
+    connect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+  }
+
+  export type EventAnimalUpdateManyWithoutEventNestedInput = {
+    create?: XOR<EventAnimalCreateWithoutEventInput, EventAnimalUncheckedCreateWithoutEventInput> | EventAnimalCreateWithoutEventInput[] | EventAnimalUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventAnimalCreateOrConnectWithoutEventInput | EventAnimalCreateOrConnectWithoutEventInput[]
+    upsert?: EventAnimalUpsertWithWhereUniqueWithoutEventInput | EventAnimalUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: EventAnimalCreateManyEventInputEnvelope
+    set?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    disconnect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    delete?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    connect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    update?: EventAnimalUpdateWithWhereUniqueWithoutEventInput | EventAnimalUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: EventAnimalUpdateManyWithWhereWithoutEventInput | EventAnimalUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: EventAnimalScalarWhereInput | EventAnimalScalarWhereInput[]
+  }
+
+  export type EventAnimalUncheckedUpdateManyWithoutEventNestedInput = {
+    create?: XOR<EventAnimalCreateWithoutEventInput, EventAnimalUncheckedCreateWithoutEventInput> | EventAnimalCreateWithoutEventInput[] | EventAnimalUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventAnimalCreateOrConnectWithoutEventInput | EventAnimalCreateOrConnectWithoutEventInput[]
+    upsert?: EventAnimalUpsertWithWhereUniqueWithoutEventInput | EventAnimalUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: EventAnimalCreateManyEventInputEnvelope
+    set?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    disconnect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    delete?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    connect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+    update?: EventAnimalUpdateWithWhereUniqueWithoutEventInput | EventAnimalUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: EventAnimalUpdateManyWithWhereWithoutEventInput | EventAnimalUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: EventAnimalScalarWhereInput | EventAnimalScalarWhereInput[]
+  }
+
+  export type EventCreateNestedOneWithoutAnimalsInput = {
+    create?: XOR<EventCreateWithoutAnimalsInput, EventUncheckedCreateWithoutAnimalsInput>
+    connectOrCreate?: EventCreateOrConnectWithoutAnimalsInput
+    connect?: EventWhereUniqueInput
+  }
+
+  export type AnimalCreateNestedOneWithoutEventsInput = {
+    create?: XOR<AnimalCreateWithoutEventsInput, AnimalUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: AnimalCreateOrConnectWithoutEventsInput
+    connect?: AnimalWhereUniqueInput
+  }
+
+  export type EventUpdateOneRequiredWithoutAnimalsNestedInput = {
+    create?: XOR<EventCreateWithoutAnimalsInput, EventUncheckedCreateWithoutAnimalsInput>
+    connectOrCreate?: EventCreateOrConnectWithoutAnimalsInput
+    upsert?: EventUpsertWithoutAnimalsInput
+    connect?: EventWhereUniqueInput
+    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutAnimalsInput, EventUpdateWithoutAnimalsInput>, EventUncheckedUpdateWithoutAnimalsInput>
+  }
+
+  export type AnimalUpdateOneRequiredWithoutEventsNestedInput = {
+    create?: XOR<AnimalCreateWithoutEventsInput, AnimalUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: AnimalCreateOrConnectWithoutEventsInput
+    upsert?: AnimalUpsertWithoutEventsInput
+    connect?: AnimalWhereUniqueInput
+    update?: XOR<XOR<AnimalUpdateToOneWithWhereWithoutEventsInput, AnimalUpdateWithoutEventsInput>, AnimalUncheckedUpdateWithoutEventsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5572,6 +8449,29 @@ export namespace Prisma {
     data: TransactionCreateManyAnimalInput | TransactionCreateManyAnimalInput[]
   }
 
+  export type EventAnimalCreateWithoutAnimalInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    event: EventCreateNestedOneWithoutAnimalsInput
+  }
+
+  export type EventAnimalUncheckedCreateWithoutAnimalInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventId: string
+  }
+
+  export type EventAnimalCreateOrConnectWithoutAnimalInput = {
+    where: EventAnimalWhereUniqueInput
+    create: XOR<EventAnimalCreateWithoutAnimalInput, EventAnimalUncheckedCreateWithoutAnimalInput>
+  }
+
+  export type EventAnimalCreateManyAnimalInputEnvelope = {
+    data: EventAnimalCreateManyAnimalInput | EventAnimalCreateManyAnimalInput[]
+  }
+
   export type BirthUpsertWithWhereUniqueWithoutMotherInput = {
     where: BirthWhereUniqueInput
     update: XOR<BirthUpdateWithoutMotherInput, BirthUncheckedUpdateWithoutMotherInput>
@@ -5657,6 +8557,33 @@ export namespace Prisma {
     animalId?: StringFilter<"Transaction"> | string
   }
 
+  export type EventAnimalUpsertWithWhereUniqueWithoutAnimalInput = {
+    where: EventAnimalWhereUniqueInput
+    update: XOR<EventAnimalUpdateWithoutAnimalInput, EventAnimalUncheckedUpdateWithoutAnimalInput>
+    create: XOR<EventAnimalCreateWithoutAnimalInput, EventAnimalUncheckedCreateWithoutAnimalInput>
+  }
+
+  export type EventAnimalUpdateWithWhereUniqueWithoutAnimalInput = {
+    where: EventAnimalWhereUniqueInput
+    data: XOR<EventAnimalUpdateWithoutAnimalInput, EventAnimalUncheckedUpdateWithoutAnimalInput>
+  }
+
+  export type EventAnimalUpdateManyWithWhereWithoutAnimalInput = {
+    where: EventAnimalScalarWhereInput
+    data: XOR<EventAnimalUpdateManyMutationInput, EventAnimalUncheckedUpdateManyWithoutAnimalInput>
+  }
+
+  export type EventAnimalScalarWhereInput = {
+    AND?: EventAnimalScalarWhereInput | EventAnimalScalarWhereInput[]
+    OR?: EventAnimalScalarWhereInput[]
+    NOT?: EventAnimalScalarWhereInput | EventAnimalScalarWhereInput[]
+    id?: StringFilter<"EventAnimal"> | string
+    createdAt?: DateTimeFilter<"EventAnimal"> | Date | string
+    updatedAt?: DateTimeFilter<"EventAnimal"> | Date | string
+    eventId?: StringFilter<"EventAnimal"> | string
+    animalId?: StringFilter<"EventAnimal"> | string
+  }
+
   export type AnimalCreateWithoutMotherOfInput = {
     id?: string
     name: string
@@ -5669,6 +8596,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     childOf?: BirthCreateNestedOneWithoutChildInput
     transactions?: TransactionCreateNestedManyWithoutAnimalInput
+    events?: EventAnimalCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalUncheckedCreateWithoutMotherOfInput = {
@@ -5683,6 +8611,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutAnimalInput
+    events?: EventAnimalUncheckedCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalCreateOrConnectWithoutMotherOfInput = {
@@ -5702,6 +8631,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     motherOf?: BirthCreateNestedManyWithoutMotherInput
     transactions?: TransactionCreateNestedManyWithoutAnimalInput
+    events?: EventAnimalCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalUncheckedCreateWithoutChildOfInput = {
@@ -5716,6 +8646,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutAnimalInput
+    events?: EventAnimalUncheckedCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalCreateOrConnectWithoutChildOfInput = {
@@ -5746,6 +8677,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     childOf?: BirthUpdateOneWithoutChildNestedInput
     transactions?: TransactionUpdateManyWithoutAnimalNestedInput
+    events?: EventAnimalUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalUncheckedUpdateWithoutMotherOfInput = {
@@ -5760,6 +8692,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutAnimalNestedInput
+    events?: EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalUpsertWithoutChildOfInput = {
@@ -5785,6 +8718,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
     transactions?: TransactionUpdateManyWithoutAnimalNestedInput
+    events?: EventAnimalUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalUncheckedUpdateWithoutChildOfInput = {
@@ -5799,6 +8733,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutAnimalNestedInput
+    events?: EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalCreateWithoutTransactionsInput = {
@@ -5813,6 +8748,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     motherOf?: BirthCreateNestedManyWithoutMotherInput
     childOf?: BirthCreateNestedOneWithoutChildInput
+    events?: EventAnimalCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalUncheckedCreateWithoutTransactionsInput = {
@@ -5827,6 +8763,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
     childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
+    events?: EventAnimalUncheckedCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalCreateOrConnectWithoutTransactionsInput = {
@@ -5857,6 +8794,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
     childOf?: BirthUpdateOneWithoutChildNestedInput
+    events?: EventAnimalUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalUncheckedUpdateWithoutTransactionsInput = {
@@ -5871,6 +8809,178 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
     childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
+    events?: EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput
+  }
+
+  export type EventAnimalCreateWithoutEventInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animal: AnimalCreateNestedOneWithoutEventsInput
+  }
+
+  export type EventAnimalUncheckedCreateWithoutEventInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animalId: string
+  }
+
+  export type EventAnimalCreateOrConnectWithoutEventInput = {
+    where: EventAnimalWhereUniqueInput
+    create: XOR<EventAnimalCreateWithoutEventInput, EventAnimalUncheckedCreateWithoutEventInput>
+  }
+
+  export type EventAnimalCreateManyEventInputEnvelope = {
+    data: EventAnimalCreateManyEventInput | EventAnimalCreateManyEventInput[]
+  }
+
+  export type EventAnimalUpsertWithWhereUniqueWithoutEventInput = {
+    where: EventAnimalWhereUniqueInput
+    update: XOR<EventAnimalUpdateWithoutEventInput, EventAnimalUncheckedUpdateWithoutEventInput>
+    create: XOR<EventAnimalCreateWithoutEventInput, EventAnimalUncheckedCreateWithoutEventInput>
+  }
+
+  export type EventAnimalUpdateWithWhereUniqueWithoutEventInput = {
+    where: EventAnimalWhereUniqueInput
+    data: XOR<EventAnimalUpdateWithoutEventInput, EventAnimalUncheckedUpdateWithoutEventInput>
+  }
+
+  export type EventAnimalUpdateManyWithWhereWithoutEventInput = {
+    where: EventAnimalScalarWhereInput
+    data: XOR<EventAnimalUpdateManyMutationInput, EventAnimalUncheckedUpdateManyWithoutEventInput>
+  }
+
+  export type EventCreateWithoutAnimalsInput = {
+    id?: string
+    title: string
+    type: string
+    date: Date | string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EventUncheckedCreateWithoutAnimalsInput = {
+    id?: string
+    title: string
+    type: string
+    date: Date | string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EventCreateOrConnectWithoutAnimalsInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutAnimalsInput, EventUncheckedCreateWithoutAnimalsInput>
+  }
+
+  export type AnimalCreateWithoutEventsInput = {
+    id?: string
+    name: string
+    tag: string
+    breed: string
+    gender: string
+    birthDate: Date | string
+    status: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    motherOf?: BirthCreateNestedManyWithoutMotherInput
+    childOf?: BirthCreateNestedOneWithoutChildInput
+    transactions?: TransactionCreateNestedManyWithoutAnimalInput
+  }
+
+  export type AnimalUncheckedCreateWithoutEventsInput = {
+    id?: string
+    name: string
+    tag: string
+    breed: string
+    gender: string
+    birthDate: Date | string
+    status: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
+    childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutAnimalInput
+  }
+
+  export type AnimalCreateOrConnectWithoutEventsInput = {
+    where: AnimalWhereUniqueInput
+    create: XOR<AnimalCreateWithoutEventsInput, AnimalUncheckedCreateWithoutEventsInput>
+  }
+
+  export type EventUpsertWithoutAnimalsInput = {
+    update: XOR<EventUpdateWithoutAnimalsInput, EventUncheckedUpdateWithoutAnimalsInput>
+    create: XOR<EventCreateWithoutAnimalsInput, EventUncheckedCreateWithoutAnimalsInput>
+    where?: EventWhereInput
+  }
+
+  export type EventUpdateToOneWithWhereWithoutAnimalsInput = {
+    where?: EventWhereInput
+    data: XOR<EventUpdateWithoutAnimalsInput, EventUncheckedUpdateWithoutAnimalsInput>
+  }
+
+  export type EventUpdateWithoutAnimalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventUncheckedUpdateWithoutAnimalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AnimalUpsertWithoutEventsInput = {
+    update: XOR<AnimalUpdateWithoutEventsInput, AnimalUncheckedUpdateWithoutEventsInput>
+    create: XOR<AnimalCreateWithoutEventsInput, AnimalUncheckedCreateWithoutEventsInput>
+    where?: AnimalWhereInput
+  }
+
+  export type AnimalUpdateToOneWithWhereWithoutEventsInput = {
+    where?: AnimalWhereInput
+    data: XOR<AnimalUpdateWithoutEventsInput, AnimalUncheckedUpdateWithoutEventsInput>
+  }
+
+  export type AnimalUpdateWithoutEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    motherOf?: BirthUpdateManyWithoutMotherNestedInput
+    childOf?: BirthUpdateOneWithoutChildNestedInput
+    transactions?: TransactionUpdateManyWithoutAnimalNestedInput
+  }
+
+  export type AnimalUncheckedUpdateWithoutEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
+    childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutAnimalNestedInput
   }
 
   export type BirthCreateManyMotherInput = {
@@ -5889,6 +8999,13 @@ export namespace Prisma {
     person: string
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type EventAnimalCreateManyAnimalInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventId: string
   }
 
   export type BirthUpdateWithoutMotherInput = {
@@ -5943,6 +9060,55 @@ export namespace Prisma {
     person?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventAnimalUpdateWithoutAnimalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    event?: EventUpdateOneRequiredWithoutAnimalsNestedInput
+  }
+
+  export type EventAnimalUncheckedUpdateWithoutAnimalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EventAnimalUncheckedUpdateManyWithoutAnimalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EventAnimalCreateManyEventInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animalId: string
+  }
+
+  export type EventAnimalUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animal?: AnimalUpdateOneRequiredWithoutEventsNestedInput
+  }
+
+  export type EventAnimalUncheckedUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animalId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EventAnimalUncheckedUpdateManyWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animalId?: StringFieldUpdateOperationsInput | string
   }
 
 

@@ -1,4 +1,4 @@
-import { PrismaClient } from "@/lib/generated/prisma";
+import { PrismaClient } from "./generated/prisma";
 
 // This file ensures that Prisma is initialized properly before any routes are loaded
 

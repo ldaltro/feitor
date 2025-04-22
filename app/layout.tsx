@@ -38,9 +38,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <TRPCProvider>
-            <div className="flex min-h-screen">
+            <div className="flex min-h-screen flex-col md:flex-row">
               <Sidebar />
-              <div className="flex-1 p-8">{children}</div>
+              <main className="flex-1 overflow-auto p-4 pt-16 md:p-8 md:pt-8">
+                {children}
+              </main>
             </div>
           </TRPCProvider>
         </ThemeProvider>

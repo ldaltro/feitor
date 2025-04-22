@@ -1,13 +1,13 @@
-import { AnimalDetails } from "@/components/animal-details"
+import { AnimalDetails } from "@/components/animal-details";
 
-export default function AnimalDetailsPage({
+export default async function AnimalDetailsPage({
   params,
 }: {
-  params: { id: string }
+  params: { id: string };
 }) {
   return (
     <div className="space-y-6">
       <AnimalDetails id={params.id} />
     </div>
-  )
+  );
 }
