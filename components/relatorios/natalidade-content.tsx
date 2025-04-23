@@ -13,7 +13,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { cn } from "@/lib/utils"
 import { NatalidadeChart } from "@/components/relatorios/natalidade-chart"
 import { NatalidadeTable } from "@/components/relatorios/natalidade-table"
-import { getNatalidadeData, exportToExcel, type NatalidadeData } from "@/lib/actions/natalidade-actions"
+import { getNatalidadeData, type NatalidadeData } from "@/lib/actions/natalidade-actions"
+import { createAndDownloadExcel } from "@/lib/utils/client-excel"
 import { useToast } from "@/components/ui/use-toast"
 
 export function NatalidadeContent() {
@@ -51,15 +52,58 @@ export function NatalidadeContent() {
     try {
       setIsExporting(true)
       
-      const { filePath } = await exportToExcel()
+      // Get the data from the server
+      const data = await getNatalidadeData()
       
-      // Create a temporary anchor element to trigger download
-      const link = document.createElement('a')
-      link.href = `/tmp/${filePath.split('/').pop()}` // Just the filename
-      link.download = `Relatório_Natalidade_${format(new Date(), 'dd-MM-yyyy')}.xlsx`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
+      // Format date for filename
+      const dateStr = format(new Date(), "dd-MM-yyyy", { locale: ptBR })
+      
+      // Prepare data for Excel export
+      const statsSheet = [
+        {
+          "Estatística": "Total de Animais",
+          "Valor": data.stats.totalAnimals
+        },
+        {
+          "Estatística": "Fêmeas",
+          "Valor": data.stats.femaleAnimals
+        },
+        {
+          "Estatística": "Gestantes",
+          "Valor": data.stats.pregnantAnimals
+        },
+        {
+          "Estatística": "Inseminadas",
+          "Valor": data.stats.inseminatedAnimals
+        },
+        {
+          "Estatística": "Nascimentos Este Mês",
+          "Valor": data.stats.birthsThisMonth
+        },
+        {
+          "Estatística": "Nascimentos Mês Anterior",
+          "Valor": data.stats.birthsLastMonth
+        }
+      ]
+      
+      // Create and download the Excel file directly in the browser
+      createAndDownloadExcel(
+        [
+          {
+            name: "Estatísticas",
+            data: statsSheet
+          },
+          {
+            name: "Dados Detalhados",
+            data: data.tableData
+          }
+        ],
+        `Relatório_Natalidade_${dateStr}.xlsx`,
+        {
+          creator: "Sistema Feitor",
+          title: "Relatório de Natalidade"
+        }
+      )
       
       toast({
         title: "Relatório exportado",

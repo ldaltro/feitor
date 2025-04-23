@@ -3,15 +3,16 @@ rules:
   - title: Avoid useEffect
     tags: [react, hooks, best-practices]
     description: >
-      Don't use useEffect unless absolutely necessary (e.g., for certain
-      data-fetching cases). Prefer alternatives like Tanstack Query. useEffect
+      Don't use useEffect unless absolutely necessary (e.g., for specific
+      data-fetching cases). Prefer alternatives like TanStack Query. useEffect
       is often a source of bugs and should be used sparingly.
 
   - title: Minimize comments
     tags: [code-style, best-practices]
     description: >
       Don't write unnecessary comments. Add comments only when explaining
-      complex logic that can't be made clearer through naming or refactoring.
+      complex logic that can't be made clearer through better naming or
+      refactoring.
 
   - title: Tests required
     tags: [testing, quality, best-practices]
@@ -27,36 +28,65 @@ rules:
       Never suggest running the app (e.g., via npm run dev); assume the user
       already has the app running.
 
-  - title: App in brazilian portuguese code in english
-    tags: [best-practices, quality]
+  - title: App in Brazilian Portuguese, code in English
+    tags: [i18n, best-practices]
     description: >
-      Write all code in English, but all UI strings should be in Brazilian
+      Write all code in English, but all UI strings must be in Brazilian
       Portuguese. Ensure every text string is supplied via proper i18n, not
       hard-coded.
+
+  - title: Step-by-step planning
+    tags: [process, reasoning]
+    description: >
+      Before coding, describe your approach in detailed pseudocode and confirm
+      it with stakeholders to promote shared understanding and reduce rework.
+
+  - title: Code implementation guidelines
+    tags: [code-style, readability]
+    description: >
+      • Prefer readability over micro-performance.  
+      • Use early returns to flatten control flow.  
+      • Style exclusively with Tailwind classes.  
+      • Use “class:” directives instead of inline ternaries where practical.  
+      • Choose descriptive variable and function names; event handlers start
+        with “handle”.  
+      • Ensure accessibility: add aria-labels, tabindex="0", and keyboard
+        handlers to interactive elements.  
+      • Declare functions with const (e.g., “const toggle = () => …”).
+
+  - title: Answer quality and honesty
+    tags: [quality, integrity]
+    description: >
+      Provide accurate, factual, thoughtful answers. If uncertain, state it
+      clearly instead of guessing, and explain when no correct answer exists.
 
   - title: Don't mock data
     tags: [data, best-practices]
     description: >
       Don't mock data unless absolutely necessary. Use real data from the
-      database, if we don't have the data we need, update the schema to have it and seed it.
+      database; if the needed data isn't available, update the schema and seed
+      it.
 
   - title: Use server actions
     tags: [data, best-practices]
     description: >
-      Use server actions instead of api routes for the backend work. Fetch the data in a page server component and pass it to a client component.
+      Use Next.js Server Actions instead of API routes for backend logic. Fetch
+      data in a page server component and pass it to client components.
 
-  - title: Use next js prefetch
+  - title: Use Next.js prefetch
     tags: [data, best-practices]
     description: >
-      Use next js prefetch to fetch data in the background.
-  
+      Use Next.js prefetch to retrieve data in the background and improve user perceived performance.
+
   - title: Use --legacy-peer-deps
     tags: [commands, debugging]
     description: >
-      Use --legacy-peer-deps when installing dependencies.
+      When installing dependencies with npm, pass the --legacy-peer-deps flag
+      to avoid peer-dependency conflicts.
 
   - title: Think before suggesting new libraries
     tags: [commands, debugging]
     description: >
-      Think before suggesting new libraries. Always check if there is a component already built that does the same and use that instead.
+      Before proposing a new library, check whether an existing dependency or
+      component already fulfills the requirement and reuse it when possible.
 ---

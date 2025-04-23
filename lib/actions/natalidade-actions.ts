@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/prisma"
 import { format, subMonths, startOfMonth, endOfMonth } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { createExcelFile } from "@/lib/utils/excel"
+import { createExcelFile, saveExcelFile } from "@/lib/utils/excel"
 import path from "path"
 import fs from "fs-extra"
 import { NextResponse } from "next/server"
@@ -38,10 +38,13 @@ export interface NatalidadeData {
 
 export async function getNatalidadeData(): Promise<NatalidadeData> {
   try {
+    console.log("Fetching natalidade data...");
+    
     // Get total animals
     const totalAnimals = await prisma.animal.count({
       where: { active: true }
     })
+    console.log("Total animals:", totalAnimals);
 
     // Get female animals
     const femaleAnimals = await prisma.animal.count({
@@ -50,24 +53,31 @@ export async function getNatalidadeData(): Promise<NatalidadeData> {
         active: true
       }
     })
+    console.log("Female animals:", femaleAnimals);
 
-    // Get pregnant animals
+    // Get pregnant animals - using case insensitive contains
     const pregnantAnimals = await prisma.animal.count({
       where: {
         gender: "Fêmea",
-        reproductiveStatus: "Gestante",
+        reproductiveStatus: {
+          in: ["Gestante", "gestante"], // Check for both capitalization options
+        },
         active: true
       }
     })
+    console.log("Pregnant animals:", pregnantAnimals);
 
     // Get inseminated animals
     const inseminatedAnimals = await prisma.animal.count({
       where: {
         gender: "Fêmea",
-        reproductiveStatus: "Inseminada",
+        reproductiveStatus: {
+          in: ["Inseminada", "inseminada"], // Check for both capitalization options
+        },
         active: true
       }
     })
+    console.log("Inseminated animals:", inseminatedAnimals);
 
     // Get births this month
     const now = new Date()
@@ -82,6 +92,7 @@ export async function getNatalidadeData(): Promise<NatalidadeData> {
         }
       }
     })
+    console.log("Births this month:", birthsThisMonth);
 
     // Get births last month
     const lastMonth = subMonths(now, 1)
@@ -96,17 +107,43 @@ export async function getNatalidadeData(): Promise<NatalidadeData> {
         }
       }
     })
+    console.log("Births last month:", birthsLastMonth);
+
+    // Alternative approach - count all births in the last 1-2 months
+    const oneMonthAgo = subMonths(now, 1);
+    const twoMonthsAgo = subMonths(now, 2);
+    
+    const recentBirths = await prisma.birth.count({
+      where: {
+        birthDate: {
+          gte: oneMonthAgo
+        }
+      }
+    });
+    console.log("Recent births (1 month):", recentBirths);
+    
+    const previousPeriodBirths = await prisma.birth.count({
+      where: {
+        birthDate: {
+          gte: twoMonthsAgo,
+          lt: oneMonthAgo
+        }
+      }
+    });
+    console.log("Previous period births (1-2 months ago):", previousPeriodBirths);
 
     // Get chart data - last 6 months of births
     const labels = []
     const birthCounts = []
+    const pregnancyCounts = []
+    const inseminationCounts = []
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 5; i >= 0; i--) {
       const month = subMonths(now, i)
       const start = startOfMonth(month)
       const end = endOfMonth(month)
       
-      const count = await prisma.birth.count({
+      const birthCount = await prisma.birth.count({
         where: {
           birthDate: {
             gte: start,
@@ -115,20 +152,60 @@ export async function getNatalidadeData(): Promise<NatalidadeData> {
         }
       })
       
-      labels.unshift(format(month, "MMM/yyyy", { locale: ptBR }))
-      birthCounts.unshift(count)
+      // Count animals that were pregnant during this month
+      const pregnantCount = await prisma.animal.count({
+        where: {
+          gender: "Fêmea",
+          reproductiveStatus: {
+            in: ["Gestante", "gestante"], // Check for both capitalization options
+          },
+          // Consider animals that were marked as pregnant before or during this month
+          inseminationDate: {
+            lt: end
+          },
+          active: true
+        }
+      });
+      
+      // Count inseminations performed this month
+      const inseminationCount = await prisma.event.count({
+        where: {
+          type: "Manejo Reprodutivo",
+          title: {
+            contains: "Inseminaç",
+          },
+          date: {
+            gte: start,
+            lte: end
+          }
+        }
+      });
+      
+      const monthLabel = format(month, "MMM/yyyy", { locale: ptBR });
+      labels.push(monthLabel);
+      birthCounts.push(birthCount);
+      pregnancyCounts.push(pregnantCount);
+      inseminationCounts.push(inseminationCount);
+      
+      console.log(`Month ${monthLabel}: births=${birthCount}, pregnant=${pregnantCount}, inseminations=${inseminationCount}`);
     }
 
     // Get female animals for table
     const femaleAnimalsData = await prisma.animal.findMany({
       where: {
         gender: "Fêmea",
-        active: true
+        active: true,
+        OR: [
+          { reproductiveStatus: { not: null } },
+          { inseminationDate: { not: null } },
+          { expectedBirthDate: { not: null } }
+        ]
       },
       orderBy: {
         tag: "asc"
       }
     })
+    console.log(`Found ${femaleAnimalsData.length} female animals with reproductive data`);
 
     // Format data for table
     const tableData = femaleAnimalsData.map(animal => ({
@@ -148,8 +225,8 @@ export async function getNatalidadeData(): Promise<NatalidadeData> {
         femaleAnimals,
         pregnantAnimals,
         inseminatedAnimals,
-        birthsThisMonth,
-        birthsLastMonth
+        birthsThisMonth: recentBirths || birthsThisMonth,
+        birthsLastMonth: previousPeriodBirths || birthsLastMonth
       },
       chartData: {
         labels,
@@ -157,6 +234,14 @@ export async function getNatalidadeData(): Promise<NatalidadeData> {
           {
             label: "Nascimentos",
             data: birthCounts
+          },
+          {
+            label: "Gestantes",
+            data: pregnancyCounts
+          },
+          {
+            label: "Inseminações",
+            data: inseminationCounts
           }
         ]
       },
@@ -204,60 +289,62 @@ export async function exportToExcel(): Promise<{ success: boolean, filePath: str
       }
     ]
     
-    // Format table data for Excel
-    const animalsSheet = data.tableData.map(animal => ({
-      "Tag": animal.tag,
-      "Nome": animal.name,
-      "Status": animal.status,
-      "Data de Nascimento": animal.birthDate,
-      "Status Reprodutivo": animal.reproductiveStatus,
-      "Data de Inseminação": animal.inseminationDate,
-      "Previsão de Parto": animal.expectedBirthDate
-    }))
-    
-    // Create Excel file
-    const filePath = await createExcelFile({
-      filename: `Relatório_Natalidade_${dateStr}`,
-      sheets: [
+    // Create workbook with multiple sheets using our new utility
+    const workbook = await createExcelFile(
+      [
         {
           name: "Estatísticas",
           data: statsSheet
         },
         {
-          name: "Animais",
-          data: animalsSheet
+          name: "Dados Detalhados",
+          data: data.tableData
         }
-      ]
-    })
+      ],
+      {
+        creator: "Sistema Feitor",
+        title: "Relatório de Natalidade"
+      }
+    )
     
-    return { success: true, filePath }
+    // Save the workbook to a file
+    const filename = `relatorio-natalidade-${dateStr}.xlsx`
+    const filePath = await saveExcelFile(
+      workbook, 
+      filename, 
+      path.join(process.cwd(), "public", "tmp")
+    )
+    
+    return {
+      success: true,
+      filePath: `/tmp/${filename.split('/').pop()}` // Return relative path for frontend
+    }
   } catch (error) {
     console.error("Error exporting to Excel:", error)
-    throw new Error("Falha ao exportar dados para Excel")
+    throw new Error("Falha ao exportar para Excel")
   }
 }
 
-export async function downloadExcel(): Promise<Response> {
+export async function downloadExcel() {
   try {
     const { filePath } = await exportToExcel()
     
-    // Read file
-    const fileBuffer = await fs.readFile(filePath)
+    // Serve the file
+    const file = await fs.readFile(path.join(process.cwd(), "public", filePath))
     
-    // Create response
-    const response = new NextResponse(fileBuffer, {
+    return new NextResponse(file, {
       headers: {
-        'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'Content-Disposition': `attachment; filename="Relatório_Natalidade.xlsx"`,
-      },
+        "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "Content-Disposition": `attachment; filename="relatorio-natalidade.xlsx"`
+      }
     })
-    
-    // Delete the temporary file after sending
-    fs.unlink(filePath).catch(err => console.error("Error deleting temporary file:", err))
-    
-    return response
   } catch (error) {
-    console.error("Error downloading Excel:", error)
-    return new NextResponse("Erro ao gerar arquivo Excel", { status: 500 })
+    console.error("Error serving Excel file:", error)
+    return new NextResponse(JSON.stringify({ error: "Falha ao baixar arquivo Excel" }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
   }
 }
