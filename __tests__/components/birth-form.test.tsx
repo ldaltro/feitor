@@ -1,9 +1,19 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+// Define the Animal type to match the actual component
+type Animal = {
+  id: string;
+  name: string;
+  tag: string;
+  gender: string;
+  status: string;
+  breed: string;
+};
+
 // Mock component instead of importing it
-jest.mock("@/components/birth-form", () => ({
-  BirthForm: () => (
+jest.mock("@/components/birth-form-client", () => ({
+  BirthFormClient: ({ animals }: { animals: Animal[] }) => (
     <div>
       <label htmlFor="mother">Mãe</label>
       <select id="mother" data-testid="mother-select">
@@ -66,11 +76,11 @@ jest.mock("next/navigation", () => ({
 }));
 
 // Import the component after mocking
-const { BirthForm } = require("@/components/birth-form");
+const { BirthFormClient } = require("@/components/birth-form-client");
 
-describe("BirthForm", () => {
+describe("BirthFormClient", () => {
   it("renders the form correctly", async () => {
-    render(<BirthForm />);
+    render(<BirthFormClient animals={[]} />);
 
     // Check if form elements are rendered
     expect(screen.getByLabelText(/Mãe/i)).toBeInTheDocument();
