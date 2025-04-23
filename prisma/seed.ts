@@ -234,6 +234,61 @@ async function main() {
     console.log(`Created event: ${eventData.title}`);
   }
 
+  // Create transactions data
+  const transactionsData = [
+    {
+      type: "Compra",
+      date: subMonths(new Date(), 2),
+      value: 5000,
+      person: "João Silva",
+      animalId: animals[0].id,
+    },
+    {
+      type: "Venda",
+      date: subMonths(new Date(), 2),
+      value: 3500,
+      person: "Maria Oliveira",
+      animalId: animals[1].id,
+    },
+    {
+      type: "Compra",
+      date: subMonths(new Date(), 1.5),
+      value: 7500,
+      person: "Carlos Santos",
+      animalId: animals[2].id,
+    },
+    {
+      type: "Venda",
+      date: subMonths(new Date(), 1),
+      value: 8000,
+      person: "Ana Pereira",
+      animalId: animals[3].id,
+    },
+    {
+      type: "Compra",
+      date: subMonths(new Date(), 0.5),
+      value: 12000,
+      person: "Roberto Costa",
+      animalId: animals[4].id,
+    },
+    {
+      type: "Venda",
+      date: new Date(),
+      value: 15000,
+      person: "Patricia Lima",
+      animalId: animals[0].id,
+    },
+  ];
+
+  for (const transactionData of transactionsData) {
+    await prisma.transaction.create({
+      data: transactionData,
+    });
+    console.log(
+      `Created transaction: ${transactionData.type} - R$ ${transactionData.value}`
+    );
+  }
+
   // Create some lotes
   const lote1 = await prisma.lote.create({
     data: {
