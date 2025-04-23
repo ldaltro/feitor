@@ -5,7 +5,6 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Sidebar } from "@/components/sidebar";
-import { TRPCProvider } from "@/lib/trpc/provider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -37,14 +36,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TRPCProvider>
-            <div className="flex min-h-screen flex-col md:flex-row">
-              <Sidebar />
-              <main className="flex-1 overflow-auto p-4 pt-16 md:p-8 md:pt-8">
-                {children}
-              </main>
-            </div>
-          </TRPCProvider>
+          <div className="flex min-h-screen flex-col md:flex-row">
+            <Sidebar />
+            <main className="flex-1 overflow-auto p-4 pt-16 md:p-8 md:pt-8">
+              {children}
+            </main>
+          </div>
         </ThemeProvider>
       </body>
     </html>

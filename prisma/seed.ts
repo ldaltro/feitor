@@ -234,6 +234,47 @@ async function main() {
     console.log(`Created event: ${eventData.title}`);
   }
 
+  // Create some lotes
+  const lote1 = await prisma.lote.create({
+    data: {
+      nome: "Lote de Cria 1",
+      descricao: "Lote para cria de bezerros",
+      finalidade: "Cria",
+    },
+  });
+
+  const lote2 = await prisma.lote.create({
+    data: {
+      nome: "Lote de Engorda",
+      descricao: "Lote para engorda de bois",
+      finalidade: "Engorda",
+    },
+  });
+
+  const lote3 = await prisma.lote.create({
+    data: {
+      nome: "Lote de Leite",
+      descricao: "Lote de vacas leiteiras",
+      finalidade: "Leite",
+    },
+  });
+
+  // Assign some animals to lotes
+  await prisma.animal.update({
+    where: { id: animals[0].id },
+    data: { loteId: lote1.id },
+  });
+
+  await prisma.animal.update({
+    where: { id: animals[1].id },
+    data: { loteId: lote2.id },
+  });
+
+  await prisma.animal.update({
+    where: { id: animals[2].id },
+    data: { loteId: lote3.id },
+  });
+
   console.log("Seeding completed.");
 }
 

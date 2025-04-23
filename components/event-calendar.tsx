@@ -182,13 +182,23 @@ export function EventCalendar() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon" onClick={prevMonth}>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={prevMonth}
+            data-testid="prev-month"
+          >
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <h2 className="text-xl font-semibold">
             {format(currentMonth, "MMMM yyyy", { locale: ptBR })}
           </h2>
-          <Button variant="outline" size="icon" onClick={nextMonth}>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={nextMonth}
+            data-testid="next-month"
+          >
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>

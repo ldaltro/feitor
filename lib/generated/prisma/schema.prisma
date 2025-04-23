@@ -29,6 +29,8 @@ model Animal {
   transactions Transaction[]
   events       EventAnimal[]
   Birth        Birth[]
+  lote         Lote?         @relation(fields: [loteId], references: [id])
+  loteId       String?
 }
 
 model Birth {
@@ -87,4 +89,16 @@ model EventAnimal {
   animal   Animal @relation(fields: [animalId], references: [id], onDelete: Cascade)
 
   @@unique([eventId, animalId])
+}
+
+model Lote {
+  id         String   @id @default(cuid())
+  nome       String
+  descricao  String?
+  finalidade String // "Cria", "Recria", "Engorda", "Leite"
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relations
+  animais Animal[]
 }

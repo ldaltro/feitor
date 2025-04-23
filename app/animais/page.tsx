@@ -1,9 +1,13 @@
-import { Button } from "@/components/ui/button"
-import { PlusCircle } from "lucide-react"
-import { AnimalsList } from "@/components/animals-list"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import { PlusCircle } from "lucide-react";
+import Link from "next/link";
+import { getAnimals } from "@/lib/actions/animals";
+import { AnimalsListClient } from "@/components/animals-list-client";
 
-export default function AnimalsPage() {
+export default async function AnimalsPage() {
+  // Fetch animals data on the server
+  const { animals, error } = await getAnimals();
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -15,7 +19,14 @@ export default function AnimalsPage() {
           </Button>
         </Link>
       </div>
-      <AnimalsList />
+
+      {error ? (
+        <div className="p-4 bg-red-50 text-red-500 rounded-md">
+          Erro ao carregar dados: {error}
+        </div>
+      ) : (
+        <AnimalsListClient animals={animals || []} />
+      )}
     </div>
-  )
+  );
 }

@@ -12,6 +12,7 @@ import {
   Baby,
   Menu,
   X,
+  BoxesIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -28,6 +29,12 @@ const routes = [
     icon: Cow,
     href: "/animais",
     color: "text-emerald-500",
+  },
+  {
+    label: "Lotes",
+    icon: BoxesIcon,
+    href: "/lotes",
+    color: "text-amber-500",
   },
   {
     label: "Nascimentos",
