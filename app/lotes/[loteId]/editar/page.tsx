@@ -9,23 +9,23 @@ interface EditLotePageProps {
   };
 }
 
-export default async function EditLotePage({ params }: EditLotePageProps) {
+export default async function EditLotePage({ params }: { params: { loteId: string } }) {
   const { loteId } = params;
-  const { lote, error } = await getLoteById(loteId);
   const { lotes: t } = useTranslations();
-
-  if (error || !lote) {
+  const data = await getLoteById(loteId);
+  
+  if (data.error || !data.lote) {
     notFound();
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">{t.edit}</h1>
-        <p className="text-muted-foreground mt-2">{t.editDesc}</p>
-      </div>
-      <div className="border rounded-lg p-4 md:p-6">
-        <LoteFormClient initialData={lote} isEditing />
+    <div className="container mx-auto py-10">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-3xl font-bold">{t.edit}</h1>
+          <p className="text-muted-foreground">{t.editDesc}</p>
+        </div>
+        <LoteFormClient mode="edit" lote={data.lote} />
       </div>
     </div>
   );

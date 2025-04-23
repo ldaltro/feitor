@@ -43,19 +43,16 @@ const loteFormSchema = z.object({
 });
 
 interface LoteFormProps {
-  initialData?: {
+  mode: 'create' | 'edit';
+  lote?: {
     id: string;
     nome: string;
     descricao: string | null;
     finalidade: string;
-  } | null;
-  isEditing?: boolean;
+  };
 }
 
-export function LoteFormClient({
-  initialData,
-  isEditing = false,
-}: LoteFormProps) {
+export function LoteFormClient({ mode = 'create', lote }: LoteFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { lotes: t } = useTranslations();
@@ -63,10 +60,10 @@ export function LoteFormClient({
   const form = useForm<z.infer<typeof loteFormSchema>>({
     resolver: zodResolver(loteFormSchema),
     defaultValues: {
-      nome: initialData?.nome || "",
-      descricao: initialData?.descricao || "",
+      nome: lote?.nome || "",
+      descricao: lote?.descricao || "",
       finalidade:
-        (initialData?.finalidade as "Cria" | "Recria" | "Engorda" | "Leite") ||
+        (lote?.finalidade as "Cria" | "Recria" | "Engorda" | "Leite") ||
         "Cria",
     },
   });
@@ -75,9 +72,9 @@ export function LoteFormClient({
     try {
       setLoading(true);
 
-      if (isEditing && initialData) {
+      if (mode === 'edit' && lote) {
         await updateLote({
-          id: initialData.id,
+          id: lote.id,
           ...values,
         });
       } else {
@@ -170,7 +167,7 @@ export function LoteFormClient({
             {t.cancel}
           </Button>
           <Button type="submit" disabled={loading}>
-            {loading ? t.saving : isEditing ? t.update : t.create}
+            {loading ? t.saving : mode === 'edit' ? t.update : t.create}
           </Button>
         </div>
       </form>

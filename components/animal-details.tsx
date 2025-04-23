@@ -31,6 +31,33 @@ import { ptBR } from "date-fns/locale"
 import { toast } from "@/components/ui/use-toast"
 import { updateReproductiveStatus, getAnimalDetails, type ReproductiveStatus } from "@/lib/actions/animal-actions"
 
+interface Animal {
+  id: string;
+  name: string;
+  tag: string;
+  breed: string;
+  gender: string;
+  birthDate: Date;
+  age: string;
+  purchaseDate: Date;
+  purchaseValue: number;
+  status: string;
+  reproductiveStatus: ReproductiveStatus;
+  weight?: number;
+  notes?: string;
+  inseminationDate?: Date;
+  expectedBirthDate?: Date;
+  lote?: {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    nome: string;
+    descricao: string | null;
+    finalidade: string;
+  } | null;
+  loteId?: string | null;
+}
+
 interface AnimalDetailsProps {
   id: string
   initialData?: Awaited<ReturnType<typeof getAnimalDetails>>
@@ -42,7 +69,7 @@ export function AnimalDetails({ id, initialData }: AnimalDetailsProps) {
   const [showPregnancyStatus, setShowPregnancyStatus] = useState(false)
   
   // Use initialData if available, otherwise fallback to defaults
-  const animal = initialData?.animal || {
+  const animal: Animal = initialData?.animal || {
     id: "1",
     name: "Mimosa",
     tag: "A001",

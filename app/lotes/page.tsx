@@ -10,27 +10,31 @@ export default async function LotesPage() {
   const { lotes: t } = useTranslations();
 
   // Fetch lotes data on the server
-  const { lotes, error } = await getLotes();
+  const data = await getLotes();
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">{t.title}</h1>
-        <Link href="/lotes/adicionar">
-          <Button>
-            <PlusCircle className="mr-2 h-4 w-4" />
-            {t.add}
-          </Button>
-        </Link>
-      </div>
-
-      {error ? (
-        <div className="p-4 bg-red-50 text-red-500 rounded-md">
-          Erro ao carregar dados: {error}
+    <div className="container mx-auto py-10">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-3xl font-bold">{t.title}</h1>
+          <p className="text-muted-foreground">{t.description}</p>
         </div>
-      ) : (
-        <LotesListClient lotes={lotes || []} />
-      )}
+        <div className="flex justify-end">
+          <Link href="/lotes/criar">
+            <Button>
+              <PlusCircle className="mr-2 h-4 w-4" />
+              {t.add}
+            </Button>
+          </Link>
+        </div>
+        {data.error ? (
+          <div className="p-4 bg-red-50 text-red-500 rounded-md">
+            Erro ao carregar dados: {data.error}
+          </div>
+        ) : (
+          <LotesListClient lotes={data.lotes || []} />
+        )}
+      </div>
     </div>
   );
 }

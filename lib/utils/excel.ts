@@ -14,6 +14,10 @@ export interface ExcelMetadata {
   creator?: string
 }
 
+type ExcelData = {
+  [key: string]: string | number | Date | null;
+}[];
+
 /**
  * Creates an Excel workbook with multiple sheets and optional metadata
  */

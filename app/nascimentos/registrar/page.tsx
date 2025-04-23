@@ -2,7 +2,7 @@ import { getAnimals } from "@/lib/actions/animals";
 import { BirthFormClient } from "@/components/birth-form-client";
 
 export default async function RegisterBirthPage() {
-  const { animals, error } = await getAnimals();
+  const { animals } = await getAnimals();
   
   return (
     <div className="space-y-6">

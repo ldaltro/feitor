@@ -35,7 +35,6 @@ export async function getLotes() {
       orderBy: { nome: "asc" },
     });
 
-    // Process to count animal breeds
     const lotesWithBreedCount = lotes.map((lote) => {
       const breedCounts: Record<string, number> = {};
 
@@ -50,10 +49,9 @@ export async function getLotes() {
       };
     });
 
-    return { lotes: lotesWithBreedCount };
+    return { lotes: lotesWithBreedCount, error: null };
   } catch (error) {
-    console.error("Failed to fetch lotes:", error);
-    return { error: "Failed to fetch lotes" };
+    return { lotes: [], error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }
 
@@ -67,10 +65,9 @@ export async function getLoteById(id: string) {
       },
     });
 
-    return { lote };
+    return { lote, error: null };
   } catch (error) {
-    console.error(`Failed to fetch lote with ID ${id}:`, error);
-    return { error: `Failed to fetch lote with ID ${id}` };
+    return { lote: null, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   format,
   addMonths,
@@ -71,11 +71,7 @@ export function EventCalendar() {
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchEvents();
-  }, []);
-
-  const fetchEvents = async () => {
+  const fetchEvents = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await fetch("/api/events");
@@ -92,7 +88,11 @@ export function EventCalendar() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchEvents();
+  }, [fetchEvents]);
 
   const handleDeleteEvent = async () => {
     if (!selectedEvent) return;

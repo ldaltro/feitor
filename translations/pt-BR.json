@@ -1,0 +1,16 @@
+{
+  "Lotes": {
+    "title": "Lotes",
+    "add": "Adicionar Lote",
+    "addDesc": "Adicione um novo lote de animais",
+    "edit": "Editar Lote",
+    "editDesc": "Edite as informações do lote",
+    "name": "Nome",
+    "nameDesc": "Nome do lote",
+    "purpose": "Finalidade",
+    "purposeDesc": "Finalidade do lote",
+    "description": "Descrição",
+    "descriptionDesc": "Descrição do lote",
+    "selectAtLeastOne": "Selecione pelo menos um animal"
+  }
+}

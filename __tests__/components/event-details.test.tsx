@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
 import { EventDetails } from "@/components/event-details";
 import { useRouter } from "next/navigation";
 
@@ -92,7 +92,9 @@ describe("EventDetails", () => {
     fireEvent.click(deleteConfirmButton);
 
     // Fast-forward timer
-    jest.runAllTimers();
+    await act(async () => {
+      jest.runAllTimers();
+    });
 
     // Should navigate to calendar page
     expect(mockPush).toHaveBeenCalledWith("/calendario");

@@ -1,4 +1,4 @@
-import { dictionary } from "@/lib/dictionary";
+import { dictionary } from '@/lib/dictionary';
 
 export function useTranslations() {
   return dictionary;
