@@ -4,27 +4,38 @@ globs:
 alwaysApply: true
 ---
 ---
-title: Avoid useEffect
-tags: [react, hooks, best-practices]
-Don't use useEffect unless absolutely necessary (like for specific data fetching cases). Consider alternatives like Tanstack Query for data fetching operations. useEffect is often a source of bugs and should be used sparingly.
+rules:
+  - title: Avoid useEffect
+    tags: [react, hooks, best-practices]
+    description: >
+      Don't use useEffect unless absolutely necessary (e.g., for certain
+      data-fetching cases). Prefer alternatives like Tanstack Query. useEffect
+      is often a source of bugs and should be used sparingly.
 
+  - title: Minimize comments
+    tags: [code-style, best-practices]
+    description: >
+      Don't write unnecessary comments. Add comments only when explaining
+      complex logic that can't be made clearer through naming or refactoring.
 
-title: Minimize comments
-tags: [code-style, best-practices]
-Don't write unnecessary comments in code. Only add comments when explaining complex logic that can't be made clearer through better naming or refactoring.
+  - title: Tests required
+    tags: [testing, quality, best-practices]
+    command: npm test
+    description: >
+      ALWAYS create or update tests for EVERY code change. Use React Testing
+      Library and Jest. Run tests and ensure they pass before marking a task
+      complete.
 
+  - title: No npm run dev
+    tags: [commands, debugging]
+    description: >
+      Never suggest running the app (e.g., via npm run dev); assume the user
+      already has the app running.
 
-title: Tests required
-tags: [testing, quality, best-practices]
-command: npm test
-ALWAYS create or update tests for EVERY code change. Use React Testing Library and Jest for tests. Always run tests and ensure they pass before marking a task complete.
-
-title: No npm run dev
-tags: [commands, debugging]
-Never suggest running the app(like suggesting a npm run dev), always assume that the user has the app running already.
-
-
-title: App in brazilian portuguese code in english
-tags: [best practices, quality]
-Write all the code in english but the strings of the app should be in brazilian portuguese. Make sure every text you write is in a proper i18n string and NOT hard coded
-
+  - title: App in brazilian portuguese code in english
+    tags: [best-practices, quality]
+    description: >
+      Write all code in English, but all UI strings should be in Brazilian
+      Portuguese. Ensure every text string is supplied via proper i18n, not
+      hard-coded.
+---

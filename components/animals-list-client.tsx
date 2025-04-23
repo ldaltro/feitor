@@ -27,6 +27,8 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { deleteAnimal } from "@/lib/actions/animals";
 import { addAnimalToLote } from "@/lib/actions/lotes";
+import { useTranslations } from "@/hooks/useTranslations";
+import { ptBR } from "date-fns/locale";
 
 type Animal = {
   id: string;
@@ -47,6 +49,7 @@ export function AnimalsListClient({ animals }: AnimalsListClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const loteId = searchParams.get("addToLote");
+  const { lotes: t } = useTranslations();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -94,7 +97,7 @@ export function AnimalsListClient({ animals }: AnimalsListClientProps) {
 
   const handleAddToLote = async () => {
     if (selectedAnimals.length === 0) {
-      alert("Selecione pelo menos um animal");
+      alert(t.selectAtLeastOne);
       return;
     }
 
@@ -111,7 +114,7 @@ export function AnimalsListClient({ animals }: AnimalsListClientProps) {
       router.push(`/lotes/${loteId}`);
     } catch (error) {
       console.error("Failed to add animals to lote:", error);
-      alert("Erro ao adicionar animais ao lote");
+      alert(t.addError);
     } finally {
       setIsAdding(false);
     }
@@ -137,13 +140,13 @@ export function AnimalsListClient({ animals }: AnimalsListClientProps) {
               disabled={selectedAnimals.length === 0 || isAdding}
             >
               <Layers className="mr-2 h-4 w-4" />
-              Adicionar ao Lote ({selectedAnimals.length})
+              {t.addToLote} ({selectedAnimals.length})
             </Button>
             <Button
               variant="outline"
               onClick={() => router.push(`/lotes/${loteId}`)}
             >
-              Cancelar
+              {t.cancel}
             </Button>
           </div>
         )}
@@ -191,7 +194,9 @@ export function AnimalsListClient({ animals }: AnimalsListClientProps) {
                     <TableCell>{animal.breed}</TableCell>
                     <TableCell>{animal.gender}</TableCell>
                     <TableCell>
-                      {format(new Date(animal.birthDate), "dd/MM/yyyy")}
+                      {format(new Date(animal.birthDate), "dd/MM/yyyy", {
+                        locale: ptBR,
+                      })}
                     </TableCell>
                     <TableCell>
                       <Badge
@@ -240,7 +245,7 @@ export function AnimalsListClient({ animals }: AnimalsListClientProps) {
                               <Layers className="mr-2 h-4 w-4" />
                               {selectedAnimals.includes(animal.id)
                                 ? "Remover da seleção"
-                                : "Adicionar ao lote"}
+                                : t.addToLote}
                             </DropdownMenuItem>
                           )}
                           <DropdownMenuItem

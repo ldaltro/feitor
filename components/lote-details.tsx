@@ -33,6 +33,8 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { removeAnimalFromLote } from "@/lib/actions/lotes";
+import { useTranslations } from "@/hooks/useTranslations";
+import { ptBR } from "date-fns/locale";
 
 type LoteWithAnimals = {
   id: string;
@@ -49,6 +51,7 @@ interface LoteDetailsProps {
 export function LoteDetails({ lote }: LoteDetailsProps) {
   const router = useRouter();
   const [isRemoving, setIsRemoving] = useState(false);
+  const { lotes: t } = useTranslations();
 
   const { id, nome, descricao, finalidade, animais } = lote;
 
@@ -68,14 +71,14 @@ export function LoteDetails({ lote }: LoteDetailsProps) {
   };
 
   const handleRemoveAnimal = async (animalId: string) => {
-    if (confirm("Tem certeza que deseja remover este animal do lote?")) {
+    if (confirm(t.removeConfirm)) {
       setIsRemoving(true);
       try {
         await removeAnimalFromLote(animalId);
         router.refresh();
       } catch (error) {
         console.error("Failed to remove animal from lote:", error);
-        alert("Erro ao remover animal do lote");
+        alert(t.removeError);
       } finally {
         setIsRemoving(false);
       }
@@ -114,13 +117,13 @@ export function LoteDetails({ lote }: LoteDetailsProps) {
           <Link href={`/lotes/${id}/editar`}>
             <Button variant="outline" size="sm">
               <PenSquare className="h-4 w-4 mr-2" />
-              Editar
+              {t.edit}
             </Button>
           </Link>
           <Link href={`/animais?addToLote=${id}`}>
             <Button size="sm">
               <PlusCircle className="h-4 w-4 mr-2" />
-              Adicionar Animais
+              {t.addAnimals}
             </Button>
           </Link>
         </div>
@@ -129,7 +132,7 @@ export function LoteDetails({ lote }: LoteDetailsProps) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-base">Total de Animais</CardTitle>
+            <CardTitle className="text-base">{t.totalAnimals}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{animais.length}</div>
@@ -138,7 +141,7 @@ export function LoteDetails({ lote }: LoteDetailsProps) {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-base">Raças Principais</CardTitle>
+            <CardTitle className="text-base">{t.mainBreeds}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-sm">
@@ -152,9 +155,7 @@ export function LoteDetails({ lote }: LoteDetailsProps) {
                   ))}
                 </div>
               ) : (
-                <span className="text-muted-foreground">
-                  Nenhum animal no lote
-                </span>
+                <span className="text-muted-foreground">{t.noAnimals}</span>
               )}
             </div>
           </CardContent>
@@ -162,7 +163,7 @@ export function LoteDetails({ lote }: LoteDetailsProps) {
 
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-base">Finalidade</CardTitle>
+            <CardTitle className="text-base">{t.purpose}</CardTitle>
           </CardHeader>
           <CardContent>
             <Badge
@@ -177,7 +178,7 @@ export function LoteDetails({ lote }: LoteDetailsProps) {
 
       <div className="border rounded-md">
         <div className="p-4 bg-muted/50">
-          <h2 className="text-lg font-medium">Animais neste Lote</h2>
+          <h2 className="text-lg font-medium">{t.animalsInLote}</h2>
         </div>
         <div>
           <Table>
@@ -196,7 +197,7 @@ export function LoteDetails({ lote }: LoteDetailsProps) {
               {animais.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={7} className="h-24 text-center">
-                    Nenhum animal neste lote.
+                    {t.noAnimals}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -207,7 +208,9 @@ export function LoteDetails({ lote }: LoteDetailsProps) {
                     <TableCell>{animal.breed}</TableCell>
                     <TableCell>{animal.gender}</TableCell>
                     <TableCell>
-                      {format(new Date(animal.birthDate), "dd/MM/yyyy")}
+                      {format(new Date(animal.birthDate), "dd/MM/yyyy", {
+                        locale: ptBR,
+                      })}
                     </TableCell>
                     <TableCell>
                       <Badge
@@ -231,16 +234,16 @@ export function LoteDetails({ lote }: LoteDetailsProps) {
                             disabled={isRemoving}
                           >
                             <MoreHorizontal className="h-4 w-4" />
-                            <span className="sr-only">Abrir menu</span>
+                            <span className="sr-only">{t.actions}</span>
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuLabel>Ações</DropdownMenuLabel>
+                          <DropdownMenuLabel>{t.actions}</DropdownMenuLabel>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem asChild>
                             <Link href={`/animais/${animal.id}`}>
                               <Eye className="mr-2 h-4 w-4" />
-                              Visualizar Animal
+                              {t.viewAnimal}
                             </Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem
@@ -249,7 +252,7 @@ export function LoteDetails({ lote }: LoteDetailsProps) {
                             disabled={isRemoving}
                           >
                             <Trash className="mr-2 h-4 w-4" />
-                            Remover do Lote
+                            {t.removeFromLote}
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>

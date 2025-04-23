@@ -25,6 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { createLote, updateLote } from "@/lib/actions/lotes";
+import { useTranslations } from "@/hooks/useTranslations";
 
 // Schema validator
 const loteFormSchema = z.object({
@@ -57,6 +58,7 @@ export function LoteFormClient({
 }: LoteFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { lotes: t } = useTranslations();
 
   const form = useForm<z.infer<typeof loteFormSchema>>({
     resolver: zodResolver(loteFormSchema),
@@ -100,13 +102,11 @@ export function LoteFormClient({
             name="nome"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nome do Lote</FormLabel>
+                <FormLabel>{t.name}</FormLabel>
                 <FormControl>
-                  <Input placeholder="Nome do lote" {...field} />
+                  <Input placeholder={t.name} {...field} />
                 </FormControl>
-                <FormDescription>
-                  Identifique o lote com um nome único
-                </FormDescription>
+                <FormDescription>{t.nameDesc}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -116,26 +116,24 @@ export function LoteFormClient({
             name="finalidade"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Finalidade</FormLabel>
+                <FormLabel>{t.purpose}</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Selecione uma finalidade" />
+                      <SelectValue placeholder={t.selectPurpose} />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Cria">Cria</SelectItem>
-                    <SelectItem value="Recria">Recria</SelectItem>
-                    <SelectItem value="Engorda">Engorda</SelectItem>
-                    <SelectItem value="Leite">Leite</SelectItem>
+                    <SelectItem value="Cria">{t.cria}</SelectItem>
+                    <SelectItem value="Recria">{t.recria}</SelectItem>
+                    <SelectItem value="Engorda">{t.engorda}</SelectItem>
+                    <SelectItem value="Leite">{t.leite}</SelectItem>
                   </SelectContent>
                 </Select>
-                <FormDescription>
-                  A finalidade principal do lote
-                </FormDescription>
+                <FormDescription>{t.purposeDesc}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -147,18 +145,16 @@ export function LoteFormClient({
           name="descricao"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Descrição</FormLabel>
+              <FormLabel>{t.description}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Descrição detalhada do lote"
+                  placeholder={t.description}
                   className="min-h-[100px]"
                   {...field}
                   value={field.value || ""}
                 />
               </FormControl>
-              <FormDescription>
-                Adicione informações adicionais sobre o lote
-              </FormDescription>
+              <FormDescription>{t.descriptionDesc}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -171,14 +167,10 @@ export function LoteFormClient({
             onClick={() => router.push("/lotes")}
             disabled={loading}
           >
-            Cancelar
+            {t.cancel}
           </Button>
           <Button type="submit" disabled={loading}>
-            {loading
-              ? "Salvando..."
-              : isEditing
-              ? "Atualizar Lote"
-              : "Criar Lote"}
+            {loading ? t.saving : isEditing ? t.update : t.create}
           </Button>
         </div>
       </form>

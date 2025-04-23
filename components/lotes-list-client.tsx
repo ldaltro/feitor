@@ -23,6 +23,7 @@ import { Badge } from "@/components/ui/badge";
 import { MoreHorizontal, Search, Edit, Trash, Eye, Users } from "lucide-react";
 import Link from "next/link";
 import { deleteLote } from "@/lib/actions/lotes";
+import { useTranslations } from "@/hooks/useTranslations";
 
 type Lote = {
   id: string;
@@ -40,6 +41,7 @@ interface LotesListClientProps {
 export function LotesListClient({ lotes }: LotesListClientProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const { lotes: t } = useTranslations();
 
   // Filter lotes based on search term
   const filteredLotes = lotes.filter(
@@ -51,13 +53,13 @@ export function LotesListClient({ lotes }: LotesListClientProps) {
   );
 
   const handleDelete = async (id: string) => {
-    if (confirm("Tem certeza que deseja excluir este lote?")) {
+    if (confirm(t.deleteConfirm)) {
       setIsDeleting(true);
       try {
         await deleteLote(id);
       } catch (error) {
         console.error("Failed to delete lote:", error);
-        alert("Erro ao excluir lote");
+        alert(t.deleteError);
       } finally {
         setIsDeleting(false);
       }
@@ -83,7 +85,7 @@ export function LotesListClient({ lotes }: LotesListClientProps) {
     const breeds = Object.entries(breedCounts)
       .map(([breed, count]) => `${breed} (${count})`)
       .join(", ");
-    return breeds || "Nenhuma";
+    return breeds || t.none;
   };
 
   return (
@@ -91,7 +93,7 @@ export function LotesListClient({ lotes }: LotesListClientProps) {
       <div className="flex items-center gap-2">
         <Search className="h-4 w-4 text-muted-foreground" />
         <Input
-          placeholder="Buscar por nome, descrição ou finalidade..."
+          placeholder={t.search}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="max-w-sm"
@@ -101,11 +103,11 @@ export function LotesListClient({ lotes }: LotesListClientProps) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Nome</TableHead>
-              <TableHead>Descrição</TableHead>
-              <TableHead>Finalidade</TableHead>
-              <TableHead>Animais</TableHead>
-              <TableHead>Raças</TableHead>
+              <TableHead>{t.name}</TableHead>
+              <TableHead>{t.description}</TableHead>
+              <TableHead>{t.purpose}</TableHead>
+              <TableHead>{t.animals}</TableHead>
+              <TableHead>{t.breeds}</TableHead>
               <TableHead className="w-[80px]"></TableHead>
             </TableRow>
           </TableHeader>
@@ -113,7 +115,7 @@ export function LotesListClient({ lotes }: LotesListClientProps) {
             {filteredLotes.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={6} className="h-24 text-center">
-                  Nenhum lote encontrado.
+                  {t.noLotes}
                 </TableCell>
               </TableRow>
             ) : (
@@ -142,22 +144,22 @@ export function LotesListClient({ lotes }: LotesListClientProps) {
                           disabled={isDeleting}
                         >
                           <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Abrir menu</span>
+                          <span className="sr-only">{t.actions}</span>
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Ações</DropdownMenuLabel>
+                        <DropdownMenuLabel>{t.actions}</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem asChild>
                           <Link href={`/lotes/${lote.id}`}>
                             <Eye className="mr-2 h-4 w-4" />
-                            Visualizar
+                            {t.view}
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
                           <Link href={`/lotes/${lote.id}/editar`}>
                             <Edit className="mr-2 h-4 w-4" />
-                            Editar
+                            {t.edit}
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem
@@ -166,7 +168,7 @@ export function LotesListClient({ lotes }: LotesListClientProps) {
                           disabled={isDeleting}
                         >
                           <Trash className="mr-2 h-4 w-4" />
-                          Excluir
+                          {t.delete}
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
