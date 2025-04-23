@@ -18,89 +18,117 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Edit, Trash, Calendar, CreditCard, Baby } from "lucide-react"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Edit, Trash, Calendar, CreditCard, Baby, Milestone } from "lucide-react"
+import { format, addDays, addMonths } from "date-fns"
+import { ptBR } from "date-fns/locale"
+import { toast } from "@/components/ui/use-toast"
+import { updateReproductiveStatus, getAnimalDetails, type ReproductiveStatus } from "@/lib/actions/animal-actions"
 
-export function AnimalDetails({ id }: { id: string }) {
+interface AnimalDetailsProps {
+  id: string
+  initialData?: Awaited<ReturnType<typeof getAnimalDetails>>
+}
+
+export function AnimalDetails({ id, initialData }: AnimalDetailsProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-
-  // Mock data - would be fetched from API in a real app
-  const animal = {
+  const [showPregnancyStatus, setShowPregnancyStatus] = useState(false)
+  
+  // Use initialData if available, otherwise fallback to defaults
+  const animal = initialData?.animal || {
     id: "1",
     name: "Mimosa",
     tag: "A001",
     breed: "Nelore",
     gender: "Fêmea",
-    birthDate: "10/03/2020",
+    birthDate: new Date("2020-03-10"),
     age: "3 anos",
-    purchaseDate: "15/05/2020",
-    purchaseValue: "R$ 2.500,00",
-    weight: "450 kg",
+    purchaseDate: new Date("2020-05-15"),
+    purchaseValue: 2500,
     status: "Saudável",
-    notes: "Animal saudável e produtivo.",
+    reproductiveStatus: "Não gestante" as ReproductiveStatus,
   }
-
-  const events = [
-    {
-      id: "1",
-      title: "Vacinação",
-      date: "12/05/2023",
-      type: "Manejo Sanitário",
-      description: "Vacinação contra febre aftosa",
-    },
-    {
-      id: "2",
-      title: "Inseminação",
-      date: "10/04/2023",
-      type: "Manejo Reprodutivo",
-      description: "Inseminação artificial",
-    },
-    {
-      id: "3",
-      title: "Pesagem",
-      date: "05/03/2023",
-      type: "Pesagem",
-      description: "Peso: 450 kg",
-    },
-  ]
-
-  const births = [
-    {
-      id: "1",
-      childName: "Filhote 1",
-      childTag: "A010",
-      birthDate: "15/06/2022",
-      gender: "Fêmea",
-      status: "Saudável",
-    },
-    {
-      id: "2",
-      childName: "Filhote 2",
-      childTag: "A015",
-      birthDate: "20/07/2023",
-      gender: "Macho",
-      status: "Saudável",
-    },
-  ]
-
-  const transactions = [
-    {
-      id: "1",
-      type: "Compra",
-      date: "15/05/2020",
-      value: "R$ 2.500,00",
-      description: "Compra inicial",
-    },
-  ]
+  
+  const events = initialData?.events || []
+  const births = initialData?.births || []
+  const transactions = initialData?.transactions || []
+  
+  const [pregnancyStatus, setPregnancyStatus] = useState<ReproductiveStatus>(
+    animal.reproductiveStatus as ReproductiveStatus || "Não gestante"
+  )
 
   function handleDelete() {
     setIsLoading(true)
 
-    // In a real app, send delete request to API
+    // In a real app, would send delete request to API
     setTimeout(() => {
       setIsLoading(false)
       router.push("/animais")
     }, 1000)
+  }
+
+  async function handlePregnancyStatusChange(value: string) {
+    try {
+      setIsLoading(true)
+      
+      const result = await updateReproductiveStatus(id, value as ReproductiveStatus)
+      
+      // Update local state
+      setPregnancyStatus(value as ReproductiveStatus)
+      
+      // Show message to the user
+      let message = `Status atualizado para ${value}`
+      
+      if (value === "Inseminada") {
+        const expectedDate = addDays(new Date(), 280)
+        message += `. Data prevista para parto: ${format(expectedDate, "dd/MM/yyyy", { locale: ptBR })}`
+      }
+      
+      toast({
+        title: "Status atualizado",
+        description: message,
+      })
+      
+      // Refresh the page data
+      router.refresh()
+    } catch (error) {
+      toast({
+        title: "Erro",
+        description: "Não foi possível atualizar o status. Tente novamente.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsLoading(false)
+      setShowPregnancyStatus(false)
+    }
+  }
+
+  // Format helpers
+  const formatDate = (date: Date | string | null | undefined) => {
+    if (!date) return ""
+    const dateObj = date instanceof Date ? date : new Date(date)
+    return format(dateObj, "dd/MM/yyyy", { locale: ptBR })
+  }
+  
+  const formatCurrency = (value: number | null | undefined) => {
+    if (!value && value !== 0) return ""
+    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value)
+  }
+  
+  // Calculate age
+  const calculateAge = (birthDate: Date | string | null | undefined) => {
+    if (!birthDate) return ""
+    const birthDateObj = birthDate instanceof Date ? birthDate : new Date(birthDate)
+    const ageInMs = new Date().getTime() - birthDateObj.getTime()
+    const ageInYears = ageInMs / (1000 * 60 * 60 * 24 * 365.25)
+    return `${Math.floor(ageInYears)} anos`
   }
 
   return (
@@ -175,15 +203,15 @@ export function AnimalDetails({ id }: { id: string }) {
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Data de Nascimento</p>
-                <p>{animal.birthDate}</p>
+                <p>{formatDate(animal.birthDate)}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Idade</p>
-                <p>{animal.age}</p>
+                <p>{calculateAge(animal.birthDate)}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Peso</p>
-                <p>{animal.weight}</p>
+                <p>{animal.weight ? `${animal.weight} kg` : "—"}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Status</p>
@@ -209,24 +237,100 @@ export function AnimalDetails({ id }: { id: string }) {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Informações de Compra</CardTitle>
-            <CardDescription>Detalhes da aquisição</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Data de Compra</p>
-                <p>{animal.purchaseDate || "N/A"}</p>
+        {animal.gender === "Fêmea" && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Informações Reprodutivas</CardTitle>
+              <CardDescription>Status reprodutivo do animal</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Status Atual</p>
+                  <div className="flex items-center gap-2 pt-1">
+                    <Badge
+                      variant={
+                        pregnancyStatus === "Não gestante"
+                          ? "outline"
+                          : pregnancyStatus === "Inseminada"
+                            ? "default"
+                            : pregnancyStatus === "Gestante"
+                              ? "secondary"
+                              : pregnancyStatus === "Parto"
+                                ? "default"
+                                : "destructive"
+                      }
+                    >
+                      {pregnancyStatus}
+                    </Badge>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="h-6 px-2"
+                      onClick={() => setShowPregnancyStatus(!showPregnancyStatus)}
+                      disabled={isLoading}
+                    >
+                      <Edit className="h-3 w-3" />
+                    </Button>
+                  </div>
+                  {showPregnancyStatus && (
+                    <div className="mt-2">
+                      <Select onValueChange={handlePregnancyStatusChange} disabled={isLoading}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Selecionar status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Não gestante">Não gestante</SelectItem>
+                          <SelectItem value="Inseminada">Inseminada</SelectItem>
+                          <SelectItem value="Gestante">Gestante</SelectItem>
+                          <SelectItem value="Parto">Parto realizado</SelectItem>
+                          <SelectItem value="Aborto">Aborto</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Total de Partos</p>
+                  <p>{births.length}</p>
+                </div>
+                {pregnancyStatus === "Gestante" && (
+                  <>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Data de Inseminação</p>
+                      <p>{formatDate(animal.inseminationDate)}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Previsão de Parto</p>
+                      <p>{formatDate(animal.expectedBirthDate)}</p>
+                    </div>
+                  </>
+                )}
               </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Valor de Compra</p>
-                <p>{animal.purchaseValue || "N/A"}</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {(animal.gender !== "Fêmea" || animal.purchaseDate) && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Informações de Compra</CardTitle>
+              <CardDescription>Detalhes da aquisição</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Data de Compra</p>
+                  <p>{formatDate(animal.purchaseDate) || "N/A"}</p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Valor de Compra</p>
+                  <p>{formatCurrency(animal.purchaseValue) || "N/A"}</p>
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       <Tabs defaultValue="events">
@@ -243,12 +347,18 @@ export function AnimalDetails({ id }: { id: string }) {
             <CreditCard className="mr-2 h-4 w-4" />
             Transações
           </TabsTrigger>
+          {animal.gender === "Fêmea" && (
+            <TabsTrigger value="reproductive" className="flex items-center">
+              <Milestone className="mr-2 h-4 w-4" />
+              Linha do Tempo Reprodutiva
+            </TabsTrigger>
+          )}
         </TabsList>
         <TabsContent value="events" className="space-y-4 pt-4">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-medium">Histórico de Eventos</h3>
             <Button asChild>
-              <Link href="/eventos/adicionar">Adicionar Evento</Link>
+              <Link href={`/eventos/adicionar?animalId=${id}`}>Adicionar Evento</Link>
             </Button>
           </div>
           {events.length === 0 ? (
@@ -262,7 +372,7 @@ export function AnimalDetails({ id }: { id: string }) {
                       <CardTitle className="text-base">{event.title}</CardTitle>
                       <Badge>{event.type}</Badge>
                     </div>
-                    <CardDescription>{event.date}</CardDescription>
+                    <CardDescription>{formatDate(event.date)}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm">{event.description}</p>
@@ -275,9 +385,11 @@ export function AnimalDetails({ id }: { id: string }) {
         <TabsContent value="births" className="space-y-4 pt-4">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-medium">Histórico de Nascimentos</h3>
-            <Button asChild>
-              <Link href="/nascimentos/registrar">Registrar Nascimento</Link>
-            </Button>
+            {animal.gender === "Fêmea" && (
+              <Button asChild>
+                <Link href={`/nascimentos/registrar?motherId=${id}`}>Registrar Nascimento</Link>
+              </Button>
+            )}
           </div>
           {births.length === 0 ? (
             <p className="text-muted-foreground">Nenhum nascimento registrado.</p>
@@ -287,26 +399,26 @@ export function AnimalDetails({ id }: { id: string }) {
                 <Card key={birth.id}>
                   <CardHeader className="pb-2">
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-base">{birth.childName}</CardTitle>
-                      <Badge>{birth.gender}</Badge>
+                      <CardTitle className="text-base">{birth.child.name}</CardTitle>
+                      <Badge>{birth.child.gender}</Badge>
                     </div>
-                    <CardDescription>{birth.birthDate}</CardDescription>
+                    <CardDescription>{formatDate(birth.birthDate)}</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-2 gap-2 text-sm">
                       <div>
                         <span className="font-medium">Tag: </span>
-                        {birth.childTag}
+                        {birth.child.tag}
                       </div>
                       <div>
                         <span className="font-medium">Status: </span>
-                        {birth.status}
+                        {birth.child.status}
                       </div>
                     </div>
                   </CardContent>
                   <CardFooter>
                     <Button variant="outline" size="sm" asChild className="w-full">
-                      <Link href={`/animais/${birth.id}`}>Ver Detalhes</Link>
+                      <Link href={`/animais/${birth.child.id}`}>Ver Detalhes</Link>
                     </Button>
                   </CardFooter>
                 </Card>
@@ -319,10 +431,10 @@ export function AnimalDetails({ id }: { id: string }) {
             <h3 className="text-lg font-medium">Histórico de Transações</h3>
             <div className="flex gap-2">
               <Button variant="outline" asChild>
-                <Link href="/transacoes/compra">Registrar Compra</Link>
+                <Link href={`/transacoes/compra?animalId=${id}`}>Registrar Compra</Link>
               </Button>
               <Button asChild>
-                <Link href="/transacoes/venda">Registrar Venda</Link>
+                <Link href={`/transacoes/venda?animalId=${id}`}>Registrar Venda</Link>
               </Button>
             </div>
           </div>
@@ -335,18 +447,52 @@ export function AnimalDetails({ id }: { id: string }) {
                   <CardHeader className="pb-2">
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-base">{transaction.type}</CardTitle>
-                      <Badge variant={transaction.type === "Compra" ? "outline" : "default"}>{transaction.value}</Badge>
+                      <Badge variant={transaction.type === "Compra" ? "outline" : "default"}>
+                        {formatCurrency(transaction.value)}
+                      </Badge>
                     </div>
-                    <CardDescription>{transaction.date}</CardDescription>
+                    <CardDescription>{formatDate(transaction.date)}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm">{transaction.description}</p>
+                    <p className="text-sm">Pessoa: {transaction.person}</p>
                   </CardContent>
                 </Card>
               ))}
             </div>
           )}
         </TabsContent>
+        {animal.gender === "Fêmea" && (
+          <TabsContent value="reproductive" className="space-y-4 pt-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-medium">Linha do Tempo Reprodutiva</h3>
+            </div>
+            <div className="relative border-l-2 border-muted pl-6 ml-4 space-y-8">
+              {events
+                .filter(event => event.type === "Manejo Reprodutivo")
+                .map((event, index) => (
+                  <div className="relative" key={event.id}>
+                    <div className={`absolute -left-[33px] flex h-6 w-6 items-center justify-center rounded-full 
+                      ${event.title.includes("Inseminação") ? "bg-primary text-primary-foreground" : 
+                        event.title.includes("Gestação") ? "bg-secondary text-secondary-foreground" : 
+                        event.title.includes("Parto") ? "bg-primary text-primary-foreground" : 
+                        event.title.includes("Aborto") ? "bg-destructive text-destructive-foreground" : 
+                        "bg-muted text-muted-foreground"}`}>
+                      <Milestone className="h-3 w-3" />
+                    </div>
+                    <div className="space-y-1">
+                      <h4 className="text-sm font-medium">{event.title}</h4>
+                      <p className="text-sm text-muted-foreground">{formatDate(event.date)}</p>
+                      <p className="text-sm">{event.description}</p>
+                    </div>
+                  </div>
+                ))}
+              
+              {events.filter(event => event.type === "Manejo Reprodutivo").length === 0 && (
+                <p className="text-muted-foreground">Nenhum evento reprodutivo registrado.</p>
+              )}
+            </div>
+          </TabsContent>
+        )}
       </Tabs>
     </div>
   )

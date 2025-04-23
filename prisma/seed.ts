@@ -5,6 +5,7 @@ const {
   addMonths,
   subYears,
   subMonths,
+  subDays,
 } = require("date-fns");
 
 const prisma = new PrismaClient();
@@ -18,6 +19,10 @@ interface Animal {
   gender: string;
   birthDate: Date;
   status: string;
+  reproductiveStatus?: string;
+  inseminationDate?: Date;
+  expectedBirthDate?: Date;
+  abortionDate?: Date;
 }
 
 async function main() {
@@ -39,6 +44,9 @@ async function main() {
       gender: "Fêmea",
       birthDate: new Date("2018-05-10"),
       status: "Ativo",
+      reproductiveStatus: "Gestante",
+      inseminationDate: subDays(new Date(), 60),
+      expectedBirthDate: addDays(subDays(new Date(), 60), 280),
     },
     {
       name: "Estrela",
@@ -47,6 +55,9 @@ async function main() {
       gender: "Fêmea",
       birthDate: new Date("2018-03-15"),
       status: "Ativo",
+      reproductiveStatus: "Inseminada",
+      inseminationDate: subDays(new Date(), 20),
+      expectedBirthDate: addDays(subDays(new Date(), 20), 280),
     },
     {
       name: "Trovão",
@@ -63,6 +74,7 @@ async function main() {
       gender: "Fêmea",
       birthDate: new Date("2018-01-30"),
       status: "Ativo",
+      reproductiveStatus: "Não gestante",
     },
     {
       name: "Sultão",
@@ -95,6 +107,7 @@ async function main() {
       fatherIndex: 2, // Trovão
       birthDate: subMonths(new Date(), 6),
       childStatus: "Ativo",
+      childReproductiveStatus: "Não gestante",
     },
     {
       childName: "Relâmpago",
@@ -115,20 +128,28 @@ async function main() {
       fatherIndex: 4, // Sultão
       birthDate: subMonths(new Date(), 4),
       childStatus: "Ativo",
+      childReproductiveStatus: "Não gestante",
     },
   ];
 
   for (const birthData of birthsData) {
     // Create the child animal
+    const childData = {
+      name: birthData.childName,
+      tag: birthData.childTag,
+      breed: birthData.childBreed,
+      gender: birthData.childGender,
+      birthDate: birthData.birthDate,
+      status: birthData.childStatus,
+    };
+    
+    // Add reproductive status for females
+    if (birthData.childGender === "Fêmea" && birthData.childReproductiveStatus) {
+      (childData as any).reproductiveStatus = birthData.childReproductiveStatus;
+    }
+    
     const child = await prisma.animal.create({
-      data: {
-        name: birthData.childName,
-        tag: birthData.childTag,
-        breed: birthData.childBreed,
-        gender: birthData.childGender,
-        birthDate: birthData.birthDate,
-        status: birthData.childStatus,
-      },
+      data: childData,
     });
 
     // Create the birth record linking the mother, father and child
@@ -151,7 +172,46 @@ async function main() {
 
   const now = new Date();
 
-  // Create events distributed across different time periods
+  // Create reproductive events for female animals
+  const reproEvents = [
+    {
+      title: "Inseminação",
+      type: "Manejo Reprodutivo",
+      date: subDays(now, 90),
+      description: "Inseminação artificial",
+      animals: [animals[0].id], // Mimosa
+    },
+    {
+      title: "Confirmação de Gestação",
+      type: "Manejo Reprodutivo",
+      date: subDays(now, 60),
+      description: "Gestação confirmada por ultrassom",
+      animals: [animals[0].id], // Mimosa
+    },
+    {
+      title: "Inseminação",
+      type: "Manejo Reprodutivo",
+      date: subDays(now, 20),
+      description: "Inseminação artificial",
+      animals: [animals[1].id], // Estrela
+    },
+    {
+      title: "Parto",
+      type: "Manejo Reprodutivo",
+      date: subMonths(now, 8),
+      description: "Parto realizado com sucesso",
+      animals: [animals[1].id], // Estrela - previous pregnancy
+    },
+    {
+      title: "Aborto",
+      type: "Manejo Reprodutivo",
+      date: subMonths(now, 3),
+      description: "Registro de aborto",
+      animals: [animals[3].id], // Boneca
+    },
+  ];
+
+  // Add reproductive events to the events list
   const eventsData = [
     // Next week events
     {
@@ -174,7 +234,7 @@ async function main() {
       type: "Manejo Reprodutivo",
       date: addDays(now, 12),
       description: "Inseminação artificial",
-      animals: [animals[1].id, animals[3].id],
+      animals: [animals[3].id], // Boneca
     },
     {
       title: "Pesagem Mensal",
@@ -196,7 +256,7 @@ async function main() {
       type: "Manejo Reprodutivo",
       date: addMonths(now, 2),
       description: "Diagnóstico de gestação por ultrassom",
-      animals: [animals[0].id, animals[1].id, animals[3].id],
+      animals: [animals[1].id, animals[3].id],
     },
     {
       title: "Vacinação Semestral",
@@ -212,6 +272,7 @@ async function main() {
       description: "Avaliação do estado reprodutivo das matrizes",
       animals: [animals[0].id, animals[1].id, animals[3].id],
     },
+    ...reproEvents,
   ];
 
   for (const eventData of eventsData) {

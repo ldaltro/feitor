@@ -12,15 +12,24 @@ datasource db {
 }
 
 model Animal {
-  id        String   @id @default(cuid())
-  name      String
-  tag       String   @unique
-  breed     String
-  gender    String
-  birthDate DateTime
-  status    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id               String    @id @default(cuid())
+  name             String
+  tag              String    @unique
+  breed            String
+  gender           String
+  birthDate        DateTime
+  status           String
+  reproductiveStatus String?  // Não gestante, Inseminada, Gestante, Parto, Aborto
+  inseminationDate  DateTime?
+  expectedBirthDate DateTime?
+  abortionDate      DateTime?
+  weight           Float?
+  notes            String?
+  purchaseDate     DateTime?
+  purchaseValue    Float?
+  active           Boolean   @default(true)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
   // Relations
   motherOf     Birth[]       @relation("Mother")

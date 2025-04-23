@@ -1,0 +1,62 @@
+---
+rules:
+  - title: Avoid useEffect
+    tags: [react, hooks, best-practices]
+    description: >
+      Don't use useEffect unless absolutely necessary (e.g., for certain
+      data-fetching cases). Prefer alternatives like Tanstack Query. useEffect
+      is often a source of bugs and should be used sparingly.
+
+  - title: Minimize comments
+    tags: [code-style, best-practices]
+    description: >
+      Don't write unnecessary comments. Add comments only when explaining
+      complex logic that can't be made clearer through naming or refactoring.
+
+  - title: Tests required
+    tags: [testing, quality, best-practices]
+    command: npm test
+    description: >
+      ALWAYS create or update tests for EVERY code change. Use React Testing
+      Library and Jest. Run tests and ensure they pass before marking a task
+      complete.
+
+  - title: No npm run dev
+    tags: [commands, debugging]
+    description: >
+      Never suggest running the app (e.g., via npm run dev); assume the user
+      already has the app running.
+
+  - title: App in brazilian portuguese code in english
+    tags: [best-practices, quality]
+    description: >
+      Write all code in English, but all UI strings should be in Brazilian
+      Portuguese. Ensure every text string is supplied via proper i18n, not
+      hard-coded.
+
+  - title: Don't mock data
+    tags: [data, best-practices]
+    description: >
+      Don't mock data unless absolutely necessary. Use real data from the
+      database, if we don't have the data we need, update the schema to have it and seed it.
+
+  - title: Use server actions
+    tags: [data, best-practices]
+    description: >
+      Use server actions instead of api routes for the backend work. Fetch the data in a page server component and pass it to a client component.
+
+  - title: Use next js prefetch
+    tags: [data, best-practices]
+    description: >
+      Use next js prefetch to fetch data in the background.
+  
+  - title: Use --legacy-peer-deps
+    tags: [commands, debugging]
+    description: >
+      Use --legacy-peer-deps when installing dependencies.
+
+  - title: Think before suggesting new libraries
+    tags: [commands, debugging]
+    description: >
+      Think before suggesting new libraries. Always check if there is a component already built that does the same and use that instead.
+---

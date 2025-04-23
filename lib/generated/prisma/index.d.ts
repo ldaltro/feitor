@@ -1458,8 +1458,20 @@ export namespace Prisma {
 
   export type AggregateAnimal = {
     _count: AnimalCountAggregateOutputType | null
+    _avg: AnimalAvgAggregateOutputType | null
+    _sum: AnimalSumAggregateOutputType | null
     _min: AnimalMinAggregateOutputType | null
     _max: AnimalMaxAggregateOutputType | null
+  }
+
+  export type AnimalAvgAggregateOutputType = {
+    weight: number | null
+    purchaseValue: number | null
+  }
+
+  export type AnimalSumAggregateOutputType = {
+    weight: number | null
+    purchaseValue: number | null
   }
 
   export type AnimalMinAggregateOutputType = {
@@ -1470,6 +1482,15 @@ export namespace Prisma {
     gender: string | null
     birthDate: Date | null
     status: string | null
+    reproductiveStatus: string | null
+    inseminationDate: Date | null
+    expectedBirthDate: Date | null
+    abortionDate: Date | null
+    weight: number | null
+    notes: string | null
+    purchaseDate: Date | null
+    purchaseValue: number | null
+    active: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     loteId: string | null
@@ -1483,6 +1504,15 @@ export namespace Prisma {
     gender: string | null
     birthDate: Date | null
     status: string | null
+    reproductiveStatus: string | null
+    inseminationDate: Date | null
+    expectedBirthDate: Date | null
+    abortionDate: Date | null
+    weight: number | null
+    notes: string | null
+    purchaseDate: Date | null
+    purchaseValue: number | null
+    active: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     loteId: string | null
@@ -1496,12 +1526,31 @@ export namespace Prisma {
     gender: number
     birthDate: number
     status: number
+    reproductiveStatus: number
+    inseminationDate: number
+    expectedBirthDate: number
+    abortionDate: number
+    weight: number
+    notes: number
+    purchaseDate: number
+    purchaseValue: number
+    active: number
     createdAt: number
     updatedAt: number
     loteId: number
     _all: number
   }
 
+
+  export type AnimalAvgAggregateInputType = {
+    weight?: true
+    purchaseValue?: true
+  }
+
+  export type AnimalSumAggregateInputType = {
+    weight?: true
+    purchaseValue?: true
+  }
 
   export type AnimalMinAggregateInputType = {
     id?: true
@@ -1511,6 +1560,15 @@ export namespace Prisma {
     gender?: true
     birthDate?: true
     status?: true
+    reproductiveStatus?: true
+    inseminationDate?: true
+    expectedBirthDate?: true
+    abortionDate?: true
+    weight?: true
+    notes?: true
+    purchaseDate?: true
+    purchaseValue?: true
+    active?: true
     createdAt?: true
     updatedAt?: true
     loteId?: true
@@ -1524,6 +1582,15 @@ export namespace Prisma {
     gender?: true
     birthDate?: true
     status?: true
+    reproductiveStatus?: true
+    inseminationDate?: true
+    expectedBirthDate?: true
+    abortionDate?: true
+    weight?: true
+    notes?: true
+    purchaseDate?: true
+    purchaseValue?: true
+    active?: true
     createdAt?: true
     updatedAt?: true
     loteId?: true
@@ -1537,6 +1604,15 @@ export namespace Prisma {
     gender?: true
     birthDate?: true
     status?: true
+    reproductiveStatus?: true
+    inseminationDate?: true
+    expectedBirthDate?: true
+    abortionDate?: true
+    weight?: true
+    notes?: true
+    purchaseDate?: true
+    purchaseValue?: true
+    active?: true
     createdAt?: true
     updatedAt?: true
     loteId?: true
@@ -1581,6 +1657,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: AnimalAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AnimalSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: AnimalMinAggregateInputType
@@ -1611,6 +1699,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: AnimalCountAggregateInputType | true
+    _avg?: AnimalAvgAggregateInputType
+    _sum?: AnimalSumAggregateInputType
     _min?: AnimalMinAggregateInputType
     _max?: AnimalMaxAggregateInputType
   }
@@ -1623,10 +1713,21 @@ export namespace Prisma {
     gender: string
     birthDate: Date
     status: string
+    reproductiveStatus: string | null
+    inseminationDate: Date | null
+    expectedBirthDate: Date | null
+    abortionDate: Date | null
+    weight: number | null
+    notes: string | null
+    purchaseDate: Date | null
+    purchaseValue: number | null
+    active: boolean
     createdAt: Date
     updatedAt: Date
     loteId: string | null
     _count: AnimalCountAggregateOutputType | null
+    _avg: AnimalAvgAggregateOutputType | null
+    _sum: AnimalSumAggregateOutputType | null
     _min: AnimalMinAggregateOutputType | null
     _max: AnimalMaxAggregateOutputType | null
   }
@@ -1653,6 +1754,15 @@ export namespace Prisma {
     gender?: boolean
     birthDate?: boolean
     status?: boolean
+    reproductiveStatus?: boolean
+    inseminationDate?: boolean
+    expectedBirthDate?: boolean
+    abortionDate?: boolean
+    weight?: boolean
+    notes?: boolean
+    purchaseDate?: boolean
+    purchaseValue?: boolean
+    active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     loteId?: boolean
@@ -1674,6 +1784,15 @@ export namespace Prisma {
     gender?: boolean
     birthDate?: boolean
     status?: boolean
+    reproductiveStatus?: boolean
+    inseminationDate?: boolean
+    expectedBirthDate?: boolean
+    abortionDate?: boolean
+    weight?: boolean
+    notes?: boolean
+    purchaseDate?: boolean
+    purchaseValue?: boolean
+    active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     loteId?: boolean
@@ -1688,6 +1807,15 @@ export namespace Prisma {
     gender?: boolean
     birthDate?: boolean
     status?: boolean
+    reproductiveStatus?: boolean
+    inseminationDate?: boolean
+    expectedBirthDate?: boolean
+    abortionDate?: boolean
+    weight?: boolean
+    notes?: boolean
+    purchaseDate?: boolean
+    purchaseValue?: boolean
+    active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     loteId?: boolean
@@ -1702,12 +1830,21 @@ export namespace Prisma {
     gender?: boolean
     birthDate?: boolean
     status?: boolean
+    reproductiveStatus?: boolean
+    inseminationDate?: boolean
+    expectedBirthDate?: boolean
+    abortionDate?: boolean
+    weight?: boolean
+    notes?: boolean
+    purchaseDate?: boolean
+    purchaseValue?: boolean
+    active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     loteId?: boolean
   }
 
-  export type AnimalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "tag" | "breed" | "gender" | "birthDate" | "status" | "createdAt" | "updatedAt" | "loteId", ExtArgs["result"]["animal"]>
+  export type AnimalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "tag" | "breed" | "gender" | "birthDate" | "status" | "reproductiveStatus" | "inseminationDate" | "expectedBirthDate" | "abortionDate" | "weight" | "notes" | "purchaseDate" | "purchaseValue" | "active" | "createdAt" | "updatedAt" | "loteId", ExtArgs["result"]["animal"]>
   export type AnimalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     motherOf?: boolean | Animal$motherOfArgs<ExtArgs>
     fatherOf?: boolean | Animal$fatherOfArgs<ExtArgs>
@@ -1744,6 +1881,15 @@ export namespace Prisma {
       gender: string
       birthDate: Date
       status: string
+      reproductiveStatus: string | null
+      inseminationDate: Date | null
+      expectedBirthDate: Date | null
+      abortionDate: Date | null
+      weight: number | null
+      notes: string | null
+      purchaseDate: Date | null
+      purchaseValue: number | null
+      active: boolean
       createdAt: Date
       updatedAt: Date
       loteId: string | null
@@ -2184,6 +2330,15 @@ export namespace Prisma {
     readonly gender: FieldRef<"Animal", 'String'>
     readonly birthDate: FieldRef<"Animal", 'DateTime'>
     readonly status: FieldRef<"Animal", 'String'>
+    readonly reproductiveStatus: FieldRef<"Animal", 'String'>
+    readonly inseminationDate: FieldRef<"Animal", 'DateTime'>
+    readonly expectedBirthDate: FieldRef<"Animal", 'DateTime'>
+    readonly abortionDate: FieldRef<"Animal", 'DateTime'>
+    readonly weight: FieldRef<"Animal", 'Float'>
+    readonly notes: FieldRef<"Animal", 'String'>
+    readonly purchaseDate: FieldRef<"Animal", 'DateTime'>
+    readonly purchaseValue: FieldRef<"Animal", 'Float'>
+    readonly active: FieldRef<"Animal", 'Boolean'>
     readonly createdAt: FieldRef<"Animal", 'DateTime'>
     readonly updatedAt: FieldRef<"Animal", 'DateTime'>
     readonly loteId: FieldRef<"Animal", 'String'>
@@ -8282,6 +8437,15 @@ export namespace Prisma {
     gender: 'gender',
     birthDate: 'birthDate',
     status: 'status',
+    reproductiveStatus: 'reproductiveStatus',
+    inseminationDate: 'inseminationDate',
+    expectedBirthDate: 'expectedBirthDate',
+    abortionDate: 'abortionDate',
+    weight: 'weight',
+    notes: 'notes',
+    purchaseDate: 'purchaseDate',
+    purchaseValue: 'purchaseValue',
+    active: 'active',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     loteId: 'loteId'
@@ -8397,6 +8561,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -8417,6 +8588,15 @@ export namespace Prisma {
     gender?: StringFilter<"Animal"> | string
     birthDate?: DateTimeFilter<"Animal"> | Date | string
     status?: StringFilter<"Animal"> | string
+    reproductiveStatus?: StringNullableFilter<"Animal"> | string | null
+    inseminationDate?: DateTimeNullableFilter<"Animal"> | Date | string | null
+    expectedBirthDate?: DateTimeNullableFilter<"Animal"> | Date | string | null
+    abortionDate?: DateTimeNullableFilter<"Animal"> | Date | string | null
+    weight?: FloatNullableFilter<"Animal"> | number | null
+    notes?: StringNullableFilter<"Animal"> | string | null
+    purchaseDate?: DateTimeNullableFilter<"Animal"> | Date | string | null
+    purchaseValue?: FloatNullableFilter<"Animal"> | number | null
+    active?: BoolFilter<"Animal"> | boolean
     createdAt?: DateTimeFilter<"Animal"> | Date | string
     updatedAt?: DateTimeFilter<"Animal"> | Date | string
     loteId?: StringNullableFilter<"Animal"> | string | null
@@ -8437,6 +8617,15 @@ export namespace Prisma {
     gender?: SortOrder
     birthDate?: SortOrder
     status?: SortOrder
+    reproductiveStatus?: SortOrderInput | SortOrder
+    inseminationDate?: SortOrderInput | SortOrder
+    expectedBirthDate?: SortOrderInput | SortOrder
+    abortionDate?: SortOrderInput | SortOrder
+    weight?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    purchaseDate?: SortOrderInput | SortOrder
+    purchaseValue?: SortOrderInput | SortOrder
+    active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     loteId?: SortOrderInput | SortOrder
@@ -8460,6 +8649,15 @@ export namespace Prisma {
     gender?: StringFilter<"Animal"> | string
     birthDate?: DateTimeFilter<"Animal"> | Date | string
     status?: StringFilter<"Animal"> | string
+    reproductiveStatus?: StringNullableFilter<"Animal"> | string | null
+    inseminationDate?: DateTimeNullableFilter<"Animal"> | Date | string | null
+    expectedBirthDate?: DateTimeNullableFilter<"Animal"> | Date | string | null
+    abortionDate?: DateTimeNullableFilter<"Animal"> | Date | string | null
+    weight?: FloatNullableFilter<"Animal"> | number | null
+    notes?: StringNullableFilter<"Animal"> | string | null
+    purchaseDate?: DateTimeNullableFilter<"Animal"> | Date | string | null
+    purchaseValue?: FloatNullableFilter<"Animal"> | number | null
+    active?: BoolFilter<"Animal"> | boolean
     createdAt?: DateTimeFilter<"Animal"> | Date | string
     updatedAt?: DateTimeFilter<"Animal"> | Date | string
     loteId?: StringNullableFilter<"Animal"> | string | null
@@ -8480,12 +8678,23 @@ export namespace Prisma {
     gender?: SortOrder
     birthDate?: SortOrder
     status?: SortOrder
+    reproductiveStatus?: SortOrderInput | SortOrder
+    inseminationDate?: SortOrderInput | SortOrder
+    expectedBirthDate?: SortOrderInput | SortOrder
+    abortionDate?: SortOrderInput | SortOrder
+    weight?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    purchaseDate?: SortOrderInput | SortOrder
+    purchaseValue?: SortOrderInput | SortOrder
+    active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     loteId?: SortOrderInput | SortOrder
     _count?: AnimalCountOrderByAggregateInput
+    _avg?: AnimalAvgOrderByAggregateInput
     _max?: AnimalMaxOrderByAggregateInput
     _min?: AnimalMinOrderByAggregateInput
+    _sum?: AnimalSumOrderByAggregateInput
   }
 
   export type AnimalScalarWhereWithAggregatesInput = {
@@ -8499,6 +8708,15 @@ export namespace Prisma {
     gender?: StringWithAggregatesFilter<"Animal"> | string
     birthDate?: DateTimeWithAggregatesFilter<"Animal"> | Date | string
     status?: StringWithAggregatesFilter<"Animal"> | string
+    reproductiveStatus?: StringNullableWithAggregatesFilter<"Animal"> | string | null
+    inseminationDate?: DateTimeNullableWithAggregatesFilter<"Animal"> | Date | string | null
+    expectedBirthDate?: DateTimeNullableWithAggregatesFilter<"Animal"> | Date | string | null
+    abortionDate?: DateTimeNullableWithAggregatesFilter<"Animal"> | Date | string | null
+    weight?: FloatNullableWithAggregatesFilter<"Animal"> | number | null
+    notes?: StringNullableWithAggregatesFilter<"Animal"> | string | null
+    purchaseDate?: DateTimeNullableWithAggregatesFilter<"Animal"> | Date | string | null
+    purchaseValue?: FloatNullableWithAggregatesFilter<"Animal"> | number | null
+    active?: BoolWithAggregatesFilter<"Animal"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Animal"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Animal"> | Date | string
     loteId?: StringNullableWithAggregatesFilter<"Animal"> | string | null
@@ -8847,6 +9065,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthCreateNestedManyWithoutMotherInput
@@ -8866,6 +9093,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     loteId?: string | null
@@ -8885,6 +9121,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
@@ -8904,6 +9149,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8923,6 +9177,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     loteId?: string | null
@@ -8936,6 +9199,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8948,6 +9220,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9336,6 +9617,33 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type BirthListRelationFilter = {
     every?: BirthWhereInput
     some?: BirthWhereInput
@@ -9389,9 +9697,23 @@ export namespace Prisma {
     gender?: SortOrder
     birthDate?: SortOrder
     status?: SortOrder
+    reproductiveStatus?: SortOrder
+    inseminationDate?: SortOrder
+    expectedBirthDate?: SortOrder
+    abortionDate?: SortOrder
+    weight?: SortOrder
+    notes?: SortOrder
+    purchaseDate?: SortOrder
+    purchaseValue?: SortOrder
+    active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     loteId?: SortOrder
+  }
+
+  export type AnimalAvgOrderByAggregateInput = {
+    weight?: SortOrder
+    purchaseValue?: SortOrder
   }
 
   export type AnimalMaxOrderByAggregateInput = {
@@ -9402,6 +9724,15 @@ export namespace Prisma {
     gender?: SortOrder
     birthDate?: SortOrder
     status?: SortOrder
+    reproductiveStatus?: SortOrder
+    inseminationDate?: SortOrder
+    expectedBirthDate?: SortOrder
+    abortionDate?: SortOrder
+    weight?: SortOrder
+    notes?: SortOrder
+    purchaseDate?: SortOrder
+    purchaseValue?: SortOrder
+    active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     loteId?: SortOrder
@@ -9415,9 +9746,23 @@ export namespace Prisma {
     gender?: SortOrder
     birthDate?: SortOrder
     status?: SortOrder
+    reproductiveStatus?: SortOrder
+    inseminationDate?: SortOrder
+    expectedBirthDate?: SortOrder
+    abortionDate?: SortOrder
+    weight?: SortOrder
+    notes?: SortOrder
+    purchaseDate?: SortOrder
+    purchaseValue?: SortOrder
+    active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     loteId?: SortOrder
+  }
+
+  export type AnimalSumOrderByAggregateInput = {
+    weight?: SortOrder
+    purchaseValue?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -9466,6 +9811,44 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type AnimalScalarRelationFilter = {
@@ -9776,6 +10159,26 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type BirthUpdateManyWithoutMotherNestedInput = {
     create?: XOR<BirthCreateWithoutMotherInput, BirthUncheckedCreateWithoutMotherInput> | BirthCreateWithoutMotherInput[] | BirthUncheckedCreateWithoutMotherInput[]
     connectOrCreate?: BirthCreateOrConnectWithoutMotherInput | BirthCreateOrConnectWithoutMotherInput[]
@@ -9864,10 +10267,6 @@ export namespace Prisma {
     delete?: LoteWhereInput | boolean
     connect?: LoteWhereUniqueInput
     update?: XOR<XOR<LoteUpdateToOneWithWhereWithoutAnimaisInput, LoteUpdateWithoutAnimaisInput>, LoteUncheckedUpdateWithoutAnimaisInput>
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type BirthUncheckedUpdateManyWithoutMotherNestedInput = {
@@ -10181,6 +10580,33 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -10249,6 +10675,44 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedFloatFilter<$PrismaModel = never> = {
@@ -10652,6 +11116,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     fatherOf?: BirthCreateNestedManyWithoutFatherInput
@@ -10670,6 +11143,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     loteId?: string | null
@@ -10693,6 +11175,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthCreateNestedManyWithoutMotherInput
@@ -10711,6 +11202,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     loteId?: string | null
@@ -10734,6 +11234,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthCreateNestedManyWithoutMotherInput
@@ -10752,6 +11261,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     loteId?: string | null
@@ -10775,6 +11293,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthCreateNestedManyWithoutMotherInput
@@ -10793,6 +11320,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     loteId?: string | null
@@ -10827,6 +11363,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     fatherOf?: BirthUpdateManyWithoutFatherNestedInput
@@ -10845,6 +11390,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10874,6 +11428,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
@@ -10892,6 +11455,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10921,6 +11493,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
@@ -10939,6 +11520,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10968,6 +11558,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
@@ -10986,6 +11585,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -11004,6 +11612,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthCreateNestedManyWithoutMotherInput
@@ -11022,6 +11639,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     loteId?: string | null
@@ -11056,6 +11682,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
@@ -11074,6 +11709,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -11156,6 +11800,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthCreateNestedManyWithoutMotherInput
@@ -11174,6 +11827,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     loteId?: string | null
@@ -11239,6 +11901,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
@@ -11257,6 +11928,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -11275,6 +11955,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthCreateNestedManyWithoutMotherInput
@@ -11293,6 +11982,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
@@ -11339,6 +12037,15 @@ export namespace Prisma {
     gender?: StringFilter<"Animal"> | string
     birthDate?: DateTimeFilter<"Animal"> | Date | string
     status?: StringFilter<"Animal"> | string
+    reproductiveStatus?: StringNullableFilter<"Animal"> | string | null
+    inseminationDate?: DateTimeNullableFilter<"Animal"> | Date | string | null
+    expectedBirthDate?: DateTimeNullableFilter<"Animal"> | Date | string | null
+    abortionDate?: DateTimeNullableFilter<"Animal"> | Date | string | null
+    weight?: FloatNullableFilter<"Animal"> | number | null
+    notes?: StringNullableFilter<"Animal"> | string | null
+    purchaseDate?: DateTimeNullableFilter<"Animal"> | Date | string | null
+    purchaseValue?: FloatNullableFilter<"Animal"> | number | null
+    active?: BoolFilter<"Animal"> | boolean
     createdAt?: DateTimeFilter<"Animal"> | Date | string
     updatedAt?: DateTimeFilter<"Animal"> | Date | string
     loteId?: StringNullableFilter<"Animal"> | string | null
@@ -11568,6 +12275,15 @@ export namespace Prisma {
     gender: string
     birthDate: Date | string
     status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -11580,6 +12296,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
@@ -11598,6 +12323,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
@@ -11616,6 +12350,15 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
