@@ -10,14 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Pagination,
   PaginationContent,
   PaginationEllipsis,
@@ -29,7 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { MoreHorizontal, Search, Edit, Trash, Eye, Users } from "lucide-react";
+import { Search, Edit, Trash, Eye, Users } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { deleteLote } from "@/lib/actions/lotes";
@@ -218,45 +210,6 @@ export function LotesListClient({ lotes }: LotesListClientProps) {
                         {lote.descricao || "-"}
                       </CardDescription>
                     </div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger
-                        asChild
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          disabled={isDeleting}
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">{t.actions}</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>{t.actions}</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem asChild>
-                          <Link href={`/lotes/${lote.id}`}>
-                            <Eye className="mr-2 h-4 w-4" />
-                            {t.view}
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href={`/lotes/${lote.id}/editar`}>
-                            <Edit className="mr-2 h-4 w-4" />
-                            {t.edit}
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className="text-destructive"
-                          onClick={(e) => handleDelete(lote.id, e)}
-                          disabled={isDeleting}
-                        >
-                          <Trash className="mr-2 h-4 w-4" />
-                          {t.delete}
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -290,6 +243,40 @@ export function LotesListClient({ lotes }: LotesListClientProps) {
                     </div>
                   </div>
                 </CardContent>
+                <CardFooter className="flex justify-center gap-2 pt-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      router.push(`/lotes/${lote.id}`);
+                    }}
+                  >
+                    <Eye className="h-4 w-4 mr-1" />
+                    {t.view}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      router.push(`/lotes/${lote.id}/editar`);
+                    }}
+                  >
+                    <Edit className="h-4 w-4 mr-1" />
+                    {t.edit}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-destructive hover:bg-destructive/10"
+                    onClick={(e) => handleDelete(lote.id, e)}
+                    disabled={isDeleting}
+                  >
+                    <Trash className="h-4 w-4 mr-1" />
+                    {t.delete}
+                  </Button>
+                </CardFooter>
               </Card>
             ))}
           </div>

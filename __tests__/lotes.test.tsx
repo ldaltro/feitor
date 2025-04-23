@@ -153,6 +153,28 @@ describe("LotesListClient", () => {
     }
   });
 
+  it("navega para o detalhe do lote ao clicar no botão de visualizar", () => {
+    render(<LotesListClient lotes={mockLotes} />);
+
+    // Encontrar o primeiro botão de visualizar e clicar nele
+    const viewButtons = screen.getAllByText("Visualizar");
+    fireEvent.click(viewButtons[0]);
+
+    // Verificar se a navegação ocorreu
+    expect(mockPush).toHaveBeenCalledWith("/lotes/1");
+  });
+
+  it("navega para editar lote ao clicar no botão de editar", () => {
+    render(<LotesListClient lotes={mockLotes} />);
+
+    // Encontrar o primeiro botão de editar e clicar nele
+    const editButtons = screen.getAllByText("Editar");
+    fireEvent.click(editButtons[0]);
+
+    // Verificar se a navegação ocorreu
+    expect(mockPush).toHaveBeenCalledWith("/lotes/1/editar");
+  });
+
   it("filtra lotes por termo de busca", () => {
     render(<LotesListClient lotes={mockLotes} />);
 
@@ -182,23 +204,13 @@ describe("LotesListClient", () => {
   });
 
   it("executa a ação de deletar ao clicar no botão de excluir", async () => {
-    jest.useFakeTimers();
     render(<LotesListClient lotes={mockLotes} />);
 
-    // Open the first dropdown menu
-    const menuButtons = screen.getAllByRole("button", { name: "Ações" });
-    fireEvent.click(menuButtons[0]);
-
-    // Wait for dropdown to open
-    jest.advanceTimersByTime(100);
-
-    // Since we can't find the delete button by text, we'll directly trigger the delete
-    // Simulate the delete action by calling the deleteLote function
-    deleteLote("1");
+    // Find the delete button for the first card
+    const deleteButtons = screen.getAllByText("Excluir");
+    fireEvent.click(deleteButtons[0]);
 
     // Check if deleteLote was called with correct ID
     expect(deleteLote).toHaveBeenCalledWith("1");
-
-    jest.useRealTimers();
   });
 });
