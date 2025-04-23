@@ -6,6 +6,7 @@ export const birthRouter = router({
     return ctx.db.birth.findMany({
       include: {
         mother: true,
+        father: true,
         child: true,
       },
       orderBy: { birthDate: "desc" },
@@ -19,6 +20,7 @@ export const birthRouter = router({
         where: { id: input.id },
         include: {
           mother: true,
+          father: true,
           child: true,
         },
       });
@@ -28,6 +30,7 @@ export const birthRouter = router({
     .input(
       z.object({
         motherId: z.string(),
+        fatherId: z.string(),
         childName: z.string(),
         childTag: z.string(),
         childBreed: z.string(),
@@ -54,10 +57,12 @@ export const birthRouter = router({
         data: {
           birthDate: input.birthDate,
           motherId: input.motherId,
+          fatherId: input.fatherId,
           childId: child.id,
         },
         include: {
           mother: true,
+          father: true,
           child: true,
         },
       });

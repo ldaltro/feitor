@@ -24,9 +24,11 @@ model Animal {
 
   // Relations
   motherOf     Birth[]       @relation("Mother")
+  fatherOf     Birth[]       @relation("Father")
   childOf      Birth?        @relation("Child")
   transactions Transaction[]
   events       EventAnimal[]
+  Birth        Birth[]
 }
 
 model Birth {
@@ -37,9 +39,13 @@ model Birth {
 
   // Relations
   motherId String
-  mother   Animal @relation("Mother", fields: [motherId], references: [id])
-  childId  String @unique
-  child    Animal @relation("Child", fields: [childId], references: [id])
+  mother   Animal  @relation("Mother", fields: [motherId], references: [id])
+  fatherId String
+  father   Animal  @relation("Father", fields: [fatherId], references: [id])
+  childId  String  @unique
+  child    Animal  @relation("Child", fields: [childId], references: [id])
+  Animal   Animal? @relation(fields: [animalId], references: [id])
+  animalId String?
 }
 
 model Transaction {

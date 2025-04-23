@@ -1234,14 +1234,18 @@ export namespace Prisma {
 
   export type AnimalCountOutputType = {
     motherOf: number
+    fatherOf: number
     transactions: number
     events: number
+    Birth: number
   }
 
   export type AnimalCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     motherOf?: boolean | AnimalCountOutputTypeCountMotherOfArgs
+    fatherOf?: boolean | AnimalCountOutputTypeCountFatherOfArgs
     transactions?: boolean | AnimalCountOutputTypeCountTransactionsArgs
     events?: boolean | AnimalCountOutputTypeCountEventsArgs
+    Birth?: boolean | AnimalCountOutputTypeCountBirthArgs
   }
 
   // Custom InputTypes
@@ -1265,6 +1269,13 @@ export namespace Prisma {
   /**
    * AnimalCountOutputType without action
    */
+  export type AnimalCountOutputTypeCountFatherOfArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BirthWhereInput
+  }
+
+  /**
+   * AnimalCountOutputType without action
+   */
   export type AnimalCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TransactionWhereInput
   }
@@ -1274,6 +1285,13 @@ export namespace Prisma {
    */
   export type AnimalCountOutputTypeCountEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EventAnimalWhereInput
+  }
+
+  /**
+   * AnimalCountOutputType without action
+   */
+  export type AnimalCountOutputTypeCountBirthArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BirthWhereInput
   }
 
 
@@ -1509,9 +1527,11 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     motherOf?: boolean | Animal$motherOfArgs<ExtArgs>
+    fatherOf?: boolean | Animal$fatherOfArgs<ExtArgs>
     childOf?: boolean | Animal$childOfArgs<ExtArgs>
     transactions?: boolean | Animal$transactionsArgs<ExtArgs>
     events?: boolean | Animal$eventsArgs<ExtArgs>
+    Birth?: boolean | Animal$BirthArgs<ExtArgs>
     _count?: boolean | AnimalCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["animal"]>
 
@@ -1554,9 +1574,11 @@ export namespace Prisma {
   export type AnimalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "tag" | "breed" | "gender" | "birthDate" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["animal"]>
   export type AnimalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     motherOf?: boolean | Animal$motherOfArgs<ExtArgs>
+    fatherOf?: boolean | Animal$fatherOfArgs<ExtArgs>
     childOf?: boolean | Animal$childOfArgs<ExtArgs>
     transactions?: boolean | Animal$transactionsArgs<ExtArgs>
     events?: boolean | Animal$eventsArgs<ExtArgs>
+    Birth?: boolean | Animal$BirthArgs<ExtArgs>
     _count?: boolean | AnimalCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AnimalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1566,9 +1588,11 @@ export namespace Prisma {
     name: "Animal"
     objects: {
       motherOf: Prisma.$BirthPayload<ExtArgs>[]
+      fatherOf: Prisma.$BirthPayload<ExtArgs>[]
       childOf: Prisma.$BirthPayload<ExtArgs> | null
       transactions: Prisma.$TransactionPayload<ExtArgs>[]
       events: Prisma.$EventAnimalPayload<ExtArgs>[]
+      Birth: Prisma.$BirthPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1975,9 +1999,11 @@ export namespace Prisma {
   export interface Prisma__AnimalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     motherOf<T extends Animal$motherOfArgs<ExtArgs> = {}>(args?: Subset<T, Animal$motherOfArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BirthPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    fatherOf<T extends Animal$fatherOfArgs<ExtArgs> = {}>(args?: Subset<T, Animal$fatherOfArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BirthPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     childOf<T extends Animal$childOfArgs<ExtArgs> = {}>(args?: Subset<T, Animal$childOfArgs<ExtArgs>>): Prisma__BirthClient<$Result.GetResult<Prisma.$BirthPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     transactions<T extends Animal$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Animal$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     events<T extends Animal$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Animal$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Birth<T extends Animal$BirthArgs<ExtArgs> = {}>(args?: Subset<T, Animal$BirthArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BirthPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2426,6 +2452,30 @@ export namespace Prisma {
   }
 
   /**
+   * Animal.fatherOf
+   */
+  export type Animal$fatherOfArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Birth
+     */
+    select?: BirthSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Birth
+     */
+    omit?: BirthOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BirthInclude<ExtArgs> | null
+    where?: BirthWhereInput
+    orderBy?: BirthOrderByWithRelationInput | BirthOrderByWithRelationInput[]
+    cursor?: BirthWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BirthScalarFieldEnum | BirthScalarFieldEnum[]
+  }
+
+  /**
    * Animal.childOf
    */
   export type Animal$childOfArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2493,6 +2543,30 @@ export namespace Prisma {
   }
 
   /**
+   * Animal.Birth
+   */
+  export type Animal$BirthArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Birth
+     */
+    select?: BirthSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Birth
+     */
+    omit?: BirthOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BirthInclude<ExtArgs> | null
+    where?: BirthWhereInput
+    orderBy?: BirthOrderByWithRelationInput | BirthOrderByWithRelationInput[]
+    cursor?: BirthWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BirthScalarFieldEnum | BirthScalarFieldEnum[]
+  }
+
+  /**
    * Animal without action
    */
   export type AnimalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2527,7 +2601,9 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     motherId: string | null
+    fatherId: string | null
     childId: string | null
+    animalId: string | null
   }
 
   export type BirthMaxAggregateOutputType = {
@@ -2536,7 +2612,9 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     motherId: string | null
+    fatherId: string | null
     childId: string | null
+    animalId: string | null
   }
 
   export type BirthCountAggregateOutputType = {
@@ -2545,7 +2623,9 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     motherId: number
+    fatherId: number
     childId: number
+    animalId: number
     _all: number
   }
 
@@ -2556,7 +2636,9 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     motherId?: true
+    fatherId?: true
     childId?: true
+    animalId?: true
   }
 
   export type BirthMaxAggregateInputType = {
@@ -2565,7 +2647,9 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     motherId?: true
+    fatherId?: true
     childId?: true
+    animalId?: true
   }
 
   export type BirthCountAggregateInputType = {
@@ -2574,7 +2658,9 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     motherId?: true
+    fatherId?: true
     childId?: true
+    animalId?: true
     _all?: true
   }
 
@@ -2656,7 +2742,9 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     motherId: string
+    fatherId: string
     childId: string
+    animalId: string | null
     _count: BirthCountAggregateOutputType | null
     _min: BirthMinAggregateOutputType | null
     _max: BirthMaxAggregateOutputType | null
@@ -2682,9 +2770,13 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     motherId?: boolean
+    fatherId?: boolean
     childId?: boolean
+    animalId?: boolean
     mother?: boolean | AnimalDefaultArgs<ExtArgs>
+    father?: boolean | AnimalDefaultArgs<ExtArgs>
     child?: boolean | AnimalDefaultArgs<ExtArgs>
+    Animal?: boolean | Birth$AnimalArgs<ExtArgs>
   }, ExtArgs["result"]["birth"]>
 
   export type BirthSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2693,9 +2785,13 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     motherId?: boolean
+    fatherId?: boolean
     childId?: boolean
+    animalId?: boolean
     mother?: boolean | AnimalDefaultArgs<ExtArgs>
+    father?: boolean | AnimalDefaultArgs<ExtArgs>
     child?: boolean | AnimalDefaultArgs<ExtArgs>
+    Animal?: boolean | Birth$AnimalArgs<ExtArgs>
   }, ExtArgs["result"]["birth"]>
 
   export type BirthSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2704,9 +2800,13 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     motherId?: boolean
+    fatherId?: boolean
     childId?: boolean
+    animalId?: boolean
     mother?: boolean | AnimalDefaultArgs<ExtArgs>
+    father?: boolean | AnimalDefaultArgs<ExtArgs>
     child?: boolean | AnimalDefaultArgs<ExtArgs>
+    Animal?: boolean | Birth$AnimalArgs<ExtArgs>
   }, ExtArgs["result"]["birth"]>
 
   export type BirthSelectScalar = {
@@ -2715,28 +2815,38 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     motherId?: boolean
+    fatherId?: boolean
     childId?: boolean
+    animalId?: boolean
   }
 
-  export type BirthOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "birthDate" | "createdAt" | "updatedAt" | "motherId" | "childId", ExtArgs["result"]["birth"]>
+  export type BirthOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "birthDate" | "createdAt" | "updatedAt" | "motherId" | "fatherId" | "childId" | "animalId", ExtArgs["result"]["birth"]>
   export type BirthInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     mother?: boolean | AnimalDefaultArgs<ExtArgs>
+    father?: boolean | AnimalDefaultArgs<ExtArgs>
     child?: boolean | AnimalDefaultArgs<ExtArgs>
+    Animal?: boolean | Birth$AnimalArgs<ExtArgs>
   }
   export type BirthIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     mother?: boolean | AnimalDefaultArgs<ExtArgs>
+    father?: boolean | AnimalDefaultArgs<ExtArgs>
     child?: boolean | AnimalDefaultArgs<ExtArgs>
+    Animal?: boolean | Birth$AnimalArgs<ExtArgs>
   }
   export type BirthIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     mother?: boolean | AnimalDefaultArgs<ExtArgs>
+    father?: boolean | AnimalDefaultArgs<ExtArgs>
     child?: boolean | AnimalDefaultArgs<ExtArgs>
+    Animal?: boolean | Birth$AnimalArgs<ExtArgs>
   }
 
   export type $BirthPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Birth"
     objects: {
       mother: Prisma.$AnimalPayload<ExtArgs>
+      father: Prisma.$AnimalPayload<ExtArgs>
       child: Prisma.$AnimalPayload<ExtArgs>
+      Animal: Prisma.$AnimalPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2744,7 +2854,9 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       motherId: string
+      fatherId: string
       childId: string
+      animalId: string | null
     }, ExtArgs["result"]["birth"]>
     composites: {}
   }
@@ -3140,7 +3252,9 @@ export namespace Prisma {
   export interface Prisma__BirthClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     mother<T extends AnimalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AnimalDefaultArgs<ExtArgs>>): Prisma__AnimalClient<$Result.GetResult<Prisma.$AnimalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    father<T extends AnimalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AnimalDefaultArgs<ExtArgs>>): Prisma__AnimalClient<$Result.GetResult<Prisma.$AnimalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     child<T extends AnimalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AnimalDefaultArgs<ExtArgs>>): Prisma__AnimalClient<$Result.GetResult<Prisma.$AnimalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    Animal<T extends Birth$AnimalArgs<ExtArgs> = {}>(args?: Subset<T, Birth$AnimalArgs<ExtArgs>>): Prisma__AnimalClient<$Result.GetResult<Prisma.$AnimalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3175,7 +3289,9 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Birth", 'DateTime'>
     readonly updatedAt: FieldRef<"Birth", 'DateTime'>
     readonly motherId: FieldRef<"Birth", 'String'>
+    readonly fatherId: FieldRef<"Birth", 'String'>
     readonly childId: FieldRef<"Birth", 'String'>
+    readonly animalId: FieldRef<"Birth", 'String'>
   }
     
 
@@ -3567,6 +3683,25 @@ export namespace Prisma {
      * Limit how many Births to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Birth.Animal
+   */
+  export type Birth$AnimalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Animal
+     */
+    select?: AnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Animal
+     */
+    omit?: AnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimalInclude<ExtArgs> | null
+    where?: AnimalWhereInput
   }
 
   /**
@@ -6907,7 +7042,9 @@ export namespace Prisma {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     motherId: 'motherId',
-    childId: 'childId'
+    fatherId: 'fatherId',
+    childId: 'childId',
+    animalId: 'animalId'
   };
 
   export type BirthScalarFieldEnum = (typeof BirthScalarFieldEnum)[keyof typeof BirthScalarFieldEnum]
@@ -6957,6 +7094,14 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -7009,9 +7154,11 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Animal"> | Date | string
     updatedAt?: DateTimeFilter<"Animal"> | Date | string
     motherOf?: BirthListRelationFilter
+    fatherOf?: BirthListRelationFilter
     childOf?: XOR<BirthNullableScalarRelationFilter, BirthWhereInput> | null
     transactions?: TransactionListRelationFilter
     events?: EventAnimalListRelationFilter
+    Birth?: BirthListRelationFilter
   }
 
   export type AnimalOrderByWithRelationInput = {
@@ -7025,9 +7172,11 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     motherOf?: BirthOrderByRelationAggregateInput
+    fatherOf?: BirthOrderByRelationAggregateInput
     childOf?: BirthOrderByWithRelationInput
     transactions?: TransactionOrderByRelationAggregateInput
     events?: EventAnimalOrderByRelationAggregateInput
+    Birth?: BirthOrderByRelationAggregateInput
   }
 
   export type AnimalWhereUniqueInput = Prisma.AtLeast<{
@@ -7044,9 +7193,11 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Animal"> | Date | string
     updatedAt?: DateTimeFilter<"Animal"> | Date | string
     motherOf?: BirthListRelationFilter
+    fatherOf?: BirthListRelationFilter
     childOf?: XOR<BirthNullableScalarRelationFilter, BirthWhereInput> | null
     transactions?: TransactionListRelationFilter
     events?: EventAnimalListRelationFilter
+    Birth?: BirthListRelationFilter
   }, "id" | "tag">
 
   export type AnimalOrderByWithAggregationInput = {
@@ -7088,9 +7239,13 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Birth"> | Date | string
     updatedAt?: DateTimeFilter<"Birth"> | Date | string
     motherId?: StringFilter<"Birth"> | string
+    fatherId?: StringFilter<"Birth"> | string
     childId?: StringFilter<"Birth"> | string
+    animalId?: StringNullableFilter<"Birth"> | string | null
     mother?: XOR<AnimalScalarRelationFilter, AnimalWhereInput>
+    father?: XOR<AnimalScalarRelationFilter, AnimalWhereInput>
     child?: XOR<AnimalScalarRelationFilter, AnimalWhereInput>
+    Animal?: XOR<AnimalNullableScalarRelationFilter, AnimalWhereInput> | null
   }
 
   export type BirthOrderByWithRelationInput = {
@@ -7099,9 +7254,13 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     motherId?: SortOrder
+    fatherId?: SortOrder
     childId?: SortOrder
+    animalId?: SortOrderInput | SortOrder
     mother?: AnimalOrderByWithRelationInput
+    father?: AnimalOrderByWithRelationInput
     child?: AnimalOrderByWithRelationInput
+    Animal?: AnimalOrderByWithRelationInput
   }
 
   export type BirthWhereUniqueInput = Prisma.AtLeast<{
@@ -7114,8 +7273,12 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Birth"> | Date | string
     updatedAt?: DateTimeFilter<"Birth"> | Date | string
     motherId?: StringFilter<"Birth"> | string
+    fatherId?: StringFilter<"Birth"> | string
+    animalId?: StringNullableFilter<"Birth"> | string | null
     mother?: XOR<AnimalScalarRelationFilter, AnimalWhereInput>
+    father?: XOR<AnimalScalarRelationFilter, AnimalWhereInput>
     child?: XOR<AnimalScalarRelationFilter, AnimalWhereInput>
+    Animal?: XOR<AnimalNullableScalarRelationFilter, AnimalWhereInput> | null
   }, "id" | "childId">
 
   export type BirthOrderByWithAggregationInput = {
@@ -7124,7 +7287,9 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     motherId?: SortOrder
+    fatherId?: SortOrder
     childId?: SortOrder
+    animalId?: SortOrderInput | SortOrder
     _count?: BirthCountOrderByAggregateInput
     _max?: BirthMaxOrderByAggregateInput
     _min?: BirthMinOrderByAggregateInput
@@ -7139,7 +7304,9 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Birth"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Birth"> | Date | string
     motherId?: StringWithAggregatesFilter<"Birth"> | string
+    fatherId?: StringWithAggregatesFilter<"Birth"> | string
     childId?: StringWithAggregatesFilter<"Birth"> | string
+    animalId?: StringNullableWithAggregatesFilter<"Birth"> | string | null
   }
 
   export type TransactionWhereInput = {
@@ -7349,9 +7516,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthCreateNestedManyWithoutMotherInput
+    fatherOf?: BirthCreateNestedManyWithoutFatherInput
     childOf?: BirthCreateNestedOneWithoutChildInput
     transactions?: TransactionCreateNestedManyWithoutAnimalInput
     events?: EventAnimalCreateNestedManyWithoutAnimalInput
+    Birth?: BirthCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalUncheckedCreateInput = {
@@ -7365,9 +7534,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
+    fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
     childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutAnimalInput
     events?: EventAnimalUncheckedCreateNestedManyWithoutAnimalInput
+    Birth?: BirthUncheckedCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalUpdateInput = {
@@ -7381,9 +7552,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
+    fatherOf?: BirthUpdateManyWithoutFatherNestedInput
     childOf?: BirthUpdateOneWithoutChildNestedInput
     transactions?: TransactionUpdateManyWithoutAnimalNestedInput
     events?: EventAnimalUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalUncheckedUpdateInput = {
@@ -7397,9 +7570,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
+    fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
     childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutAnimalNestedInput
     events?: EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUncheckedUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalCreateManyInput = {
@@ -7444,7 +7619,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     mother: AnimalCreateNestedOneWithoutMotherOfInput
+    father: AnimalCreateNestedOneWithoutFatherOfInput
     child: AnimalCreateNestedOneWithoutChildOfInput
+    Animal?: AnimalCreateNestedOneWithoutBirthInput
   }
 
   export type BirthUncheckedCreateInput = {
@@ -7453,7 +7630,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     motherId: string
+    fatherId: string
     childId: string
+    animalId?: string | null
   }
 
   export type BirthUpdateInput = {
@@ -7462,7 +7641,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     mother?: AnimalUpdateOneRequiredWithoutMotherOfNestedInput
+    father?: AnimalUpdateOneRequiredWithoutFatherOfNestedInput
     child?: AnimalUpdateOneRequiredWithoutChildOfNestedInput
+    Animal?: AnimalUpdateOneWithoutBirthNestedInput
   }
 
   export type BirthUncheckedUpdateInput = {
@@ -7471,7 +7652,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherId?: StringFieldUpdateOperationsInput | string
+    fatherId?: StringFieldUpdateOperationsInput | string
     childId?: StringFieldUpdateOperationsInput | string
+    animalId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BirthCreateManyInput = {
@@ -7480,7 +7663,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     motherId: string
+    fatherId: string
     childId: string
+    animalId?: string | null
   }
 
   export type BirthUpdateManyMutationInput = {
@@ -7496,7 +7681,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherId?: StringFieldUpdateOperationsInput | string
+    fatherId?: StringFieldUpdateOperationsInput | string
     childId?: StringFieldUpdateOperationsInput | string
+    animalId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TransactionCreateInput = {
@@ -7830,9 +8017,33 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type AnimalScalarRelationFilter = {
     is?: AnimalWhereInput
     isNot?: AnimalWhereInput
+  }
+
+  export type AnimalNullableScalarRelationFilter = {
+    is?: AnimalWhereInput | null
+    isNot?: AnimalWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type BirthCountOrderByAggregateInput = {
@@ -7841,7 +8052,9 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     motherId?: SortOrder
+    fatherId?: SortOrder
     childId?: SortOrder
+    animalId?: SortOrder
   }
 
   export type BirthMaxOrderByAggregateInput = {
@@ -7850,7 +8063,9 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     motherId?: SortOrder
+    fatherId?: SortOrder
     childId?: SortOrder
+    animalId?: SortOrder
   }
 
   export type BirthMinOrderByAggregateInput = {
@@ -7859,7 +8074,26 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     motherId?: SortOrder
+    fatherId?: SortOrder
     childId?: SortOrder
+    animalId?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -8001,6 +8235,13 @@ export namespace Prisma {
     connect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
   }
 
+  export type BirthCreateNestedManyWithoutFatherInput = {
+    create?: XOR<BirthCreateWithoutFatherInput, BirthUncheckedCreateWithoutFatherInput> | BirthCreateWithoutFatherInput[] | BirthUncheckedCreateWithoutFatherInput[]
+    connectOrCreate?: BirthCreateOrConnectWithoutFatherInput | BirthCreateOrConnectWithoutFatherInput[]
+    createMany?: BirthCreateManyFatherInputEnvelope
+    connect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+  }
+
   export type BirthCreateNestedOneWithoutChildInput = {
     create?: XOR<BirthCreateWithoutChildInput, BirthUncheckedCreateWithoutChildInput>
     connectOrCreate?: BirthCreateOrConnectWithoutChildInput
@@ -8021,10 +8262,24 @@ export namespace Prisma {
     connect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
   }
 
+  export type BirthCreateNestedManyWithoutAnimalInput = {
+    create?: XOR<BirthCreateWithoutAnimalInput, BirthUncheckedCreateWithoutAnimalInput> | BirthCreateWithoutAnimalInput[] | BirthUncheckedCreateWithoutAnimalInput[]
+    connectOrCreate?: BirthCreateOrConnectWithoutAnimalInput | BirthCreateOrConnectWithoutAnimalInput[]
+    createMany?: BirthCreateManyAnimalInputEnvelope
+    connect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+  }
+
   export type BirthUncheckedCreateNestedManyWithoutMotherInput = {
     create?: XOR<BirthCreateWithoutMotherInput, BirthUncheckedCreateWithoutMotherInput> | BirthCreateWithoutMotherInput[] | BirthUncheckedCreateWithoutMotherInput[]
     connectOrCreate?: BirthCreateOrConnectWithoutMotherInput | BirthCreateOrConnectWithoutMotherInput[]
     createMany?: BirthCreateManyMotherInputEnvelope
+    connect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+  }
+
+  export type BirthUncheckedCreateNestedManyWithoutFatherInput = {
+    create?: XOR<BirthCreateWithoutFatherInput, BirthUncheckedCreateWithoutFatherInput> | BirthCreateWithoutFatherInput[] | BirthUncheckedCreateWithoutFatherInput[]
+    connectOrCreate?: BirthCreateOrConnectWithoutFatherInput | BirthCreateOrConnectWithoutFatherInput[]
+    createMany?: BirthCreateManyFatherInputEnvelope
     connect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
   }
 
@@ -8048,6 +8303,13 @@ export namespace Prisma {
     connect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
   }
 
+  export type BirthUncheckedCreateNestedManyWithoutAnimalInput = {
+    create?: XOR<BirthCreateWithoutAnimalInput, BirthUncheckedCreateWithoutAnimalInput> | BirthCreateWithoutAnimalInput[] | BirthUncheckedCreateWithoutAnimalInput[]
+    connectOrCreate?: BirthCreateOrConnectWithoutAnimalInput | BirthCreateOrConnectWithoutAnimalInput[]
+    createMany?: BirthCreateManyAnimalInputEnvelope
+    connect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -8067,6 +8329,20 @@ export namespace Prisma {
     connect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
     update?: BirthUpdateWithWhereUniqueWithoutMotherInput | BirthUpdateWithWhereUniqueWithoutMotherInput[]
     updateMany?: BirthUpdateManyWithWhereWithoutMotherInput | BirthUpdateManyWithWhereWithoutMotherInput[]
+    deleteMany?: BirthScalarWhereInput | BirthScalarWhereInput[]
+  }
+
+  export type BirthUpdateManyWithoutFatherNestedInput = {
+    create?: XOR<BirthCreateWithoutFatherInput, BirthUncheckedCreateWithoutFatherInput> | BirthCreateWithoutFatherInput[] | BirthUncheckedCreateWithoutFatherInput[]
+    connectOrCreate?: BirthCreateOrConnectWithoutFatherInput | BirthCreateOrConnectWithoutFatherInput[]
+    upsert?: BirthUpsertWithWhereUniqueWithoutFatherInput | BirthUpsertWithWhereUniqueWithoutFatherInput[]
+    createMany?: BirthCreateManyFatherInputEnvelope
+    set?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    disconnect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    delete?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    connect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    update?: BirthUpdateWithWhereUniqueWithoutFatherInput | BirthUpdateWithWhereUniqueWithoutFatherInput[]
+    updateMany?: BirthUpdateManyWithWhereWithoutFatherInput | BirthUpdateManyWithWhereWithoutFatherInput[]
     deleteMany?: BirthScalarWhereInput | BirthScalarWhereInput[]
   }
 
@@ -8108,6 +8384,20 @@ export namespace Prisma {
     deleteMany?: EventAnimalScalarWhereInput | EventAnimalScalarWhereInput[]
   }
 
+  export type BirthUpdateManyWithoutAnimalNestedInput = {
+    create?: XOR<BirthCreateWithoutAnimalInput, BirthUncheckedCreateWithoutAnimalInput> | BirthCreateWithoutAnimalInput[] | BirthUncheckedCreateWithoutAnimalInput[]
+    connectOrCreate?: BirthCreateOrConnectWithoutAnimalInput | BirthCreateOrConnectWithoutAnimalInput[]
+    upsert?: BirthUpsertWithWhereUniqueWithoutAnimalInput | BirthUpsertWithWhereUniqueWithoutAnimalInput[]
+    createMany?: BirthCreateManyAnimalInputEnvelope
+    set?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    disconnect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    delete?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    connect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    update?: BirthUpdateWithWhereUniqueWithoutAnimalInput | BirthUpdateWithWhereUniqueWithoutAnimalInput[]
+    updateMany?: BirthUpdateManyWithWhereWithoutAnimalInput | BirthUpdateManyWithWhereWithoutAnimalInput[]
+    deleteMany?: BirthScalarWhereInput | BirthScalarWhereInput[]
+  }
+
   export type BirthUncheckedUpdateManyWithoutMotherNestedInput = {
     create?: XOR<BirthCreateWithoutMotherInput, BirthUncheckedCreateWithoutMotherInput> | BirthCreateWithoutMotherInput[] | BirthUncheckedCreateWithoutMotherInput[]
     connectOrCreate?: BirthCreateOrConnectWithoutMotherInput | BirthCreateOrConnectWithoutMotherInput[]
@@ -8119,6 +8409,20 @@ export namespace Prisma {
     connect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
     update?: BirthUpdateWithWhereUniqueWithoutMotherInput | BirthUpdateWithWhereUniqueWithoutMotherInput[]
     updateMany?: BirthUpdateManyWithWhereWithoutMotherInput | BirthUpdateManyWithWhereWithoutMotherInput[]
+    deleteMany?: BirthScalarWhereInput | BirthScalarWhereInput[]
+  }
+
+  export type BirthUncheckedUpdateManyWithoutFatherNestedInput = {
+    create?: XOR<BirthCreateWithoutFatherInput, BirthUncheckedCreateWithoutFatherInput> | BirthCreateWithoutFatherInput[] | BirthUncheckedCreateWithoutFatherInput[]
+    connectOrCreate?: BirthCreateOrConnectWithoutFatherInput | BirthCreateOrConnectWithoutFatherInput[]
+    upsert?: BirthUpsertWithWhereUniqueWithoutFatherInput | BirthUpsertWithWhereUniqueWithoutFatherInput[]
+    createMany?: BirthCreateManyFatherInputEnvelope
+    set?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    disconnect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    delete?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    connect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    update?: BirthUpdateWithWhereUniqueWithoutFatherInput | BirthUpdateWithWhereUniqueWithoutFatherInput[]
+    updateMany?: BirthUpdateManyWithWhereWithoutFatherInput | BirthUpdateManyWithWhereWithoutFatherInput[]
     deleteMany?: BirthScalarWhereInput | BirthScalarWhereInput[]
   }
 
@@ -8160,15 +8464,41 @@ export namespace Prisma {
     deleteMany?: EventAnimalScalarWhereInput | EventAnimalScalarWhereInput[]
   }
 
+  export type BirthUncheckedUpdateManyWithoutAnimalNestedInput = {
+    create?: XOR<BirthCreateWithoutAnimalInput, BirthUncheckedCreateWithoutAnimalInput> | BirthCreateWithoutAnimalInput[] | BirthUncheckedCreateWithoutAnimalInput[]
+    connectOrCreate?: BirthCreateOrConnectWithoutAnimalInput | BirthCreateOrConnectWithoutAnimalInput[]
+    upsert?: BirthUpsertWithWhereUniqueWithoutAnimalInput | BirthUpsertWithWhereUniqueWithoutAnimalInput[]
+    createMany?: BirthCreateManyAnimalInputEnvelope
+    set?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    disconnect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    delete?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    connect?: BirthWhereUniqueInput | BirthWhereUniqueInput[]
+    update?: BirthUpdateWithWhereUniqueWithoutAnimalInput | BirthUpdateWithWhereUniqueWithoutAnimalInput[]
+    updateMany?: BirthUpdateManyWithWhereWithoutAnimalInput | BirthUpdateManyWithWhereWithoutAnimalInput[]
+    deleteMany?: BirthScalarWhereInput | BirthScalarWhereInput[]
+  }
+
   export type AnimalCreateNestedOneWithoutMotherOfInput = {
     create?: XOR<AnimalCreateWithoutMotherOfInput, AnimalUncheckedCreateWithoutMotherOfInput>
     connectOrCreate?: AnimalCreateOrConnectWithoutMotherOfInput
     connect?: AnimalWhereUniqueInput
   }
 
+  export type AnimalCreateNestedOneWithoutFatherOfInput = {
+    create?: XOR<AnimalCreateWithoutFatherOfInput, AnimalUncheckedCreateWithoutFatherOfInput>
+    connectOrCreate?: AnimalCreateOrConnectWithoutFatherOfInput
+    connect?: AnimalWhereUniqueInput
+  }
+
   export type AnimalCreateNestedOneWithoutChildOfInput = {
     create?: XOR<AnimalCreateWithoutChildOfInput, AnimalUncheckedCreateWithoutChildOfInput>
     connectOrCreate?: AnimalCreateOrConnectWithoutChildOfInput
+    connect?: AnimalWhereUniqueInput
+  }
+
+  export type AnimalCreateNestedOneWithoutBirthInput = {
+    create?: XOR<AnimalCreateWithoutBirthInput, AnimalUncheckedCreateWithoutBirthInput>
+    connectOrCreate?: AnimalCreateOrConnectWithoutBirthInput
     connect?: AnimalWhereUniqueInput
   }
 
@@ -8180,12 +8510,34 @@ export namespace Prisma {
     update?: XOR<XOR<AnimalUpdateToOneWithWhereWithoutMotherOfInput, AnimalUpdateWithoutMotherOfInput>, AnimalUncheckedUpdateWithoutMotherOfInput>
   }
 
+  export type AnimalUpdateOneRequiredWithoutFatherOfNestedInput = {
+    create?: XOR<AnimalCreateWithoutFatherOfInput, AnimalUncheckedCreateWithoutFatherOfInput>
+    connectOrCreate?: AnimalCreateOrConnectWithoutFatherOfInput
+    upsert?: AnimalUpsertWithoutFatherOfInput
+    connect?: AnimalWhereUniqueInput
+    update?: XOR<XOR<AnimalUpdateToOneWithWhereWithoutFatherOfInput, AnimalUpdateWithoutFatherOfInput>, AnimalUncheckedUpdateWithoutFatherOfInput>
+  }
+
   export type AnimalUpdateOneRequiredWithoutChildOfNestedInput = {
     create?: XOR<AnimalCreateWithoutChildOfInput, AnimalUncheckedCreateWithoutChildOfInput>
     connectOrCreate?: AnimalCreateOrConnectWithoutChildOfInput
     upsert?: AnimalUpsertWithoutChildOfInput
     connect?: AnimalWhereUniqueInput
     update?: XOR<XOR<AnimalUpdateToOneWithWhereWithoutChildOfInput, AnimalUpdateWithoutChildOfInput>, AnimalUncheckedUpdateWithoutChildOfInput>
+  }
+
+  export type AnimalUpdateOneWithoutBirthNestedInput = {
+    create?: XOR<AnimalCreateWithoutBirthInput, AnimalUncheckedCreateWithoutBirthInput>
+    connectOrCreate?: AnimalCreateOrConnectWithoutBirthInput
+    upsert?: AnimalUpsertWithoutBirthInput
+    disconnect?: AnimalWhereInput | boolean
+    delete?: AnimalWhereInput | boolean
+    connect?: AnimalWhereUniqueInput
+    update?: XOR<XOR<AnimalUpdateToOneWithWhereWithoutBirthInput, AnimalUpdateWithoutBirthInput>, AnimalUncheckedUpdateWithoutBirthInput>
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type AnimalCreateNestedOneWithoutTransactionsInput = {
@@ -8347,6 +8699,48 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedFloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[]
@@ -8379,7 +8773,9 @@ export namespace Prisma {
     birthDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    father: AnimalCreateNestedOneWithoutFatherOfInput
     child: AnimalCreateNestedOneWithoutChildOfInput
+    Animal?: AnimalCreateNestedOneWithoutBirthInput
   }
 
   export type BirthUncheckedCreateWithoutMotherInput = {
@@ -8387,7 +8783,9 @@ export namespace Prisma {
     birthDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    fatherId: string
     childId: string
+    animalId?: string | null
   }
 
   export type BirthCreateOrConnectWithoutMotherInput = {
@@ -8399,12 +8797,43 @@ export namespace Prisma {
     data: BirthCreateManyMotherInput | BirthCreateManyMotherInput[]
   }
 
+  export type BirthCreateWithoutFatherInput = {
+    id?: string
+    birthDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    mother: AnimalCreateNestedOneWithoutMotherOfInput
+    child: AnimalCreateNestedOneWithoutChildOfInput
+    Animal?: AnimalCreateNestedOneWithoutBirthInput
+  }
+
+  export type BirthUncheckedCreateWithoutFatherInput = {
+    id?: string
+    birthDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    motherId: string
+    childId: string
+    animalId?: string | null
+  }
+
+  export type BirthCreateOrConnectWithoutFatherInput = {
+    where: BirthWhereUniqueInput
+    create: XOR<BirthCreateWithoutFatherInput, BirthUncheckedCreateWithoutFatherInput>
+  }
+
+  export type BirthCreateManyFatherInputEnvelope = {
+    data: BirthCreateManyFatherInput | BirthCreateManyFatherInput[]
+  }
+
   export type BirthCreateWithoutChildInput = {
     id?: string
     birthDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
     mother: AnimalCreateNestedOneWithoutMotherOfInput
+    father: AnimalCreateNestedOneWithoutFatherOfInput
+    Animal?: AnimalCreateNestedOneWithoutBirthInput
   }
 
   export type BirthUncheckedCreateWithoutChildInput = {
@@ -8413,6 +8842,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     motherId: string
+    fatherId: string
+    animalId?: string | null
   }
 
   export type BirthCreateOrConnectWithoutChildInput = {
@@ -8472,6 +8903,35 @@ export namespace Prisma {
     data: EventAnimalCreateManyAnimalInput | EventAnimalCreateManyAnimalInput[]
   }
 
+  export type BirthCreateWithoutAnimalInput = {
+    id?: string
+    birthDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    mother: AnimalCreateNestedOneWithoutMotherOfInput
+    father: AnimalCreateNestedOneWithoutFatherOfInput
+    child: AnimalCreateNestedOneWithoutChildOfInput
+  }
+
+  export type BirthUncheckedCreateWithoutAnimalInput = {
+    id?: string
+    birthDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    motherId: string
+    fatherId: string
+    childId: string
+  }
+
+  export type BirthCreateOrConnectWithoutAnimalInput = {
+    where: BirthWhereUniqueInput
+    create: XOR<BirthCreateWithoutAnimalInput, BirthUncheckedCreateWithoutAnimalInput>
+  }
+
+  export type BirthCreateManyAnimalInputEnvelope = {
+    data: BirthCreateManyAnimalInput | BirthCreateManyAnimalInput[]
+  }
+
   export type BirthUpsertWithWhereUniqueWithoutMotherInput = {
     where: BirthWhereUniqueInput
     update: XOR<BirthUpdateWithoutMotherInput, BirthUncheckedUpdateWithoutMotherInput>
@@ -8497,7 +8957,25 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Birth"> | Date | string
     updatedAt?: DateTimeFilter<"Birth"> | Date | string
     motherId?: StringFilter<"Birth"> | string
+    fatherId?: StringFilter<"Birth"> | string
     childId?: StringFilter<"Birth"> | string
+    animalId?: StringNullableFilter<"Birth"> | string | null
+  }
+
+  export type BirthUpsertWithWhereUniqueWithoutFatherInput = {
+    where: BirthWhereUniqueInput
+    update: XOR<BirthUpdateWithoutFatherInput, BirthUncheckedUpdateWithoutFatherInput>
+    create: XOR<BirthCreateWithoutFatherInput, BirthUncheckedCreateWithoutFatherInput>
+  }
+
+  export type BirthUpdateWithWhereUniqueWithoutFatherInput = {
+    where: BirthWhereUniqueInput
+    data: XOR<BirthUpdateWithoutFatherInput, BirthUncheckedUpdateWithoutFatherInput>
+  }
+
+  export type BirthUpdateManyWithWhereWithoutFatherInput = {
+    where: BirthScalarWhereInput
+    data: XOR<BirthUpdateManyMutationInput, BirthUncheckedUpdateManyWithoutFatherInput>
   }
 
   export type BirthUpsertWithoutChildInput = {
@@ -8517,6 +8995,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     mother?: AnimalUpdateOneRequiredWithoutMotherOfNestedInput
+    father?: AnimalUpdateOneRequiredWithoutFatherOfNestedInput
+    Animal?: AnimalUpdateOneWithoutBirthNestedInput
   }
 
   export type BirthUncheckedUpdateWithoutChildInput = {
@@ -8525,6 +9005,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherId?: StringFieldUpdateOperationsInput | string
+    fatherId?: StringFieldUpdateOperationsInput | string
+    animalId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TransactionUpsertWithWhereUniqueWithoutAnimalInput = {
@@ -8584,6 +9066,22 @@ export namespace Prisma {
     animalId?: StringFilter<"EventAnimal"> | string
   }
 
+  export type BirthUpsertWithWhereUniqueWithoutAnimalInput = {
+    where: BirthWhereUniqueInput
+    update: XOR<BirthUpdateWithoutAnimalInput, BirthUncheckedUpdateWithoutAnimalInput>
+    create: XOR<BirthCreateWithoutAnimalInput, BirthUncheckedCreateWithoutAnimalInput>
+  }
+
+  export type BirthUpdateWithWhereUniqueWithoutAnimalInput = {
+    where: BirthWhereUniqueInput
+    data: XOR<BirthUpdateWithoutAnimalInput, BirthUncheckedUpdateWithoutAnimalInput>
+  }
+
+  export type BirthUpdateManyWithWhereWithoutAnimalInput = {
+    where: BirthScalarWhereInput
+    data: XOR<BirthUpdateManyMutationInput, BirthUncheckedUpdateManyWithoutAnimalInput>
+  }
+
   export type AnimalCreateWithoutMotherOfInput = {
     id?: string
     name: string
@@ -8594,9 +9092,11 @@ export namespace Prisma {
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    fatherOf?: BirthCreateNestedManyWithoutFatherInput
     childOf?: BirthCreateNestedOneWithoutChildInput
     transactions?: TransactionCreateNestedManyWithoutAnimalInput
     events?: EventAnimalCreateNestedManyWithoutAnimalInput
+    Birth?: BirthCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalUncheckedCreateWithoutMotherOfInput = {
@@ -8609,14 +9109,55 @@ export namespace Prisma {
     status: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
     childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutAnimalInput
     events?: EventAnimalUncheckedCreateNestedManyWithoutAnimalInput
+    Birth?: BirthUncheckedCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalCreateOrConnectWithoutMotherOfInput = {
     where: AnimalWhereUniqueInput
     create: XOR<AnimalCreateWithoutMotherOfInput, AnimalUncheckedCreateWithoutMotherOfInput>
+  }
+
+  export type AnimalCreateWithoutFatherOfInput = {
+    id?: string
+    name: string
+    tag: string
+    breed: string
+    gender: string
+    birthDate: Date | string
+    status: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    motherOf?: BirthCreateNestedManyWithoutMotherInput
+    childOf?: BirthCreateNestedOneWithoutChildInput
+    transactions?: TransactionCreateNestedManyWithoutAnimalInput
+    events?: EventAnimalCreateNestedManyWithoutAnimalInput
+    Birth?: BirthCreateNestedManyWithoutAnimalInput
+  }
+
+  export type AnimalUncheckedCreateWithoutFatherOfInput = {
+    id?: string
+    name: string
+    tag: string
+    breed: string
+    gender: string
+    birthDate: Date | string
+    status: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
+    childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutAnimalInput
+    events?: EventAnimalUncheckedCreateNestedManyWithoutAnimalInput
+    Birth?: BirthUncheckedCreateNestedManyWithoutAnimalInput
+  }
+
+  export type AnimalCreateOrConnectWithoutFatherOfInput = {
+    where: AnimalWhereUniqueInput
+    create: XOR<AnimalCreateWithoutFatherOfInput, AnimalUncheckedCreateWithoutFatherOfInput>
   }
 
   export type AnimalCreateWithoutChildOfInput = {
@@ -8630,8 +9171,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthCreateNestedManyWithoutMotherInput
+    fatherOf?: BirthCreateNestedManyWithoutFatherInput
     transactions?: TransactionCreateNestedManyWithoutAnimalInput
     events?: EventAnimalCreateNestedManyWithoutAnimalInput
+    Birth?: BirthCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalUncheckedCreateWithoutChildOfInput = {
@@ -8645,13 +9188,54 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
+    fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutAnimalInput
     events?: EventAnimalUncheckedCreateNestedManyWithoutAnimalInput
+    Birth?: BirthUncheckedCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalCreateOrConnectWithoutChildOfInput = {
     where: AnimalWhereUniqueInput
     create: XOR<AnimalCreateWithoutChildOfInput, AnimalUncheckedCreateWithoutChildOfInput>
+  }
+
+  export type AnimalCreateWithoutBirthInput = {
+    id?: string
+    name: string
+    tag: string
+    breed: string
+    gender: string
+    birthDate: Date | string
+    status: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    motherOf?: BirthCreateNestedManyWithoutMotherInput
+    fatherOf?: BirthCreateNestedManyWithoutFatherInput
+    childOf?: BirthCreateNestedOneWithoutChildInput
+    transactions?: TransactionCreateNestedManyWithoutAnimalInput
+    events?: EventAnimalCreateNestedManyWithoutAnimalInput
+  }
+
+  export type AnimalUncheckedCreateWithoutBirthInput = {
+    id?: string
+    name: string
+    tag: string
+    breed: string
+    gender: string
+    birthDate: Date | string
+    status: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
+    fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
+    childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutAnimalInput
+    events?: EventAnimalUncheckedCreateNestedManyWithoutAnimalInput
+  }
+
+  export type AnimalCreateOrConnectWithoutBirthInput = {
+    where: AnimalWhereUniqueInput
+    create: XOR<AnimalCreateWithoutBirthInput, AnimalUncheckedCreateWithoutBirthInput>
   }
 
   export type AnimalUpsertWithoutMotherOfInput = {
@@ -8675,9 +9259,11 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fatherOf?: BirthUpdateManyWithoutFatherNestedInput
     childOf?: BirthUpdateOneWithoutChildNestedInput
     transactions?: TransactionUpdateManyWithoutAnimalNestedInput
     events?: EventAnimalUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalUncheckedUpdateWithoutMotherOfInput = {
@@ -8690,9 +9276,56 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
     childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutAnimalNestedInput
     events?: EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUncheckedUpdateManyWithoutAnimalNestedInput
+  }
+
+  export type AnimalUpsertWithoutFatherOfInput = {
+    update: XOR<AnimalUpdateWithoutFatherOfInput, AnimalUncheckedUpdateWithoutFatherOfInput>
+    create: XOR<AnimalCreateWithoutFatherOfInput, AnimalUncheckedCreateWithoutFatherOfInput>
+    where?: AnimalWhereInput
+  }
+
+  export type AnimalUpdateToOneWithWhereWithoutFatherOfInput = {
+    where?: AnimalWhereInput
+    data: XOR<AnimalUpdateWithoutFatherOfInput, AnimalUncheckedUpdateWithoutFatherOfInput>
+  }
+
+  export type AnimalUpdateWithoutFatherOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    motherOf?: BirthUpdateManyWithoutMotherNestedInput
+    childOf?: BirthUpdateOneWithoutChildNestedInput
+    transactions?: TransactionUpdateManyWithoutAnimalNestedInput
+    events?: EventAnimalUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUpdateManyWithoutAnimalNestedInput
+  }
+
+  export type AnimalUncheckedUpdateWithoutFatherOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
+    childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutAnimalNestedInput
+    events?: EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUncheckedUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalUpsertWithoutChildOfInput = {
@@ -8717,8 +9350,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
+    fatherOf?: BirthUpdateManyWithoutFatherNestedInput
     transactions?: TransactionUpdateManyWithoutAnimalNestedInput
     events?: EventAnimalUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalUncheckedUpdateWithoutChildOfInput = {
@@ -8732,6 +9367,53 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
+    fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutAnimalNestedInput
+    events?: EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUncheckedUpdateManyWithoutAnimalNestedInput
+  }
+
+  export type AnimalUpsertWithoutBirthInput = {
+    update: XOR<AnimalUpdateWithoutBirthInput, AnimalUncheckedUpdateWithoutBirthInput>
+    create: XOR<AnimalCreateWithoutBirthInput, AnimalUncheckedCreateWithoutBirthInput>
+    where?: AnimalWhereInput
+  }
+
+  export type AnimalUpdateToOneWithWhereWithoutBirthInput = {
+    where?: AnimalWhereInput
+    data: XOR<AnimalUpdateWithoutBirthInput, AnimalUncheckedUpdateWithoutBirthInput>
+  }
+
+  export type AnimalUpdateWithoutBirthInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    motherOf?: BirthUpdateManyWithoutMotherNestedInput
+    fatherOf?: BirthUpdateManyWithoutFatherNestedInput
+    childOf?: BirthUpdateOneWithoutChildNestedInput
+    transactions?: TransactionUpdateManyWithoutAnimalNestedInput
+    events?: EventAnimalUpdateManyWithoutAnimalNestedInput
+  }
+
+  export type AnimalUncheckedUpdateWithoutBirthInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
+    fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
+    childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutAnimalNestedInput
     events?: EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput
   }
@@ -8747,8 +9429,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthCreateNestedManyWithoutMotherInput
+    fatherOf?: BirthCreateNestedManyWithoutFatherInput
     childOf?: BirthCreateNestedOneWithoutChildInput
     events?: EventAnimalCreateNestedManyWithoutAnimalInput
+    Birth?: BirthCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalUncheckedCreateWithoutTransactionsInput = {
@@ -8762,8 +9446,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
+    fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
     childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
     events?: EventAnimalUncheckedCreateNestedManyWithoutAnimalInput
+    Birth?: BirthUncheckedCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalCreateOrConnectWithoutTransactionsInput = {
@@ -8793,8 +9479,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
+    fatherOf?: BirthUpdateManyWithoutFatherNestedInput
     childOf?: BirthUpdateOneWithoutChildNestedInput
     events?: EventAnimalUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalUncheckedUpdateWithoutTransactionsInput = {
@@ -8808,8 +9496,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
+    fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
     childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
     events?: EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUncheckedUpdateManyWithoutAnimalNestedInput
   }
 
   export type EventAnimalCreateWithoutEventInput = {
@@ -8887,8 +9577,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthCreateNestedManyWithoutMotherInput
+    fatherOf?: BirthCreateNestedManyWithoutFatherInput
     childOf?: BirthCreateNestedOneWithoutChildInput
     transactions?: TransactionCreateNestedManyWithoutAnimalInput
+    Birth?: BirthCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalUncheckedCreateWithoutEventsInput = {
@@ -8902,8 +9594,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
+    fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
     childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutAnimalInput
+    Birth?: BirthUncheckedCreateNestedManyWithoutAnimalInput
   }
 
   export type AnimalCreateOrConnectWithoutEventsInput = {
@@ -8964,8 +9658,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
+    fatherOf?: BirthUpdateManyWithoutFatherNestedInput
     childOf?: BirthUpdateOneWithoutChildNestedInput
     transactions?: TransactionUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUpdateManyWithoutAnimalNestedInput
   }
 
   export type AnimalUncheckedUpdateWithoutEventsInput = {
@@ -8979,8 +9675,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
+    fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
     childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUncheckedUpdateManyWithoutAnimalNestedInput
   }
 
   export type BirthCreateManyMotherInput = {
@@ -8988,7 +9686,19 @@ export namespace Prisma {
     birthDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    fatherId: string
     childId: string
+    animalId?: string | null
+  }
+
+  export type BirthCreateManyFatherInput = {
+    id?: string
+    birthDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    motherId: string
+    childId: string
+    animalId?: string | null
   }
 
   export type TransactionCreateManyAnimalInput = {
@@ -9008,12 +9718,24 @@ export namespace Prisma {
     eventId: string
   }
 
+  export type BirthCreateManyAnimalInput = {
+    id?: string
+    birthDate: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    motherId: string
+    fatherId: string
+    childId: string
+  }
+
   export type BirthUpdateWithoutMotherInput = {
     id?: StringFieldUpdateOperationsInput | string
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    father?: AnimalUpdateOneRequiredWithoutFatherOfNestedInput
     child?: AnimalUpdateOneRequiredWithoutChildOfNestedInput
+    Animal?: AnimalUpdateOneWithoutBirthNestedInput
   }
 
   export type BirthUncheckedUpdateWithoutMotherInput = {
@@ -9021,7 +9743,9 @@ export namespace Prisma {
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fatherId?: StringFieldUpdateOperationsInput | string
     childId?: StringFieldUpdateOperationsInput | string
+    animalId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BirthUncheckedUpdateManyWithoutMotherInput = {
@@ -9029,7 +9753,39 @@ export namespace Prisma {
     birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fatherId?: StringFieldUpdateOperationsInput | string
     childId?: StringFieldUpdateOperationsInput | string
+    animalId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BirthUpdateWithoutFatherInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mother?: AnimalUpdateOneRequiredWithoutMotherOfNestedInput
+    child?: AnimalUpdateOneRequiredWithoutChildOfNestedInput
+    Animal?: AnimalUpdateOneWithoutBirthNestedInput
+  }
+
+  export type BirthUncheckedUpdateWithoutFatherInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    motherId?: StringFieldUpdateOperationsInput | string
+    childId?: StringFieldUpdateOperationsInput | string
+    animalId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BirthUncheckedUpdateManyWithoutFatherInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    motherId?: StringFieldUpdateOperationsInput | string
+    childId?: StringFieldUpdateOperationsInput | string
+    animalId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TransactionUpdateWithoutAnimalInput = {
@@ -9081,6 +9837,36 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     eventId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BirthUpdateWithoutAnimalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    mother?: AnimalUpdateOneRequiredWithoutMotherOfNestedInput
+    father?: AnimalUpdateOneRequiredWithoutFatherOfNestedInput
+    child?: AnimalUpdateOneRequiredWithoutChildOfNestedInput
+  }
+
+  export type BirthUncheckedUpdateWithoutAnimalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    motherId?: StringFieldUpdateOperationsInput | string
+    fatherId?: StringFieldUpdateOperationsInput | string
+    childId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type BirthUncheckedUpdateManyWithoutAnimalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    motherId?: StringFieldUpdateOperationsInput | string
+    fatherId?: StringFieldUpdateOperationsInput | string
+    childId?: StringFieldUpdateOperationsInput | string
   }
 
   export type EventAnimalCreateManyEventInput = {

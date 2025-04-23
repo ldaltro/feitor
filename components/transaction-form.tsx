@@ -1,22 +1,39 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import { format } from "date-fns"
-import { ptBR } from "date-fns/locale"
-import { CalendarIcon } from "lucide-react"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { CalendarIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Calendar } from "@/components/ui/calendar"
-import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   animalId: z.string({
@@ -31,13 +48,13 @@ const formSchema = z.object({
   buyer: z.string().optional(),
   seller: z.string().optional(),
   notes: z.string().optional(),
-})
+});
 
-type TransactionFormValues = z.infer<typeof formSchema>
+type TransactionFormValues = z.infer<typeof formSchema>;
 
 export function TransactionForm({ type }: { type: "compra" | "venda" }) {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Mock data - would be fetched from API in a real app
   const animals = [
@@ -46,7 +63,7 @@ export function TransactionForm({ type }: { type: "compra" | "venda" }) {
     { id: "3", name: "Trovão (A003)" },
     { id: "4", name: "Boneca (A004)" },
     { id: "5", name: "Sultão (A005)" },
-  ]
+  ];
 
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(formSchema),
@@ -58,18 +75,18 @@ export function TransactionForm({ type }: { type: "compra" | "venda" }) {
       seller: "",
       notes: "",
     },
-  })
+  });
 
   function onSubmit(values: TransactionFormValues) {
-    setIsLoading(true)
+    setIsLoading(true);
 
     // In a real app, send data to API
-    console.log(values)
+    console.log(values);
 
     setTimeout(() => {
-      setIsLoading(false)
-      router.push("/transacoes")
-    }, 1000)
+      setIsLoading(false);
+      router.push("/transacoes");
+    }, 1000);
   }
 
   return (
@@ -82,7 +99,10 @@ export function TransactionForm({ type }: { type: "compra" | "venda" }) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Animal</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Selecione o animal" />
@@ -105,15 +125,24 @@ export function TransactionForm({ type }: { type: "compra" | "venda" }) {
             name="date"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Data da {type === "compra" ? "Compra" : "Venda"}</FormLabel>
+                <FormLabel>
+                  Data da {type === "compra" ? "Compra" : "Venda"}
+                </FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button
                         variant={"outline"}
-                        className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
+                        className={cn(
+                          "w-full pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
                       >
-                        {field.value ? format(field.value, "PPP", { locale: ptBR }) : <span>Selecione uma data</span>}
+                        {field.value ? (
+                          format(field.value, "PPP", { locale: ptBR })
+                        ) : (
+                          <span>Selecione uma data</span>
+                        )}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
                     </FormControl>
@@ -123,7 +152,9 @@ export function TransactionForm({ type }: { type: "compra" | "venda" }) {
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
-                      disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                      disabled={(date) =>
+                        date > new Date() || date < new Date("1900-01-01")
+                      }
                       initialFocus
                     />
                   </PopoverContent>
@@ -182,21 +213,33 @@ export function TransactionForm({ type }: { type: "compra" | "venda" }) {
             <FormItem>
               <FormLabel>Observações</FormLabel>
               <FormControl>
-                <Textarea placeholder={`Informações adicionais sobre a ${type}`} className="resize-none" {...field} />
+                <Textarea
+                  placeholder={`Informações adicionais sobre a ${type}`}
+                  className="resize-none"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <div className="flex gap-2">
-          <Button type="button" variant="outline" onClick={() => router.push("/transacoes")}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => router.push("/transacoes")}
+          >
             Cancelar
           </Button>
           <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Salvando..." : type === "compra" ? "Registrar Compra" : "Registrar Venda"}
+            {isLoading
+              ? "Salvando..."
+              : type === "compra"
+              ? "Registrar Compra"
+              : "Registrar Venda"}
           </Button>
         </div>
       </form>
     </Form>
-  )
+  );
 }

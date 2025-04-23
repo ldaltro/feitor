@@ -38,6 +38,8 @@ export function BirthsList() {
     (birth) =>
       birth.mother.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       birth.mother.tag.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      birth.father.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      birth.father.tag.toLowerCase().includes(searchTerm.toLowerCase()) ||
       birth.child.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       birth.child.tag.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -59,6 +61,7 @@ export function BirthsList() {
             <TableRow>
               <TableHead>Data</TableHead>
               <TableHead>Mãe</TableHead>
+              <TableHead>Pai</TableHead>
               <TableHead>Filhote</TableHead>
               <TableHead>Tag</TableHead>
               <TableHead>Gênero</TableHead>
@@ -87,6 +90,9 @@ export function BirthsList() {
                   </TableCell>
                   <TableCell>
                     {birth.mother.name} ({birth.mother.tag})
+                  </TableCell>
+                  <TableCell>
+                    {birth.father.name} ({birth.father.tag})
                   </TableCell>
                   <TableCell>{birth.child.name}</TableCell>
                   <TableCell>{birth.child.tag}</TableCell>

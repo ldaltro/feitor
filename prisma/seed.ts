@@ -1,19 +1,43 @@
 const { PrismaClient } = require("../lib/generated/prisma");
-const { addDays, addWeeks, addMonths } = require("date-fns");
+const {
+  addDays,
+  addWeeks,
+  addMonths,
+  subYears,
+  subMonths,
+} = require("date-fns");
 
 const prisma = new PrismaClient();
+
+// Define interfaces for type safety
+interface Animal {
+  id: string;
+  name: string;
+  tag: string;
+  breed: string;
+  gender: string;
+  birthDate: Date;
+  status: string;
+}
 
 async function main() {
   console.log("Seeding database...");
 
-  // Create some animals if they don't exist
+  // Clear existing data
+  await prisma.birth.deleteMany();
+  await prisma.eventAnimal.deleteMany();
+  await prisma.event.deleteMany();
+  await prisma.transaction.deleteMany();
+  await prisma.animal.deleteMany();
+
+  // Create some animals
   const animalsData = [
     {
       name: "Mimosa",
       tag: "A001",
       breed: "Nelore",
       gender: "Fêmea",
-      birthDate: new Date("2020-05-10"),
+      birthDate: new Date("2018-05-10"),
       status: "Ativo",
     },
     {
@@ -21,7 +45,7 @@ async function main() {
       tag: "A002",
       breed: "Nelore",
       gender: "Fêmea",
-      birthDate: new Date("2019-03-15"),
+      birthDate: new Date("2018-03-15"),
       status: "Ativo",
     },
     {
@@ -37,7 +61,7 @@ async function main() {
       tag: "A004",
       breed: "Gir",
       gender: "Fêmea",
-      birthDate: new Date("2021-01-30"),
+      birthDate: new Date("2018-01-30"),
       status: "Ativo",
     },
     {
@@ -50,25 +74,80 @@ async function main() {
     },
   ];
 
+  // Create main animals
+  const createdAnimals: Animal[] = [];
   for (const animalData of animalsData) {
-    const existingAnimal = await prisma.animal.findUnique({
-      where: { tag: animalData.tag },
+    const animal = await prisma.animal.create({
+      data: animalData,
     });
-
-    if (!existingAnimal) {
-      await prisma.animal.create({
-        data: animalData,
-      });
-      console.log(`Created animal: ${animalData.name} (${animalData.tag})`);
-    }
+    createdAnimals.push(animal as Animal);
+    console.log(`Created animal: ${animalData.name} (${animalData.tag})`);
   }
 
-  // Get all animals
-  const animals = await prisma.animal.findMany();
+  // Create child animals and birth records
+  const birthsData = [
+    {
+      childName: "Florzinha",
+      childTag: "A006",
+      childBreed: "Nelore",
+      childGender: "Fêmea",
+      motherIndex: 0, // Mimosa
+      fatherIndex: 2, // Trovão
+      birthDate: subMonths(new Date(), 6),
+      childStatus: "Ativo",
+    },
+    {
+      childName: "Relâmpago",
+      childTag: "A007",
+      childBreed: "Nelore",
+      childGender: "Macho",
+      motherIndex: 1, // Estrela
+      fatherIndex: 2, // Trovão
+      birthDate: subMonths(new Date(), 8),
+      childStatus: "Ativo",
+    },
+    {
+      childName: "Beleza",
+      childTag: "A008",
+      childBreed: "Gir",
+      childGender: "Fêmea",
+      motherIndex: 3, // Boneca
+      fatherIndex: 4, // Sultão
+      birthDate: subMonths(new Date(), 4),
+      childStatus: "Ativo",
+    },
+  ];
 
-  // Delete existing events
-  await prisma.eventAnimal.deleteMany();
-  await prisma.event.deleteMany();
+  for (const birthData of birthsData) {
+    // Create the child animal
+    const child = await prisma.animal.create({
+      data: {
+        name: birthData.childName,
+        tag: birthData.childTag,
+        breed: birthData.childBreed,
+        gender: birthData.childGender,
+        birthDate: birthData.birthDate,
+        status: birthData.childStatus,
+      },
+    });
+
+    // Create the birth record linking the mother, father and child
+    await prisma.birth.create({
+      data: {
+        birthDate: birthData.birthDate,
+        motherId: createdAnimals[birthData.motherIndex].id,
+        fatherId: createdAnimals[birthData.fatherIndex].id,
+        childId: child.id,
+      },
+    });
+
+    console.log(
+      `Created birth record for: ${birthData.childName} (${birthData.childTag})`
+    );
+  }
+
+  // Get all animals (including the newly created ones)
+  const animals = await prisma.animal.findMany();
 
   const now = new Date();
 
@@ -102,7 +181,7 @@ async function main() {
       type: "Pesagem",
       date: addDays(now, 20),
       description: "Pesagem mensal de todos os animais",
-      animals: animals.map((animal: { id: string }) => animal.id),
+      animals: animals.map((animal: Animal) => animal.id),
     },
     {
       title: "Vermifugação",
@@ -124,7 +203,7 @@ async function main() {
       type: "Manejo Sanitário",
       date: addMonths(now, 2.5),
       description: "Vacinação semestral do rebanho",
-      animals: animals.map((animal: { id: string }) => animal.id),
+      animals: animals.map((animal: Animal) => animal.id),
     },
     {
       title: "Avaliação Reprodutiva",
