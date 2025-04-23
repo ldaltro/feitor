@@ -55,21 +55,53 @@ export function AnimalsListClient({ animals }: AnimalsListClientProps) {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [selectedAnimals, setSelectedAnimals] = useState<string[]>([]);
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
 
   // Filter animals based on search term
   const filteredAnimals = animals.filter(
     (animal) =>
       animal.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       animal.tag.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      animal.breed.toLowerCase().includes(searchTerm.toLowerCase())
+      animal.breed.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      animal.gender.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Filter animals that can be added to lote (those not in any lote or in a different lote)
+  const availableAnimals = loteId
+    ? filteredAnimals.filter((animal) => animal.loteId !== loteId)
+    : filteredAnimals;
 
   useEffect(() => {
     if (loteId) {
-      // Apenas mostrar animais que não estão em nenhum lote ou que estão em lotes diferentes
+      // Reset search and selection when loteId changes
       setSearchTerm("");
+      setSelectedAnimals([]);
+      setSelectAllChecked(false);
     }
   }, [loteId]);
+
+  const handleSelectAll = () => {
+    if (selectAllChecked) {
+      // If already checked, unselect all
+      setSelectedAnimals([]);
+    } else {
+      // Select all available animals
+      setSelectedAnimals(availableAnimals.map((animal) => animal.id));
+    }
+    setSelectAllChecked(!selectAllChecked);
+  };
+
+  useEffect(() => {
+    // Update selectAll checkbox state based on whether all available animals are selected
+    if (
+      availableAnimals.length > 0 &&
+      selectedAnimals.length === availableAnimals.length
+    ) {
+      setSelectAllChecked(true);
+    } else {
+      setSelectAllChecked(false);
+    }
+  }, [selectedAnimals, availableAnimals]);
 
   const handleDelete = async (id: string) => {
     if (confirm("Tem certeza que deseja excluir este animal?")) {
@@ -126,7 +158,7 @@ export function AnimalsListClient({ animals }: AnimalsListClientProps) {
         <div className="flex items-center gap-2">
           <Search className="h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Buscar por nome, tag ou raça..."
+            placeholder="Buscar por nome, tag, raça ou gênero..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="max-w-sm"
@@ -155,112 +187,123 @@ export function AnimalsListClient({ animals }: AnimalsListClientProps) {
         <Table>
           <TableHeader>
             <TableRow>
-              {loteId && <TableHead className="w-[50px]"></TableHead>}
+              {loteId && (
+                <TableHead className="w-[50px]">
+                  <Checkbox
+                    checked={selectAllChecked}
+                    onCheckedChange={handleSelectAll}
+                    aria-label="Selecionar todos"
+                  />
+                </TableHead>
+              )}
               <TableHead>Tag</TableHead>
               <TableHead>Nome</TableHead>
               <TableHead>Raça</TableHead>
               <TableHead>Gênero</TableHead>
               <TableHead>Data de Nascimento</TableHead>
               <TableHead>Status</TableHead>
+              {loteId && <TableHead>Lote Atual</TableHead>}
               <TableHead className="w-[80px]"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredAnimals.length === 0 ? (
+            {availableAnimals.length === 0 ? (
               <TableRow>
                 <TableCell
-                  colSpan={loteId ? 8 : 7}
+                  colSpan={loteId ? 9 : 7}
                   className="h-24 text-center"
                 >
-                  Nenhum animal encontrado.
+                  Nenhum animal disponível encontrado.
                 </TableCell>
               </TableRow>
             ) : (
-              filteredAnimals
-                // Filtrar animais que já estão no lote atual, se estamos adicionando a um lote
-                .filter((animal) => !loteId || animal.loteId !== loteId)
-                .map((animal) => (
-                  <TableRow key={animal.id}>
-                    {loteId && (
-                      <TableCell>
-                        <Checkbox
-                          checked={selectedAnimals.includes(animal.id)}
-                          onCheckedChange={() => handleSelectAnimal(animal.id)}
-                        />
-                      </TableCell>
-                    )}
-                    <TableCell className="font-medium">{animal.tag}</TableCell>
-                    <TableCell>{animal.name}</TableCell>
-                    <TableCell>{animal.breed}</TableCell>
-                    <TableCell>{animal.gender}</TableCell>
+              availableAnimals.map((animal) => (
+                <TableRow key={animal.id}>
+                  {loteId && (
                     <TableCell>
-                      {format(new Date(animal.birthDate), "dd/MM/yyyy", {
-                        locale: ptBR,
-                      })}
+                      <Checkbox
+                        checked={selectedAnimals.includes(animal.id)}
+                        onCheckedChange={() => handleSelectAnimal(animal.id)}
+                      />
                     </TableCell>
+                  )}
+                  <TableCell className="font-medium">{animal.tag}</TableCell>
+                  <TableCell>{animal.name}</TableCell>
+                  <TableCell>{animal.breed}</TableCell>
+                  <TableCell>{animal.gender}</TableCell>
+                  <TableCell>
+                    {format(new Date(animal.birthDate), "dd/MM/yyyy", {
+                      locale: ptBR,
+                    })}
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={
+                        animal.status === "Saudável"
+                          ? "default"
+                          : animal.status === "Gestante"
+                          ? "secondary"
+                          : "destructive"
+                      }
+                    >
+                      {animal.status}
+                    </Badge>
+                  </TableCell>
+                  {loteId && (
                     <TableCell>
-                      <Badge
-                        variant={
-                          animal.status === "Saudável"
-                            ? "default"
-                            : animal.status === "Gestante"
-                            ? "secondary"
-                            : "destructive"
-                        }
-                      >
-                        {animal.status}
-                      </Badge>
+                      {animal.loteId ? "Em outro lote" : "Nenhum"}
                     </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            disabled={isDeleting}
-                          >
-                            <MoreHorizontal className="h-4 w-4" />
-                            <span className="sr-only">Abrir menu</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuLabel>Ações</DropdownMenuLabel>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem asChild>
-                            <Link href={`/animais/${animal.id}`}>
-                              <Eye className="mr-2 h-4 w-4" />
-                              Visualizar
-                            </Link>
-                          </DropdownMenuItem>
-                          <DropdownMenuItem asChild>
-                            <Link href={`/animais/${animal.id}/editar`}>
-                              <Edit className="mr-2 h-4 w-4" />
-                              Editar
-                            </Link>
-                          </DropdownMenuItem>
-                          {loteId && (
-                            <DropdownMenuItem
-                              onClick={() => handleSelectAnimal(animal.id)}
-                            >
-                              <Layers className="mr-2 h-4 w-4" />
-                              {selectedAnimals.includes(animal.id)
-                                ? "Remover da seleção"
-                                : t.addToLote}
-                            </DropdownMenuItem>
-                          )}
+                  )}
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          disabled={isDeleting}
+                        >
+                          <MoreHorizontal className="h-4 w-4" />
+                          <span className="sr-only">Abrir menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Ações</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem asChild>
+                          <Link href={`/animais/${animal.id}`}>
+                            <Eye className="mr-2 h-4 w-4" />
+                            Visualizar
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href={`/animais/${animal.id}/editar`}>
+                            <Edit className="mr-2 h-4 w-4" />
+                            Editar
+                          </Link>
+                        </DropdownMenuItem>
+                        {loteId && (
                           <DropdownMenuItem
-                            className="text-destructive"
-                            onClick={() => handleDelete(animal.id)}
-                            disabled={isDeleting}
+                            onClick={() => handleSelectAnimal(animal.id)}
                           >
-                            <Trash className="mr-2 h-4 w-4" />
-                            Excluir
+                            <Layers className="mr-2 h-4 w-4" />
+                            {selectedAnimals.includes(animal.id)
+                              ? "Remover da seleção"
+                              : t.addToLote}
                           </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))
+                        )}
+                        <DropdownMenuItem
+                          className="text-destructive"
+                          onClick={() => handleDelete(animal.id)}
+                          disabled={isDeleting}
+                        >
+                          <Trash className="mr-2 h-4 w-4" />
+                          Excluir
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
             )}
           </TableBody>
         </Table>
