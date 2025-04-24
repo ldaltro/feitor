@@ -243,7 +243,7 @@ export function LotesListClient({ lotes }: LotesListClientProps) {
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter className="flex justify-center gap-2 pt-2">
+                <CardFooter className="flex justify-center gap-2">
                   <Button
                     variant="outline"
                     size="sm"
@@ -251,9 +251,9 @@ export function LotesListClient({ lotes }: LotesListClientProps) {
                       e.stopPropagation();
                       router.push(`/lotes/${lote.id}`);
                     }}
+                    title={t.view}
                   >
                     <Eye className="h-4 w-4 mr-1" />
-                    {t.view}
                   </Button>
                   <Button
                     variant="outline"
@@ -262,9 +262,9 @@ export function LotesListClient({ lotes }: LotesListClientProps) {
                       e.stopPropagation();
                       router.push(`/lotes/${lote.id}/editar`);
                     }}
+                    title={t.edit}
                   >
                     <Edit className="h-4 w-4 mr-1" />
-                    {t.edit}
                   </Button>
                   <Button
                     variant="outline"
@@ -272,9 +272,9 @@ export function LotesListClient({ lotes }: LotesListClientProps) {
                     className="text-destructive hover:bg-destructive/10"
                     onClick={(e) => handleDelete(lote.id, e)}
                     disabled={isDeleting}
+                    title={t.delete}
                   >
                     <Trash className="h-4 w-4 mr-1" />
-                    {t.delete}
                   </Button>
                 </CardFooter>
               </Card>
