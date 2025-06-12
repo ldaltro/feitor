@@ -70,7 +70,7 @@ export function TransactionsListClient({
   };
 
   return (
-    <div className="rounded-md border">
+    <div>
       <Table>
         <TableHeader>
           <TableRow>
@@ -99,9 +99,9 @@ export function TransactionsListClient({
                   <Badge
                     variant={
                       transaction.type === "Venda"
-                        ? "default"
+                        ? "success"
                         : transaction.type === "Compra"
-                        ? "destructive"
+                        ? "warning"
                         : "secondary"
                     }
                   >

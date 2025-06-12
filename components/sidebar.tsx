@@ -22,37 +22,31 @@ const routes = [
     label: "Dashboard",
     icon: LayoutDashboard,
     href: "/",
-    color: "text-sky-500",
   },
   {
     label: "Animais",
     icon: Cow,
     href: "/animais",
-    color: "text-emerald-500",
   },
   {
     label: "Lotes",
     icon: BoxesIcon,
     href: "/lotes",
-    color: "text-amber-500",
   },
   {
     label: "Nascimentos",
     icon: Baby,
     href: "/nascimentos",
-    color: "text-pink-500",
   },
   {
     label: "Transações",
     icon: CreditCard,
     href: "/transacoes",
-    color: "text-violet-500",
   },
   {
     label: "Calendário",
     icon: Calendar,
     href: "/calendario",
-    color: "text-orange-500",
   },
 ];
 
@@ -71,7 +65,7 @@ export function Sidebar() {
       )}
 
       <Button
-        variant="outline"
+        variant="ghost"
         size="icon"
         className="fixed left-4 top-4 z-50 md:hidden"
         onClick={() => setIsOpen(!isOpen)}
@@ -81,18 +75,20 @@ export function Sidebar() {
 
       <div
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-background shadow-lg transition-transform duration-300 md:static md:translate-x-0 md:shadow-none md:z-auto",
+          "fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-secondary text-secondary-foreground transition-transform duration-300 md:static md:translate-x-0 md:z-auto",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         <div className="flex h-20 items-center px-6">
-          <Link href="/" className="flex items-center gap-2" prefetch={true}>
-            <Home className="h-6 w-6" />
-            <span className="text-xl font-bold">Feitor</span>
+          <Link href="/" className="flex items-center gap-3" prefetch={true}>
+            <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
+              <Cow className="h-6 w-6 text-primary-foreground" />
+            </div>
+            <span className="text-2xl font-bold text-white">Vida de Gado</span>
           </Link>
         </div>
-        <div className="flex-1 overflow-auto py-2">
-          <nav className="grid items-start px-4 text-sm font-medium">
+        <div className="flex-1 overflow-auto py-4">
+          <nav className="grid items-start px-4 text-sm font-medium gap-2">
             {routes.map((route) => (
               <Link
                 key={route.href}
@@ -100,17 +96,22 @@ export function Sidebar() {
                 onClick={() => setIsOpen(false)}
                 prefetch={true}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary",
+                  "flex items-center gap-3 rounded-2xl px-4 py-3 transition-colors",
                   pathname === route.href
-                    ? "bg-muted text-primary"
-                    : "text-muted-foreground"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-white/80 hover:text-white hover:bg-white/10"
                 )}
               >
-                <route.icon className={cn("h-5 w-5", route.color)} />
-                {route.label}
+                <route.icon className="h-5 w-5" />
+                <span>{route.label}</span>
               </Link>
             ))}
           </nav>
+        </div>
+        <div className="p-6">
+          <p className="text-xs text-white/60 text-center">
+            © 2024 Vida de Gado
+          </p>
         </div>
       </div>
     </>

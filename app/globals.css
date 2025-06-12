@@ -4,48 +4,81 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 142.1 76.2% 36.3%;
-    --primary-foreground: 355.7 100% 97.3%;
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220.9 39.3% 11%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 142.1 76.2% 36.3%;
-    --radius: 0.5rem;
+    /* Vida de Gado Brand Colors */
+    --vdg-dark-green: 145 47% 20%; /* #1B4332 */
+    --vdg-green: 142 72% 45%; /* #20BF55 */
+    --vdg-light-yellow: 60 60% 90%; /* #F8F4E6 */
+    --vdg-white: 0 0% 100%; /* #FFFFFF */
+    --vdg-beige: 30 23% 76%; /* #D4C5B9 */
+    
+    /* Backgrounds */
+    --background: var(--vdg-white);
+    --foreground: var(--vdg-dark-green);
+    
+    /* Cards and surfaces */
+    --card: var(--vdg-white);
+    --card-foreground: var(--vdg-dark-green);
+    --popover: var(--vdg-white);
+    --popover-foreground: var(--vdg-dark-green);
+    
+    /* Brand colors mapped to UI */
+    --primary: var(--vdg-green);
+    --primary-foreground: var(--vdg-white);
+    
+    --secondary: var(--vdg-dark-green);
+    --secondary-foreground: var(--vdg-white);
+    
+    --muted: var(--vdg-light-yellow);
+    --muted-foreground: var(--vdg-dark-green);
+    
+    --accent: var(--vdg-beige);
+    --accent-foreground: var(--vdg-dark-green);
+    
+    /* Semantic colors */
+    --destructive: 0 72% 51%; /* Red for errors */
+    --destructive-foreground: var(--vdg-white);
+    
+    /* Borders and inputs */
+    --border: var(--vdg-beige);
+    --input: var(--vdg-beige);
+    --ring: var(--vdg-green);
+    
+    /* Radius - matching brand's rounded style */
+    --radius: 1rem;
+    
+    /* Success color for sales */
+    --success: var(--vdg-green);
+    --success-foreground: var(--vdg-white);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 142.1 70.6% 45.3%;
-    --primary-foreground: 144.9 80.4% 10%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 142.4 71.8% 29.2%;
+    /* Dark mode with Vida de Gado colors */
+    --background: var(--vdg-dark-green);
+    --foreground: var(--vdg-light-yellow);
+    
+    --card: 145 40% 15%;
+    --card-foreground: var(--vdg-light-yellow);
+    --popover: 145 40% 15%;
+    --popover-foreground: var(--vdg-light-yellow);
+    
+    --primary: var(--vdg-green);
+    --primary-foreground: var(--vdg-dark-green);
+    
+    --secondary: var(--vdg-beige);
+    --secondary-foreground: var(--vdg-dark-green);
+    
+    --muted: 145 30% 25%;
+    --muted-foreground: var(--vdg-light-yellow);
+    
+    --accent: var(--vdg-beige);
+    --accent-foreground: var(--vdg-dark-green);
+    
+    --destructive: 0 62% 40%;
+    --destructive-foreground: var(--vdg-light-yellow);
+    
+    --border: 145 30% 25%;
+    --input: 145 30% 25%;
+    --ring: var(--vdg-green);
   }
 }
 
@@ -55,5 +88,31 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Clean, modern table styles */
+  .table-row-hover {
+    @apply transition-colors hover:bg-muted/50;
+  }
+  
+  /* No shadows for clean look */
+  .card-clean {
+    @apply rounded-2xl border-0 bg-muted;
+  }
+  
+  /* Smooth transitions without elevation */
+  .transition-smooth {
+    @apply transition-all duration-200 ease-in-out;
+  }
+  
+  /* Badge styles matching brand */
+  .badge-success {
+    @apply bg-[hsl(var(--vdg-green))] text-white;
+  }
+  
+  .badge-warning {
+    @apply bg-[hsl(var(--vdg-dark-green))] text-white;
   }
 }
