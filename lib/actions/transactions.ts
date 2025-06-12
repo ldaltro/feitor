@@ -8,9 +8,10 @@ import { revalidatePath } from "next/cache";
 const createTransactionSchema = z.object({
   date: z.date(),
   type: z.string(),
-  amount: z.number(),
-  description: z.string(),
-  animalId: z.string().optional(),
+  value: z.number(),  // Changed from amount to value to match schema
+  person: z.string(),
+  description: z.string().optional(),
+  animalId: z.string(),
 });
 
 // Get all transactions

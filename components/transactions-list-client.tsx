@@ -33,8 +33,8 @@ type Transaction = {
   id: string;
   date: Date;
   type: string;
-  amount: number;
-  description: string;
+  value: number;
+  person: string;
   animal?: Animal;
 };
 
@@ -77,7 +77,7 @@ export function TransactionsListClient({
             <TableHead>Data</TableHead>
             <TableHead>Tipo</TableHead>
             <TableHead>Valor</TableHead>
-            <TableHead>Descrição</TableHead>
+            <TableHead>Pessoa</TableHead>
             <TableHead>Animal</TableHead>
             <TableHead className="w-[80px]"></TableHead>
           </TableRow>
@@ -108,8 +108,8 @@ export function TransactionsListClient({
                     {transaction.type}
                   </Badge>
                 </TableCell>
-                <TableCell>{formatCurrency(transaction.amount)}</TableCell>
-                <TableCell>{transaction.description}</TableCell>
+                <TableCell>{formatCurrency(transaction.value)}</TableCell>
+                <TableCell>{transaction.person}</TableCell>
                 <TableCell>
                   {transaction.animal
                     ? `${transaction.animal.name} (${transaction.animal.tag})`
