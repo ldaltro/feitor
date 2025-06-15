@@ -12,7 +12,7 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "Feitor - Sistema de Gestão de Animais",
+  title: "VDG - Sistema de Gestão de Animais",
   description: "Sistema de gestão de animais para fazendas",
   generator: "v0.dev",
 };
