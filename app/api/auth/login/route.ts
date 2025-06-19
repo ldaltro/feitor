@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { verifyPassword, createToken } from "@/lib/auth";
+import { UserRole } from "@/lib/types/auth";
 
 export async function POST(request: Request) {
   try {
@@ -15,9 +16,10 @@ export async function POST(request: Request) {
 
     const user = await prisma.user.findUnique({
       where: { username },
+      include: { farm: true },
     });
 
-    if (!user) {
+    if (!user || !user.active) {
       return NextResponse.json(
         { error: "Invalid credentials" },
         { status: 401 }
@@ -36,10 +38,23 @@ export async function POST(request: Request) {
     const token = await createToken({
       userId: user.id,
       username: user.username,
+      role: user.role as UserRole,
+      farmId: user.farmId,
     });
 
     const response = NextResponse.json(
-      { success: true, user: { id: user.id, username: user.username } },
+      { 
+        success: true, 
+        user: { 
+          id: user.id, 
+          username: user.username, 
+          email: user.email,
+          fullName: user.fullName,
+          role: user.role,
+          farmId: user.farmId,
+          farmName: user.farm?.name || null,
+        } 
+      },
       { status: 200 }
     );
 

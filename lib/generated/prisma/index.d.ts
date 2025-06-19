@@ -44,6 +44,11 @@ export type EventAnimal = $Result.DefaultSelection<Prisma.$EventAnimalPayload>
  */
 export type Lote = $Result.DefaultSelection<Prisma.$LotePayload>
 /**
+ * Model Farm
+ * 
+ */
+export type Farm = $Result.DefaultSelection<Prisma.$FarmPayload>
+/**
  * Model User
  * 
  */
@@ -233,6 +238,16 @@ export class PrismaClient<
     * ```
     */
   get lote(): Prisma.LoteDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.farm`: Exposes CRUD operations for the **Farm** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Farms
+    * const farms = await prisma.farm.findMany()
+    * ```
+    */
+  get farm(): Prisma.FarmDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
@@ -689,6 +704,7 @@ export namespace Prisma {
     Event: 'Event',
     EventAnimal: 'EventAnimal',
     Lote: 'Lote',
+    Farm: 'Farm',
     User: 'User'
   };
 
@@ -708,7 +724,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "animal" | "birth" | "transaction" | "event" | "eventAnimal" | "lote" | "user"
+      modelProps: "animal" | "birth" | "transaction" | "event" | "eventAnimal" | "lote" | "farm" | "user"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1156,6 +1172,80 @@ export namespace Prisma {
           }
         }
       }
+      Farm: {
+        payload: Prisma.$FarmPayload<ExtArgs>
+        fields: Prisma.FarmFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FarmFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FarmPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FarmFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FarmPayload>
+          }
+          findFirst: {
+            args: Prisma.FarmFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FarmPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FarmFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FarmPayload>
+          }
+          findMany: {
+            args: Prisma.FarmFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FarmPayload>[]
+          }
+          create: {
+            args: Prisma.FarmCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FarmPayload>
+          }
+          createMany: {
+            args: Prisma.FarmCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FarmCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FarmPayload>[]
+          }
+          delete: {
+            args: Prisma.FarmDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FarmPayload>
+          }
+          update: {
+            args: Prisma.FarmUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FarmPayload>
+          }
+          deleteMany: {
+            args: Prisma.FarmDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FarmUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FarmUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FarmPayload>[]
+          }
+          upsert: {
+            args: Prisma.FarmUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FarmPayload>
+          }
+          aggregate: {
+            args: Prisma.FarmAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFarm>
+          }
+          groupBy: {
+            args: Prisma.FarmGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FarmGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FarmCountArgs<ExtArgs>
+            result: $Utils.Optional<FarmCountAggregateOutputType> | number
+          }
+        }
+      }
       User: {
         payload: Prisma.$UserPayload<ExtArgs>
         fields: Prisma.UserFieldRefs
@@ -1320,6 +1410,7 @@ export namespace Prisma {
     event?: EventOmit
     eventAnimal?: EventAnimalOmit
     lote?: LoteOmit
+    farm?: FarmOmit
     user?: UserOmit
   }
 
@@ -1540,6 +1631,73 @@ export namespace Prisma {
 
 
   /**
+   * Count Type FarmCountOutputType
+   */
+
+  export type FarmCountOutputType = {
+    users: number
+    animals: number
+    lotes: number
+    events: number
+    transactions: number
+  }
+
+  export type FarmCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | FarmCountOutputTypeCountUsersArgs
+    animals?: boolean | FarmCountOutputTypeCountAnimalsArgs
+    lotes?: boolean | FarmCountOutputTypeCountLotesArgs
+    events?: boolean | FarmCountOutputTypeCountEventsArgs
+    transactions?: boolean | FarmCountOutputTypeCountTransactionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FarmCountOutputType without action
+   */
+  export type FarmCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FarmCountOutputType
+     */
+    select?: FarmCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FarmCountOutputType without action
+   */
+  export type FarmCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+  }
+
+  /**
+   * FarmCountOutputType without action
+   */
+  export type FarmCountOutputTypeCountAnimalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AnimalWhereInput
+  }
+
+  /**
+   * FarmCountOutputType without action
+   */
+  export type FarmCountOutputTypeCountLotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LoteWhereInput
+  }
+
+  /**
+   * FarmCountOutputType without action
+   */
+  export type FarmCountOutputTypeCountEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventWhereInput
+  }
+
+  /**
+   * FarmCountOutputType without action
+   */
+  export type FarmCountOutputTypeCountTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TransactionWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -1584,6 +1742,7 @@ export namespace Prisma {
     active: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    farmId: string | null
     loteId: string | null
   }
 
@@ -1606,6 +1765,7 @@ export namespace Prisma {
     active: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    farmId: string | null
     loteId: string | null
   }
 
@@ -1628,6 +1788,7 @@ export namespace Prisma {
     active: number
     createdAt: number
     updatedAt: number
+    farmId: number
     loteId: number
     _all: number
   }
@@ -1662,6 +1823,7 @@ export namespace Prisma {
     active?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
     loteId?: true
   }
 
@@ -1684,6 +1846,7 @@ export namespace Prisma {
     active?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
     loteId?: true
   }
 
@@ -1706,6 +1869,7 @@ export namespace Prisma {
     active?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
     loteId?: true
     _all?: true
   }
@@ -1815,6 +1979,7 @@ export namespace Prisma {
     active: boolean
     createdAt: Date
     updatedAt: Date
+    farmId: string
     loteId: string | null
     _count: AnimalCountAggregateOutputType | null
     _avg: AnimalAvgAggregateOutputType | null
@@ -1856,7 +2021,9 @@ export namespace Prisma {
     active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
     loteId?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     motherOf?: boolean | Animal$motherOfArgs<ExtArgs>
     fatherOf?: boolean | Animal$fatherOfArgs<ExtArgs>
     childOf?: boolean | Animal$childOfArgs<ExtArgs>
@@ -1886,7 +2053,9 @@ export namespace Prisma {
     active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
     loteId?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     lote?: boolean | Animal$loteArgs<ExtArgs>
   }, ExtArgs["result"]["animal"]>
 
@@ -1909,7 +2078,9 @@ export namespace Prisma {
     active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
     loteId?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     lote?: boolean | Animal$loteArgs<ExtArgs>
   }, ExtArgs["result"]["animal"]>
 
@@ -1932,11 +2103,13 @@ export namespace Prisma {
     active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
     loteId?: boolean
   }
 
-  export type AnimalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "tag" | "breed" | "gender" | "birthDate" | "status" | "reproductiveStatus" | "inseminationDate" | "expectedBirthDate" | "abortionDate" | "weight" | "notes" | "purchaseDate" | "purchaseValue" | "active" | "createdAt" | "updatedAt" | "loteId", ExtArgs["result"]["animal"]>
+  export type AnimalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "tag" | "breed" | "gender" | "birthDate" | "status" | "reproductiveStatus" | "inseminationDate" | "expectedBirthDate" | "abortionDate" | "weight" | "notes" | "purchaseDate" | "purchaseValue" | "active" | "createdAt" | "updatedAt" | "farmId" | "loteId", ExtArgs["result"]["animal"]>
   export type AnimalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     motherOf?: boolean | Animal$motherOfArgs<ExtArgs>
     fatherOf?: boolean | Animal$fatherOfArgs<ExtArgs>
     childOf?: boolean | Animal$childOfArgs<ExtArgs>
@@ -1947,15 +2120,18 @@ export namespace Prisma {
     _count?: boolean | AnimalCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AnimalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     lote?: boolean | Animal$loteArgs<ExtArgs>
   }
   export type AnimalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     lote?: boolean | Animal$loteArgs<ExtArgs>
   }
 
   export type $AnimalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Animal"
     objects: {
+      farm: Prisma.$FarmPayload<ExtArgs>
       motherOf: Prisma.$BirthPayload<ExtArgs>[]
       fatherOf: Prisma.$BirthPayload<ExtArgs>[]
       childOf: Prisma.$BirthPayload<ExtArgs> | null
@@ -1983,6 +2159,7 @@ export namespace Prisma {
       active: boolean
       createdAt: Date
       updatedAt: Date
+      farmId: string
       loteId: string | null
     }, ExtArgs["result"]["animal"]>
     composites: {}
@@ -2378,6 +2555,7 @@ export namespace Prisma {
    */
   export interface Prisma__AnimalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    farm<T extends FarmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FarmDefaultArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     motherOf<T extends Animal$motherOfArgs<ExtArgs> = {}>(args?: Subset<T, Animal$motherOfArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BirthPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     fatherOf<T extends Animal$fatherOfArgs<ExtArgs> = {}>(args?: Subset<T, Animal$fatherOfArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BirthPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     childOf<T extends Animal$childOfArgs<ExtArgs> = {}>(args?: Subset<T, Animal$childOfArgs<ExtArgs>>): Prisma__BirthClient<$Result.GetResult<Prisma.$BirthPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -2432,6 +2610,7 @@ export namespace Prisma {
     readonly active: FieldRef<"Animal", 'Boolean'>
     readonly createdAt: FieldRef<"Animal", 'DateTime'>
     readonly updatedAt: FieldRef<"Animal", 'DateTime'>
+    readonly farmId: FieldRef<"Animal", 'String'>
     readonly loteId: FieldRef<"Animal", 'String'>
   }
     
@@ -4169,6 +4348,7 @@ export namespace Prisma {
     person: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    farmId: string | null
     animalId: string | null
   }
 
@@ -4180,6 +4360,7 @@ export namespace Prisma {
     person: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    farmId: string | null
     animalId: string | null
   }
 
@@ -4191,6 +4372,7 @@ export namespace Prisma {
     person: number
     createdAt: number
     updatedAt: number
+    farmId: number
     animalId: number
     _all: number
   }
@@ -4212,6 +4394,7 @@ export namespace Prisma {
     person?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
     animalId?: true
   }
 
@@ -4223,6 +4406,7 @@ export namespace Prisma {
     person?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
     animalId?: true
   }
 
@@ -4234,6 +4418,7 @@ export namespace Prisma {
     person?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
     animalId?: true
     _all?: true
   }
@@ -4332,6 +4517,7 @@ export namespace Prisma {
     person: string
     createdAt: Date
     updatedAt: Date
+    farmId: string
     animalId: string
     _count: TransactionCountAggregateOutputType | null
     _avg: TransactionAvgAggregateOutputType | null
@@ -4362,7 +4548,9 @@ export namespace Prisma {
     person?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
     animalId?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     animal?: boolean | AnimalDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
@@ -4374,7 +4562,9 @@ export namespace Prisma {
     person?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
     animalId?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     animal?: boolean | AnimalDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
@@ -4386,7 +4576,9 @@ export namespace Prisma {
     person?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
     animalId?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     animal?: boolean | AnimalDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
@@ -4398,23 +4590,28 @@ export namespace Prisma {
     person?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
     animalId?: boolean
   }
 
-  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "date" | "value" | "person" | "createdAt" | "updatedAt" | "animalId", ExtArgs["result"]["transaction"]>
+  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "date" | "value" | "person" | "createdAt" | "updatedAt" | "farmId" | "animalId", ExtArgs["result"]["transaction"]>
   export type TransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     animal?: boolean | AnimalDefaultArgs<ExtArgs>
   }
   export type TransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     animal?: boolean | AnimalDefaultArgs<ExtArgs>
   }
   export type TransactionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     animal?: boolean | AnimalDefaultArgs<ExtArgs>
   }
 
   export type $TransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Transaction"
     objects: {
+      farm: Prisma.$FarmPayload<ExtArgs>
       animal: Prisma.$AnimalPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -4425,6 +4622,7 @@ export namespace Prisma {
       person: string
       createdAt: Date
       updatedAt: Date
+      farmId: string
       animalId: string
     }, ExtArgs["result"]["transaction"]>
     composites: {}
@@ -4820,6 +5018,7 @@ export namespace Prisma {
    */
   export interface Prisma__TransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    farm<T extends FarmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FarmDefaultArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     animal<T extends AnimalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AnimalDefaultArgs<ExtArgs>>): Prisma__AnimalClient<$Result.GetResult<Prisma.$AnimalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4857,6 +5056,7 @@ export namespace Prisma {
     readonly person: FieldRef<"Transaction", 'String'>
     readonly createdAt: FieldRef<"Transaction", 'DateTime'>
     readonly updatedAt: FieldRef<"Transaction", 'DateTime'>
+    readonly farmId: FieldRef<"Transaction", 'String'>
     readonly animalId: FieldRef<"Transaction", 'String'>
   }
     
@@ -5288,6 +5488,7 @@ export namespace Prisma {
     description: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    farmId: string | null
   }
 
   export type EventMaxAggregateOutputType = {
@@ -5298,6 +5499,7 @@ export namespace Prisma {
     description: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    farmId: string | null
   }
 
   export type EventCountAggregateOutputType = {
@@ -5308,6 +5510,7 @@ export namespace Prisma {
     description: number
     createdAt: number
     updatedAt: number
+    farmId: number
     _all: number
   }
 
@@ -5320,6 +5523,7 @@ export namespace Prisma {
     description?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
   }
 
   export type EventMaxAggregateInputType = {
@@ -5330,6 +5534,7 @@ export namespace Prisma {
     description?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
   }
 
   export type EventCountAggregateInputType = {
@@ -5340,6 +5545,7 @@ export namespace Prisma {
     description?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
     _all?: true
   }
 
@@ -5423,6 +5629,7 @@ export namespace Prisma {
     description: string
     createdAt: Date
     updatedAt: Date
+    farmId: string
     _count: EventCountAggregateOutputType | null
     _min: EventMinAggregateOutputType | null
     _max: EventMaxAggregateOutputType | null
@@ -5450,6 +5657,8 @@ export namespace Prisma {
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     animals?: boolean | Event$animalsArgs<ExtArgs>
     _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
@@ -5462,6 +5671,8 @@ export namespace Prisma {
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
   export type EventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5472,6 +5683,8 @@ export namespace Prisma {
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
   export type EventSelectScalar = {
@@ -5482,19 +5695,26 @@ export namespace Prisma {
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
   }
 
-  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "date" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
+  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "date" | "description" | "createdAt" | "updatedAt" | "farmId", ExtArgs["result"]["event"]>
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     animals?: boolean | Event$animalsArgs<ExtArgs>
     _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type EventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type EventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type EventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+  }
+  export type EventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+  }
 
   export type $EventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Event"
     objects: {
+      farm: Prisma.$FarmPayload<ExtArgs>
       animals: Prisma.$EventAnimalPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -5505,6 +5725,7 @@ export namespace Prisma {
       description: string
       createdAt: Date
       updatedAt: Date
+      farmId: string
     }, ExtArgs["result"]["event"]>
     composites: {}
   }
@@ -5899,6 +6120,7 @@ export namespace Prisma {
    */
   export interface Prisma__EventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    farm<T extends FarmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FarmDefaultArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     animals<T extends Event$animalsArgs<ExtArgs> = {}>(args?: Subset<T, Event$animalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventAnimalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5936,6 +6158,7 @@ export namespace Prisma {
     readonly description: FieldRef<"Event", 'String'>
     readonly createdAt: FieldRef<"Event", 'DateTime'>
     readonly updatedAt: FieldRef<"Event", 'DateTime'>
+    readonly farmId: FieldRef<"Event", 'String'>
   }
     
 
@@ -6183,6 +6406,10 @@ export namespace Prisma {
      * The data used to create many Events.
      */
     data: EventCreateManyInput | EventCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -6253,6 +6480,10 @@ export namespace Prisma {
      * Limit how many Events to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -7445,6 +7676,7 @@ export namespace Prisma {
     finalidade: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    farmId: string | null
   }
 
   export type LoteMaxAggregateOutputType = {
@@ -7454,6 +7686,7 @@ export namespace Prisma {
     finalidade: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    farmId: string | null
   }
 
   export type LoteCountAggregateOutputType = {
@@ -7463,6 +7696,7 @@ export namespace Prisma {
     finalidade: number
     createdAt: number
     updatedAt: number
+    farmId: number
     _all: number
   }
 
@@ -7474,6 +7708,7 @@ export namespace Prisma {
     finalidade?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
   }
 
   export type LoteMaxAggregateInputType = {
@@ -7483,6 +7718,7 @@ export namespace Prisma {
     finalidade?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
   }
 
   export type LoteCountAggregateInputType = {
@@ -7492,6 +7728,7 @@ export namespace Prisma {
     finalidade?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
     _all?: true
   }
 
@@ -7574,6 +7811,7 @@ export namespace Prisma {
     finalidade: string
     createdAt: Date
     updatedAt: Date
+    farmId: string
     _count: LoteCountAggregateOutputType | null
     _min: LoteMinAggregateOutputType | null
     _max: LoteMaxAggregateOutputType | null
@@ -7600,6 +7838,8 @@ export namespace Prisma {
     finalidade?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     animais?: boolean | Lote$animaisArgs<ExtArgs>
     _count?: boolean | LoteCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["lote"]>
@@ -7611,6 +7851,8 @@ export namespace Prisma {
     finalidade?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["lote"]>
 
   export type LoteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7620,6 +7862,8 @@ export namespace Prisma {
     finalidade?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["lote"]>
 
   export type LoteSelectScalar = {
@@ -7629,19 +7873,26 @@ export namespace Prisma {
     finalidade?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
   }
 
-  export type LoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "descricao" | "finalidade" | "createdAt" | "updatedAt", ExtArgs["result"]["lote"]>
+  export type LoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "descricao" | "finalidade" | "createdAt" | "updatedAt" | "farmId", ExtArgs["result"]["lote"]>
   export type LoteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
     animais?: boolean | Lote$animaisArgs<ExtArgs>
     _count?: boolean | LoteCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type LoteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type LoteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type LoteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+  }
+  export type LoteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
+  }
 
   export type $LotePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Lote"
     objects: {
+      farm: Prisma.$FarmPayload<ExtArgs>
       animais: Prisma.$AnimalPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -7651,6 +7902,7 @@ export namespace Prisma {
       finalidade: string
       createdAt: Date
       updatedAt: Date
+      farmId: string
     }, ExtArgs["result"]["lote"]>
     composites: {}
   }
@@ -8045,6 +8297,7 @@ export namespace Prisma {
    */
   export interface Prisma__LoteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    farm<T extends FarmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FarmDefaultArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     animais<T extends Lote$animaisArgs<ExtArgs> = {}>(args?: Subset<T, Lote$animaisArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -8081,6 +8334,7 @@ export namespace Prisma {
     readonly finalidade: FieldRef<"Lote", 'String'>
     readonly createdAt: FieldRef<"Lote", 'DateTime'>
     readonly updatedAt: FieldRef<"Lote", 'DateTime'>
+    readonly farmId: FieldRef<"Lote", 'String'>
   }
     
 
@@ -8328,6 +8582,10 @@ export namespace Prisma {
      * The data used to create many Lotes.
      */
     data: LoteCreateManyInput | LoteCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LoteIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8398,6 +8656,10 @@ export namespace Prisma {
      * Limit how many Lotes to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LoteIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -8510,6 +8772,1212 @@ export namespace Prisma {
 
 
   /**
+   * Model Farm
+   */
+
+  export type AggregateFarm = {
+    _count: FarmCountAggregateOutputType | null
+    _min: FarmMinAggregateOutputType | null
+    _max: FarmMaxAggregateOutputType | null
+  }
+
+  export type FarmMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    address: string | null
+    phone: string | null
+    active: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FarmMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    address: string | null
+    phone: string | null
+    active: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FarmCountAggregateOutputType = {
+    id: number
+    name: number
+    address: number
+    phone: number
+    active: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FarmMinAggregateInputType = {
+    id?: true
+    name?: true
+    address?: true
+    phone?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FarmMaxAggregateInputType = {
+    id?: true
+    name?: true
+    address?: true
+    phone?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FarmCountAggregateInputType = {
+    id?: true
+    name?: true
+    address?: true
+    phone?: true
+    active?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FarmAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Farm to aggregate.
+     */
+    where?: FarmWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Farms to fetch.
+     */
+    orderBy?: FarmOrderByWithRelationInput | FarmOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FarmWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Farms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Farms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Farms
+    **/
+    _count?: true | FarmCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FarmMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FarmMaxAggregateInputType
+  }
+
+  export type GetFarmAggregateType<T extends FarmAggregateArgs> = {
+        [P in keyof T & keyof AggregateFarm]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFarm[P]>
+      : GetScalarType<T[P], AggregateFarm[P]>
+  }
+
+
+
+
+  export type FarmGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FarmWhereInput
+    orderBy?: FarmOrderByWithAggregationInput | FarmOrderByWithAggregationInput[]
+    by: FarmScalarFieldEnum[] | FarmScalarFieldEnum
+    having?: FarmScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FarmCountAggregateInputType | true
+    _min?: FarmMinAggregateInputType
+    _max?: FarmMaxAggregateInputType
+  }
+
+  export type FarmGroupByOutputType = {
+    id: string
+    name: string
+    address: string | null
+    phone: string | null
+    active: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: FarmCountAggregateOutputType | null
+    _min: FarmMinAggregateOutputType | null
+    _max: FarmMaxAggregateOutputType | null
+  }
+
+  type GetFarmGroupByPayload<T extends FarmGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FarmGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FarmGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FarmGroupByOutputType[P]>
+            : GetScalarType<T[P], FarmGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FarmSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    address?: boolean
+    phone?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    users?: boolean | Farm$usersArgs<ExtArgs>
+    animals?: boolean | Farm$animalsArgs<ExtArgs>
+    lotes?: boolean | Farm$lotesArgs<ExtArgs>
+    events?: boolean | Farm$eventsArgs<ExtArgs>
+    transactions?: boolean | Farm$transactionsArgs<ExtArgs>
+    _count?: boolean | FarmCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["farm"]>
+
+  export type FarmSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    address?: boolean
+    phone?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["farm"]>
+
+  export type FarmSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    address?: boolean
+    phone?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["farm"]>
+
+  export type FarmSelectScalar = {
+    id?: boolean
+    name?: boolean
+    address?: boolean
+    phone?: boolean
+    active?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type FarmOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "phone" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["farm"]>
+  export type FarmInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | Farm$usersArgs<ExtArgs>
+    animals?: boolean | Farm$animalsArgs<ExtArgs>
+    lotes?: boolean | Farm$lotesArgs<ExtArgs>
+    events?: boolean | Farm$eventsArgs<ExtArgs>
+    transactions?: boolean | Farm$transactionsArgs<ExtArgs>
+    _count?: boolean | FarmCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type FarmIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type FarmIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $FarmPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Farm"
+    objects: {
+      users: Prisma.$UserPayload<ExtArgs>[]
+      animals: Prisma.$AnimalPayload<ExtArgs>[]
+      lotes: Prisma.$LotePayload<ExtArgs>[]
+      events: Prisma.$EventPayload<ExtArgs>[]
+      transactions: Prisma.$TransactionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      address: string | null
+      phone: string | null
+      active: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["farm"]>
+    composites: {}
+  }
+
+  type FarmGetPayload<S extends boolean | null | undefined | FarmDefaultArgs> = $Result.GetResult<Prisma.$FarmPayload, S>
+
+  type FarmCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FarmFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FarmCountAggregateInputType | true
+    }
+
+  export interface FarmDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Farm'], meta: { name: 'Farm' } }
+    /**
+     * Find zero or one Farm that matches the filter.
+     * @param {FarmFindUniqueArgs} args - Arguments to find a Farm
+     * @example
+     * // Get one Farm
+     * const farm = await prisma.farm.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FarmFindUniqueArgs>(args: SelectSubset<T, FarmFindUniqueArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Farm that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FarmFindUniqueOrThrowArgs} args - Arguments to find a Farm
+     * @example
+     * // Get one Farm
+     * const farm = await prisma.farm.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FarmFindUniqueOrThrowArgs>(args: SelectSubset<T, FarmFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Farm that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FarmFindFirstArgs} args - Arguments to find a Farm
+     * @example
+     * // Get one Farm
+     * const farm = await prisma.farm.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FarmFindFirstArgs>(args?: SelectSubset<T, FarmFindFirstArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Farm that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FarmFindFirstOrThrowArgs} args - Arguments to find a Farm
+     * @example
+     * // Get one Farm
+     * const farm = await prisma.farm.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FarmFindFirstOrThrowArgs>(args?: SelectSubset<T, FarmFindFirstOrThrowArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Farms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FarmFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Farms
+     * const farms = await prisma.farm.findMany()
+     * 
+     * // Get first 10 Farms
+     * const farms = await prisma.farm.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const farmWithIdOnly = await prisma.farm.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FarmFindManyArgs>(args?: SelectSubset<T, FarmFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Farm.
+     * @param {FarmCreateArgs} args - Arguments to create a Farm.
+     * @example
+     * // Create one Farm
+     * const Farm = await prisma.farm.create({
+     *   data: {
+     *     // ... data to create a Farm
+     *   }
+     * })
+     * 
+     */
+    create<T extends FarmCreateArgs>(args: SelectSubset<T, FarmCreateArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Farms.
+     * @param {FarmCreateManyArgs} args - Arguments to create many Farms.
+     * @example
+     * // Create many Farms
+     * const farm = await prisma.farm.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FarmCreateManyArgs>(args?: SelectSubset<T, FarmCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Farms and returns the data saved in the database.
+     * @param {FarmCreateManyAndReturnArgs} args - Arguments to create many Farms.
+     * @example
+     * // Create many Farms
+     * const farm = await prisma.farm.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Farms and only return the `id`
+     * const farmWithIdOnly = await prisma.farm.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FarmCreateManyAndReturnArgs>(args?: SelectSubset<T, FarmCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Farm.
+     * @param {FarmDeleteArgs} args - Arguments to delete one Farm.
+     * @example
+     * // Delete one Farm
+     * const Farm = await prisma.farm.delete({
+     *   where: {
+     *     // ... filter to delete one Farm
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FarmDeleteArgs>(args: SelectSubset<T, FarmDeleteArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Farm.
+     * @param {FarmUpdateArgs} args - Arguments to update one Farm.
+     * @example
+     * // Update one Farm
+     * const farm = await prisma.farm.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FarmUpdateArgs>(args: SelectSubset<T, FarmUpdateArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Farms.
+     * @param {FarmDeleteManyArgs} args - Arguments to filter Farms to delete.
+     * @example
+     * // Delete a few Farms
+     * const { count } = await prisma.farm.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FarmDeleteManyArgs>(args?: SelectSubset<T, FarmDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Farms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FarmUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Farms
+     * const farm = await prisma.farm.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FarmUpdateManyArgs>(args: SelectSubset<T, FarmUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Farms and returns the data updated in the database.
+     * @param {FarmUpdateManyAndReturnArgs} args - Arguments to update many Farms.
+     * @example
+     * // Update many Farms
+     * const farm = await prisma.farm.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Farms and only return the `id`
+     * const farmWithIdOnly = await prisma.farm.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FarmUpdateManyAndReturnArgs>(args: SelectSubset<T, FarmUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Farm.
+     * @param {FarmUpsertArgs} args - Arguments to update or create a Farm.
+     * @example
+     * // Update or create a Farm
+     * const farm = await prisma.farm.upsert({
+     *   create: {
+     *     // ... data to create a Farm
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Farm we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FarmUpsertArgs>(args: SelectSubset<T, FarmUpsertArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Farms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FarmCountArgs} args - Arguments to filter Farms to count.
+     * @example
+     * // Count the number of Farms
+     * const count = await prisma.farm.count({
+     *   where: {
+     *     // ... the filter for the Farms we want to count
+     *   }
+     * })
+    **/
+    count<T extends FarmCountArgs>(
+      args?: Subset<T, FarmCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FarmCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Farm.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FarmAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FarmAggregateArgs>(args: Subset<T, FarmAggregateArgs>): Prisma.PrismaPromise<GetFarmAggregateType<T>>
+
+    /**
+     * Group by Farm.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FarmGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FarmGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FarmGroupByArgs['orderBy'] }
+        : { orderBy?: FarmGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FarmGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFarmGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Farm model
+   */
+  readonly fields: FarmFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Farm.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FarmClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    users<T extends Farm$usersArgs<ExtArgs> = {}>(args?: Subset<T, Farm$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    animals<T extends Farm$animalsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$animalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AnimalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    lotes<T extends Farm$lotesArgs<ExtArgs> = {}>(args?: Subset<T, Farm$lotesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    events<T extends Farm$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    transactions<T extends Farm$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Farm$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Farm model
+   */
+  interface FarmFieldRefs {
+    readonly id: FieldRef<"Farm", 'String'>
+    readonly name: FieldRef<"Farm", 'String'>
+    readonly address: FieldRef<"Farm", 'String'>
+    readonly phone: FieldRef<"Farm", 'String'>
+    readonly active: FieldRef<"Farm", 'Boolean'>
+    readonly createdAt: FieldRef<"Farm", 'DateTime'>
+    readonly updatedAt: FieldRef<"Farm", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Farm findUnique
+   */
+  export type FarmFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farm
+     */
+    select?: FarmSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Farm
+     */
+    omit?: FarmOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FarmInclude<ExtArgs> | null
+    /**
+     * Filter, which Farm to fetch.
+     */
+    where: FarmWhereUniqueInput
+  }
+
+  /**
+   * Farm findUniqueOrThrow
+   */
+  export type FarmFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farm
+     */
+    select?: FarmSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Farm
+     */
+    omit?: FarmOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FarmInclude<ExtArgs> | null
+    /**
+     * Filter, which Farm to fetch.
+     */
+    where: FarmWhereUniqueInput
+  }
+
+  /**
+   * Farm findFirst
+   */
+  export type FarmFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farm
+     */
+    select?: FarmSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Farm
+     */
+    omit?: FarmOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FarmInclude<ExtArgs> | null
+    /**
+     * Filter, which Farm to fetch.
+     */
+    where?: FarmWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Farms to fetch.
+     */
+    orderBy?: FarmOrderByWithRelationInput | FarmOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Farms.
+     */
+    cursor?: FarmWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Farms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Farms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Farms.
+     */
+    distinct?: FarmScalarFieldEnum | FarmScalarFieldEnum[]
+  }
+
+  /**
+   * Farm findFirstOrThrow
+   */
+  export type FarmFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farm
+     */
+    select?: FarmSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Farm
+     */
+    omit?: FarmOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FarmInclude<ExtArgs> | null
+    /**
+     * Filter, which Farm to fetch.
+     */
+    where?: FarmWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Farms to fetch.
+     */
+    orderBy?: FarmOrderByWithRelationInput | FarmOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Farms.
+     */
+    cursor?: FarmWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Farms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Farms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Farms.
+     */
+    distinct?: FarmScalarFieldEnum | FarmScalarFieldEnum[]
+  }
+
+  /**
+   * Farm findMany
+   */
+  export type FarmFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farm
+     */
+    select?: FarmSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Farm
+     */
+    omit?: FarmOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FarmInclude<ExtArgs> | null
+    /**
+     * Filter, which Farms to fetch.
+     */
+    where?: FarmWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Farms to fetch.
+     */
+    orderBy?: FarmOrderByWithRelationInput | FarmOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Farms.
+     */
+    cursor?: FarmWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Farms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Farms.
+     */
+    skip?: number
+    distinct?: FarmScalarFieldEnum | FarmScalarFieldEnum[]
+  }
+
+  /**
+   * Farm create
+   */
+  export type FarmCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farm
+     */
+    select?: FarmSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Farm
+     */
+    omit?: FarmOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FarmInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Farm.
+     */
+    data: XOR<FarmCreateInput, FarmUncheckedCreateInput>
+  }
+
+  /**
+   * Farm createMany
+   */
+  export type FarmCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Farms.
+     */
+    data: FarmCreateManyInput | FarmCreateManyInput[]
+  }
+
+  /**
+   * Farm createManyAndReturn
+   */
+  export type FarmCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farm
+     */
+    select?: FarmSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Farm
+     */
+    omit?: FarmOmit<ExtArgs> | null
+    /**
+     * The data used to create many Farms.
+     */
+    data: FarmCreateManyInput | FarmCreateManyInput[]
+  }
+
+  /**
+   * Farm update
+   */
+  export type FarmUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farm
+     */
+    select?: FarmSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Farm
+     */
+    omit?: FarmOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FarmInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Farm.
+     */
+    data: XOR<FarmUpdateInput, FarmUncheckedUpdateInput>
+    /**
+     * Choose, which Farm to update.
+     */
+    where: FarmWhereUniqueInput
+  }
+
+  /**
+   * Farm updateMany
+   */
+  export type FarmUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Farms.
+     */
+    data: XOR<FarmUpdateManyMutationInput, FarmUncheckedUpdateManyInput>
+    /**
+     * Filter which Farms to update
+     */
+    where?: FarmWhereInput
+    /**
+     * Limit how many Farms to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Farm updateManyAndReturn
+   */
+  export type FarmUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farm
+     */
+    select?: FarmSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Farm
+     */
+    omit?: FarmOmit<ExtArgs> | null
+    /**
+     * The data used to update Farms.
+     */
+    data: XOR<FarmUpdateManyMutationInput, FarmUncheckedUpdateManyInput>
+    /**
+     * Filter which Farms to update
+     */
+    where?: FarmWhereInput
+    /**
+     * Limit how many Farms to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Farm upsert
+   */
+  export type FarmUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farm
+     */
+    select?: FarmSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Farm
+     */
+    omit?: FarmOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FarmInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Farm to update in case it exists.
+     */
+    where: FarmWhereUniqueInput
+    /**
+     * In case the Farm found by the `where` argument doesn't exist, create a new Farm with this data.
+     */
+    create: XOR<FarmCreateInput, FarmUncheckedCreateInput>
+    /**
+     * In case the Farm was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FarmUpdateInput, FarmUncheckedUpdateInput>
+  }
+
+  /**
+   * Farm delete
+   */
+  export type FarmDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farm
+     */
+    select?: FarmSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Farm
+     */
+    omit?: FarmOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FarmInclude<ExtArgs> | null
+    /**
+     * Filter which Farm to delete.
+     */
+    where: FarmWhereUniqueInput
+  }
+
+  /**
+   * Farm deleteMany
+   */
+  export type FarmDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Farms to delete
+     */
+    where?: FarmWhereInput
+    /**
+     * Limit how many Farms to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Farm.users
+   */
+  export type Farm$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * Farm.animals
+   */
+  export type Farm$animalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Animal
+     */
+    select?: AnimalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Animal
+     */
+    omit?: AnimalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AnimalInclude<ExtArgs> | null
+    where?: AnimalWhereInput
+    orderBy?: AnimalOrderByWithRelationInput | AnimalOrderByWithRelationInput[]
+    cursor?: AnimalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AnimalScalarFieldEnum | AnimalScalarFieldEnum[]
+  }
+
+  /**
+   * Farm.lotes
+   */
+  export type Farm$lotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Lote
+     */
+    select?: LoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Lote
+     */
+    omit?: LoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LoteInclude<ExtArgs> | null
+    where?: LoteWhereInput
+    orderBy?: LoteOrderByWithRelationInput | LoteOrderByWithRelationInput[]
+    cursor?: LoteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LoteScalarFieldEnum | LoteScalarFieldEnum[]
+  }
+
+  /**
+   * Farm.events
+   */
+  export type Farm$eventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    where?: EventWhereInput
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    cursor?: EventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+  }
+
+  /**
+   * Farm.transactions
+   */
+  export type Farm$transactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transaction
+     */
+    select?: TransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transaction
+     */
+    omit?: TransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionInclude<ExtArgs> | null
+    where?: TransactionWhereInput
+    orderBy?: TransactionOrderByWithRelationInput | TransactionOrderByWithRelationInput[]
+    cursor?: TransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TransactionScalarFieldEnum | TransactionScalarFieldEnum[]
+  }
+
+  /**
+   * Farm without action
+   */
+  export type FarmDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farm
+     */
+    select?: FarmSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Farm
+     */
+    omit?: FarmOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FarmInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model User
    */
 
@@ -8522,25 +9990,40 @@ export namespace Prisma {
   export type UserMinAggregateOutputType = {
     id: string | null
     username: string | null
+    email: string | null
     password: string | null
+    fullName: string | null
+    role: string | null
+    active: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    farmId: string | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
     username: string | null
+    email: string | null
     password: string | null
+    fullName: string | null
+    role: string | null
+    active: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    farmId: string | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
     username: number
+    email: number
     password: number
+    fullName: number
+    role: number
+    active: number
     createdAt: number
     updatedAt: number
+    farmId: number
     _all: number
   }
 
@@ -8548,25 +10031,40 @@ export namespace Prisma {
   export type UserMinAggregateInputType = {
     id?: true
     username?: true
+    email?: true
     password?: true
+    fullName?: true
+    role?: true
+    active?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
     username?: true
+    email?: true
     password?: true
+    fullName?: true
+    role?: true
+    active?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
     username?: true
+    email?: true
     password?: true
+    fullName?: true
+    role?: true
+    active?: true
     createdAt?: true
     updatedAt?: true
+    farmId?: true
     _all?: true
   }
 
@@ -8645,9 +10143,14 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: string
     username: string
+    email: string
     password: string
+    fullName: string
+    role: string
+    active: boolean
     createdAt: Date
     updatedAt: Date
+    farmId: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -8670,46 +10173,85 @@ export namespace Prisma {
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     username?: boolean
+    email?: boolean
     password?: boolean
+    fullName?: boolean
+    role?: boolean
+    active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
+    farm?: boolean | User$farmArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     username?: boolean
+    email?: boolean
     password?: boolean
+    fullName?: boolean
+    role?: boolean
+    active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
+    farm?: boolean | User$farmArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     username?: boolean
+    email?: boolean
     password?: boolean
+    fullName?: boolean
+    role?: boolean
+    active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
+    farm?: boolean | User$farmArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
     username?: boolean
+    email?: boolean
     password?: boolean
+    fullName?: boolean
+    role?: boolean
+    active?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    farmId?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "email" | "password" | "fullName" | "role" | "active" | "createdAt" | "updatedAt" | "farmId", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | User$farmArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | User$farmArgs<ExtArgs>
+  }
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farm?: boolean | User$farmArgs<ExtArgs>
+  }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
-    objects: {}
+    objects: {
+      farm: Prisma.$FarmPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       username: string
+      email: string
       password: string
+      fullName: string
+      role: string
+      active: boolean
       createdAt: Date
       updatedAt: Date
+      farmId: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -9104,6 +10646,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    farm<T extends User$farmArgs<ExtArgs> = {}>(args?: Subset<T, User$farmArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9135,9 +10678,14 @@ export namespace Prisma {
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
     readonly username: FieldRef<"User", 'String'>
+    readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
+    readonly fullName: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'String'>
+    readonly active: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly farmId: FieldRef<"User", 'String'>
   }
     
 
@@ -9154,6 +10702,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -9173,6 +10725,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -9190,6 +10746,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -9239,6 +10799,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -9287,6 +10851,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -9330,6 +10898,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The data needed to create a User.
      */
     data: XOR<UserCreateInput, UserUncheckedCreateInput>
@@ -9361,6 +10933,10 @@ export namespace Prisma {
      * The data used to create many Users.
      */
     data: UserCreateManyInput | UserCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -9375,6 +10951,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to update a User.
      */
@@ -9427,6 +11007,10 @@ export namespace Prisma {
      * Limit how many Users to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -9441,6 +11025,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The filter to search for the User to update in case it exists.
      */
@@ -9468,6 +11056,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter which User to delete.
      */
     where: UserWhereUniqueInput
@@ -9488,6 +11080,25 @@ export namespace Prisma {
   }
 
   /**
+   * User.farm
+   */
+  export type User$farmArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farm
+     */
+    select?: FarmSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Farm
+     */
+    omit?: FarmOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FarmInclude<ExtArgs> | null
+    where?: FarmWhereInput
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9499,6 +11110,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
   }
 
 
@@ -9532,6 +11147,7 @@ export namespace Prisma {
     active: 'active',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
+    farmId: 'farmId',
     loteId: 'loteId'
   };
 
@@ -9560,6 +11176,7 @@ export namespace Prisma {
     person: 'person',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
+    farmId: 'farmId',
     animalId: 'animalId'
   };
 
@@ -9573,7 +11190,8 @@ export namespace Prisma {
     date: 'date',
     description: 'description',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    farmId: 'farmId'
   };
 
   export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
@@ -9596,18 +11214,37 @@ export namespace Prisma {
     descricao: 'descricao',
     finalidade: 'finalidade',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    farmId: 'farmId'
   };
 
   export type LoteScalarFieldEnum = (typeof LoteScalarFieldEnum)[keyof typeof LoteScalarFieldEnum]
 
 
+  export const FarmScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    address: 'address',
+    phone: 'phone',
+    active: 'active',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FarmScalarFieldEnum = (typeof FarmScalarFieldEnum)[keyof typeof FarmScalarFieldEnum]
+
+
   export const UserScalarFieldEnum: {
     id: 'id',
     username: 'username',
+    email: 'email',
     password: 'password',
+    fullName: 'fullName',
+    role: 'role',
+    active: 'active',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    farmId: 'farmId'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -9694,7 +11331,9 @@ export namespace Prisma {
     active?: BoolFilter<"Animal"> | boolean
     createdAt?: DateTimeFilter<"Animal"> | Date | string
     updatedAt?: DateTimeFilter<"Animal"> | Date | string
+    farmId?: StringFilter<"Animal"> | string
     loteId?: StringNullableFilter<"Animal"> | string | null
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     motherOf?: BirthListRelationFilter
     fatherOf?: BirthListRelationFilter
     childOf?: XOR<BirthNullableScalarRelationFilter, BirthWhereInput> | null
@@ -9723,7 +11362,9 @@ export namespace Prisma {
     active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
     loteId?: SortOrderInput | SortOrder
+    farm?: FarmOrderByWithRelationInput
     motherOf?: BirthOrderByRelationAggregateInput
     fatherOf?: BirthOrderByRelationAggregateInput
     childOf?: BirthOrderByWithRelationInput
@@ -9735,11 +11376,12 @@ export namespace Prisma {
 
   export type AnimalWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    tag?: string
+    tag_farmId?: AnimalTagFarmIdCompoundUniqueInput
     AND?: AnimalWhereInput | AnimalWhereInput[]
     OR?: AnimalWhereInput[]
     NOT?: AnimalWhereInput | AnimalWhereInput[]
     name?: StringFilter<"Animal"> | string
+    tag?: StringFilter<"Animal"> | string
     breed?: StringFilter<"Animal"> | string
     gender?: StringFilter<"Animal"> | string
     birthDate?: DateTimeFilter<"Animal"> | Date | string
@@ -9755,7 +11397,9 @@ export namespace Prisma {
     active?: BoolFilter<"Animal"> | boolean
     createdAt?: DateTimeFilter<"Animal"> | Date | string
     updatedAt?: DateTimeFilter<"Animal"> | Date | string
+    farmId?: StringFilter<"Animal"> | string
     loteId?: StringNullableFilter<"Animal"> | string | null
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     motherOf?: BirthListRelationFilter
     fatherOf?: BirthListRelationFilter
     childOf?: XOR<BirthNullableScalarRelationFilter, BirthWhereInput> | null
@@ -9763,7 +11407,7 @@ export namespace Prisma {
     events?: EventAnimalListRelationFilter
     Birth?: BirthListRelationFilter
     lote?: XOR<LoteNullableScalarRelationFilter, LoteWhereInput> | null
-  }, "id" | "tag">
+  }, "id" | "tag_farmId">
 
   export type AnimalOrderByWithAggregationInput = {
     id?: SortOrder
@@ -9784,6 +11428,7 @@ export namespace Prisma {
     active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
     loteId?: SortOrderInput | SortOrder
     _count?: AnimalCountOrderByAggregateInput
     _avg?: AnimalAvgOrderByAggregateInput
@@ -9814,6 +11459,7 @@ export namespace Prisma {
     active?: BoolWithAggregatesFilter<"Animal"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Animal"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Animal"> | Date | string
+    farmId?: StringWithAggregatesFilter<"Animal"> | string
     loteId?: StringNullableWithAggregatesFilter<"Animal"> | string | null
   }
 
@@ -9907,7 +11553,9 @@ export namespace Prisma {
     person?: StringFilter<"Transaction"> | string
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
+    farmId?: StringFilter<"Transaction"> | string
     animalId?: StringFilter<"Transaction"> | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     animal?: XOR<AnimalScalarRelationFilter, AnimalWhereInput>
   }
 
@@ -9919,7 +11567,9 @@ export namespace Prisma {
     person?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
     animalId?: SortOrder
+    farm?: FarmOrderByWithRelationInput
     animal?: AnimalOrderByWithRelationInput
   }
 
@@ -9934,7 +11584,9 @@ export namespace Prisma {
     person?: StringFilter<"Transaction"> | string
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
+    farmId?: StringFilter<"Transaction"> | string
     animalId?: StringFilter<"Transaction"> | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     animal?: XOR<AnimalScalarRelationFilter, AnimalWhereInput>
   }, "id">
 
@@ -9946,6 +11598,7 @@ export namespace Prisma {
     person?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
     animalId?: SortOrder
     _count?: TransactionCountOrderByAggregateInput
     _avg?: TransactionAvgOrderByAggregateInput
@@ -9965,6 +11618,7 @@ export namespace Prisma {
     person?: StringWithAggregatesFilter<"Transaction"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Transaction"> | Date | string
+    farmId?: StringWithAggregatesFilter<"Transaction"> | string
     animalId?: StringWithAggregatesFilter<"Transaction"> | string
   }
 
@@ -9979,6 +11633,8 @@ export namespace Prisma {
     description?: StringFilter<"Event"> | string
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
+    farmId?: StringFilter<"Event"> | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     animals?: EventAnimalListRelationFilter
   }
 
@@ -9990,6 +11646,8 @@ export namespace Prisma {
     description?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
+    farm?: FarmOrderByWithRelationInput
     animals?: EventAnimalOrderByRelationAggregateInput
   }
 
@@ -10004,6 +11662,8 @@ export namespace Prisma {
     description?: StringFilter<"Event"> | string
     createdAt?: DateTimeFilter<"Event"> | Date | string
     updatedAt?: DateTimeFilter<"Event"> | Date | string
+    farmId?: StringFilter<"Event"> | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     animals?: EventAnimalListRelationFilter
   }, "id">
 
@@ -10015,6 +11675,7 @@ export namespace Prisma {
     description?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
     _count?: EventCountOrderByAggregateInput
     _max?: EventMaxOrderByAggregateInput
     _min?: EventMinOrderByAggregateInput
@@ -10031,6 +11692,7 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"Event"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
+    farmId?: StringWithAggregatesFilter<"Event"> | string
   }
 
   export type EventAnimalWhereInput = {
@@ -10102,6 +11764,8 @@ export namespace Prisma {
     finalidade?: StringFilter<"Lote"> | string
     createdAt?: DateTimeFilter<"Lote"> | Date | string
     updatedAt?: DateTimeFilter<"Lote"> | Date | string
+    farmId?: StringFilter<"Lote"> | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     animais?: AnimalListRelationFilter
   }
 
@@ -10112,6 +11776,8 @@ export namespace Prisma {
     finalidade?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
+    farm?: FarmOrderByWithRelationInput
     animais?: AnimalOrderByRelationAggregateInput
   }
 
@@ -10125,6 +11791,8 @@ export namespace Prisma {
     finalidade?: StringFilter<"Lote"> | string
     createdAt?: DateTimeFilter<"Lote"> | Date | string
     updatedAt?: DateTimeFilter<"Lote"> | Date | string
+    farmId?: StringFilter<"Lote"> | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
     animais?: AnimalListRelationFilter
   }, "id">
 
@@ -10135,6 +11803,7 @@ export namespace Prisma {
     finalidade?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
     _count?: LoteCountOrderByAggregateInput
     _max?: LoteMaxOrderByAggregateInput
     _min?: LoteMinOrderByAggregateInput
@@ -10150,6 +11819,84 @@ export namespace Prisma {
     finalidade?: StringWithAggregatesFilter<"Lote"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Lote"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Lote"> | Date | string
+    farmId?: StringWithAggregatesFilter<"Lote"> | string
+  }
+
+  export type FarmWhereInput = {
+    AND?: FarmWhereInput | FarmWhereInput[]
+    OR?: FarmWhereInput[]
+    NOT?: FarmWhereInput | FarmWhereInput[]
+    id?: StringFilter<"Farm"> | string
+    name?: StringFilter<"Farm"> | string
+    address?: StringNullableFilter<"Farm"> | string | null
+    phone?: StringNullableFilter<"Farm"> | string | null
+    active?: BoolFilter<"Farm"> | boolean
+    createdAt?: DateTimeFilter<"Farm"> | Date | string
+    updatedAt?: DateTimeFilter<"Farm"> | Date | string
+    users?: UserListRelationFilter
+    animals?: AnimalListRelationFilter
+    lotes?: LoteListRelationFilter
+    events?: EventListRelationFilter
+    transactions?: TransactionListRelationFilter
+  }
+
+  export type FarmOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    address?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    users?: UserOrderByRelationAggregateInput
+    animals?: AnimalOrderByRelationAggregateInput
+    lotes?: LoteOrderByRelationAggregateInput
+    events?: EventOrderByRelationAggregateInput
+    transactions?: TransactionOrderByRelationAggregateInput
+  }
+
+  export type FarmWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: FarmWhereInput | FarmWhereInput[]
+    OR?: FarmWhereInput[]
+    NOT?: FarmWhereInput | FarmWhereInput[]
+    name?: StringFilter<"Farm"> | string
+    address?: StringNullableFilter<"Farm"> | string | null
+    phone?: StringNullableFilter<"Farm"> | string | null
+    active?: BoolFilter<"Farm"> | boolean
+    createdAt?: DateTimeFilter<"Farm"> | Date | string
+    updatedAt?: DateTimeFilter<"Farm"> | Date | string
+    users?: UserListRelationFilter
+    animals?: AnimalListRelationFilter
+    lotes?: LoteListRelationFilter
+    events?: EventListRelationFilter
+    transactions?: TransactionListRelationFilter
+  }, "id">
+
+  export type FarmOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    address?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FarmCountOrderByAggregateInput
+    _max?: FarmMaxOrderByAggregateInput
+    _min?: FarmMinOrderByAggregateInput
+  }
+
+  export type FarmScalarWhereWithAggregatesInput = {
+    AND?: FarmScalarWhereWithAggregatesInput | FarmScalarWhereWithAggregatesInput[]
+    OR?: FarmScalarWhereWithAggregatesInput[]
+    NOT?: FarmScalarWhereWithAggregatesInput | FarmScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Farm"> | string
+    name?: StringWithAggregatesFilter<"Farm"> | string
+    address?: StringNullableWithAggregatesFilter<"Farm"> | string | null
+    phone?: StringNullableWithAggregatesFilter<"Farm"> | string | null
+    active?: BoolWithAggregatesFilter<"Farm"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"Farm"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Farm"> | Date | string
   }
 
   export type UserWhereInput = {
@@ -10158,36 +11905,59 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
     username?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    fullName?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
+    active?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    farmId?: StringNullableFilter<"User"> | string | null
+    farm?: XOR<FarmNullableScalarRelationFilter, FarmWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     username?: SortOrder
+    email?: SortOrder
     password?: SortOrder
+    fullName?: SortOrder
+    role?: SortOrder
+    active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrderInput | SortOrder
+    farm?: FarmOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     username?: string
+    email?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringFilter<"User"> | string
+    fullName?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
+    active?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-  }, "id" | "username">
+    farmId?: StringNullableFilter<"User"> | string | null
+    farm?: XOR<FarmNullableScalarRelationFilter, FarmWhereInput> | null
+  }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     username?: SortOrder
+    email?: SortOrder
     password?: SortOrder
+    fullName?: SortOrder
+    role?: SortOrder
+    active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -10199,9 +11969,14 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
     username?: StringWithAggregatesFilter<"User"> | string
+    email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
+    fullName?: StringWithAggregatesFilter<"User"> | string
+    role?: StringWithAggregatesFilter<"User"> | string
+    active?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    farmId?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type AnimalCreateInput = {
@@ -10223,6 +11998,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutAnimalsInput
     motherOf?: BirthCreateNestedManyWithoutMotherInput
     fatherOf?: BirthCreateNestedManyWithoutFatherInput
     childOf?: BirthCreateNestedOneWithoutChildInput
@@ -10251,6 +12027,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
     loteId?: string | null
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
     fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
@@ -10279,6 +12056,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutAnimalsNestedInput
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
     fatherOf?: BirthUpdateManyWithoutFatherNestedInput
     childOf?: BirthUpdateOneWithoutChildNestedInput
@@ -10307,6 +12085,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
     fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
@@ -10335,6 +12114,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
     loteId?: string | null
   }
 
@@ -10378,6 +12158,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -10462,6 +12243,7 @@ export namespace Prisma {
     person: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutTransactionsInput
     animal: AnimalCreateNestedOneWithoutTransactionsInput
   }
 
@@ -10473,6 +12255,7 @@ export namespace Prisma {
     person: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
     animalId: string
   }
 
@@ -10484,6 +12267,7 @@ export namespace Prisma {
     person?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutTransactionsNestedInput
     animal?: AnimalUpdateOneRequiredWithoutTransactionsNestedInput
   }
 
@@ -10495,6 +12279,7 @@ export namespace Prisma {
     person?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
     animalId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -10506,6 +12291,7 @@ export namespace Prisma {
     person: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
     animalId: string
   }
 
@@ -10527,6 +12313,7 @@ export namespace Prisma {
     person?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
     animalId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -10538,6 +12325,7 @@ export namespace Prisma {
     description: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutEventsInput
     animals?: EventAnimalCreateNestedManyWithoutEventInput
   }
 
@@ -10549,6 +12337,7 @@ export namespace Prisma {
     description: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
     animals?: EventAnimalUncheckedCreateNestedManyWithoutEventInput
   }
 
@@ -10560,6 +12349,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutEventsNestedInput
     animals?: EventAnimalUpdateManyWithoutEventNestedInput
   }
 
@@ -10571,6 +12361,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
     animals?: EventAnimalUncheckedUpdateManyWithoutEventNestedInput
   }
 
@@ -10582,6 +12373,7 @@ export namespace Prisma {
     description: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
   }
 
   export type EventUpdateManyMutationInput = {
@@ -10602,6 +12394,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
   }
 
   export type EventAnimalCreateInput = {
@@ -10665,6 +12458,7 @@ export namespace Prisma {
     finalidade: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutLotesInput
     animais?: AnimalCreateNestedManyWithoutLoteInput
   }
 
@@ -10675,6 +12469,7 @@ export namespace Prisma {
     finalidade: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
     animais?: AnimalUncheckedCreateNestedManyWithoutLoteInput
   }
 
@@ -10685,6 +12480,7 @@ export namespace Prisma {
     finalidade?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutLotesNestedInput
     animais?: AnimalUpdateManyWithoutLoteNestedInput
   }
 
@@ -10695,6 +12491,7 @@ export namespace Prisma {
     finalidade?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
     animais?: AnimalUncheckedUpdateManyWithoutLoteNestedInput
   }
 
@@ -10705,6 +12502,7 @@ export namespace Prisma {
     finalidade: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
   }
 
   export type LoteUpdateManyMutationInput = {
@@ -10723,52 +12521,172 @@ export namespace Prisma {
     finalidade?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FarmCreateInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phone?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserCreateNestedManyWithoutFarmInput
+    animals?: AnimalCreateNestedManyWithoutFarmInput
+    lotes?: LoteCreateNestedManyWithoutFarmInput
+    events?: EventCreateNestedManyWithoutFarmInput
+    transactions?: TransactionCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmUncheckedCreateInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phone?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutFarmInput
+    animals?: AnimalUncheckedCreateNestedManyWithoutFarmInput
+    lotes?: LoteUncheckedCreateNestedManyWithoutFarmInput
+    events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUpdateManyWithoutFarmNestedInput
+    animals?: AnimalUpdateManyWithoutFarmNestedInput
+    lotes?: LoteUpdateManyWithoutFarmNestedInput
+    events?: EventUpdateManyWithoutFarmNestedInput
+    transactions?: TransactionUpdateManyWithoutFarmNestedInput
+  }
+
+  export type FarmUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutFarmNestedInput
+    animals?: AnimalUncheckedUpdateManyWithoutFarmNestedInput
+    lotes?: LoteUncheckedUpdateManyWithoutFarmNestedInput
+    events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutFarmNestedInput
+  }
+
+  export type FarmCreateManyInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phone?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FarmUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FarmUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateInput = {
     id?: string
     username: string
+    email: string
     password: string
+    fullName: string
+    role: string
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm?: FarmCreateNestedOneWithoutUsersInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
     username: string
+    email: string
     password: string
+    fullName: string
+    role: string
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId?: string | null
   }
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneWithoutUsersNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserCreateManyInput = {
     id?: string
     username: string
+    email: string
     password: string
+    fullName: string
+    role: string
+    active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10776,9 +12694,14 @@ export namespace Prisma {
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -10847,6 +12770,11 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type FarmScalarRelationFilter = {
+    is?: FarmWhereInput
+    isNot?: FarmWhereInput
+  }
+
   export type BirthListRelationFilter = {
     every?: BirthWhereInput
     some?: BirthWhereInput
@@ -10892,6 +12820,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type AnimalTagFarmIdCompoundUniqueInput = {
+    tag: string
+    farmId: string
+  }
+
   export type AnimalCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -10911,6 +12844,7 @@ export namespace Prisma {
     active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
     loteId?: SortOrder
   }
 
@@ -10938,6 +12872,7 @@ export namespace Prisma {
     active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
     loteId?: SortOrder
   }
 
@@ -10960,6 +12895,7 @@ export namespace Prisma {
     active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
     loteId?: SortOrder
   }
 
@@ -11116,6 +13052,7 @@ export namespace Prisma {
     person?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
     animalId?: SortOrder
   }
 
@@ -11131,6 +13068,7 @@ export namespace Prisma {
     person?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
     animalId?: SortOrder
   }
 
@@ -11142,6 +13080,7 @@ export namespace Prisma {
     person?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
     animalId?: SortOrder
   }
 
@@ -11173,6 +13112,7 @@ export namespace Prisma {
     description?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
   }
 
   export type EventMaxOrderByAggregateInput = {
@@ -11183,6 +13123,7 @@ export namespace Prisma {
     description?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
   }
 
   export type EventMinOrderByAggregateInput = {
@@ -11193,6 +13134,7 @@ export namespace Prisma {
     description?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
   }
 
   export type EventScalarRelationFilter = {
@@ -11246,6 +13188,7 @@ export namespace Prisma {
     finalidade?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
   }
 
   export type LoteMaxOrderByAggregateInput = {
@@ -11255,6 +13198,7 @@ export namespace Prisma {
     finalidade?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
   }
 
   export type LoteMinOrderByAggregateInput = {
@@ -11264,30 +13208,117 @@ export namespace Prisma {
     finalidade?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
+  }
+
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
+  }
+
+  export type LoteListRelationFilter = {
+    every?: LoteWhereInput
+    some?: LoteWhereInput
+    none?: LoteWhereInput
+  }
+
+  export type EventListRelationFilter = {
+    every?: EventWhereInput
+    some?: EventWhereInput
+    none?: EventWhereInput
+  }
+
+  export type UserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type LoteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type EventOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FarmCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    address?: SortOrder
+    phone?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FarmMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    address?: SortOrder
+    phone?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FarmMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    address?: SortOrder
+    phone?: SortOrder
+    active?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FarmNullableScalarRelationFilter = {
+    is?: FarmWhereInput | null
+    isNot?: FarmWhereInput | null
   }
 
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     username?: SortOrder
+    email?: SortOrder
     password?: SortOrder
+    fullName?: SortOrder
+    role?: SortOrder
+    active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     username?: SortOrder
+    email?: SortOrder
     password?: SortOrder
+    fullName?: SortOrder
+    role?: SortOrder
+    active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     username?: SortOrder
+    email?: SortOrder
     password?: SortOrder
+    fullName?: SortOrder
+    role?: SortOrder
+    active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    farmId?: SortOrder
+  }
+
+  export type FarmCreateNestedOneWithoutAnimalsInput = {
+    create?: XOR<FarmCreateWithoutAnimalsInput, FarmUncheckedCreateWithoutAnimalsInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutAnimalsInput
+    connect?: FarmWhereUniqueInput
   }
 
   export type BirthCreateNestedManyWithoutMotherInput = {
@@ -11404,6 +13435,14 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type FarmUpdateOneRequiredWithoutAnimalsNestedInput = {
+    create?: XOR<FarmCreateWithoutAnimalsInput, FarmUncheckedCreateWithoutAnimalsInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutAnimalsInput
+    upsert?: FarmUpsertWithoutAnimalsInput
+    connect?: FarmWhereUniqueInput
+    update?: XOR<XOR<FarmUpdateToOneWithWhereWithoutAnimalsInput, FarmUpdateWithoutAnimalsInput>, FarmUncheckedUpdateWithoutAnimalsInput>
   }
 
   export type BirthUpdateManyWithoutMotherNestedInput = {
@@ -11634,6 +13673,12 @@ export namespace Prisma {
     update?: XOR<XOR<AnimalUpdateToOneWithWhereWithoutBirthInput, AnimalUpdateWithoutBirthInput>, AnimalUncheckedUpdateWithoutBirthInput>
   }
 
+  export type FarmCreateNestedOneWithoutTransactionsInput = {
+    create?: XOR<FarmCreateWithoutTransactionsInput, FarmUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutTransactionsInput
+    connect?: FarmWhereUniqueInput
+  }
+
   export type AnimalCreateNestedOneWithoutTransactionsInput = {
     create?: XOR<AnimalCreateWithoutTransactionsInput, AnimalUncheckedCreateWithoutTransactionsInput>
     connectOrCreate?: AnimalCreateOrConnectWithoutTransactionsInput
@@ -11648,12 +13693,26 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type FarmUpdateOneRequiredWithoutTransactionsNestedInput = {
+    create?: XOR<FarmCreateWithoutTransactionsInput, FarmUncheckedCreateWithoutTransactionsInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutTransactionsInput
+    upsert?: FarmUpsertWithoutTransactionsInput
+    connect?: FarmWhereUniqueInput
+    update?: XOR<XOR<FarmUpdateToOneWithWhereWithoutTransactionsInput, FarmUpdateWithoutTransactionsInput>, FarmUncheckedUpdateWithoutTransactionsInput>
+  }
+
   export type AnimalUpdateOneRequiredWithoutTransactionsNestedInput = {
     create?: XOR<AnimalCreateWithoutTransactionsInput, AnimalUncheckedCreateWithoutTransactionsInput>
     connectOrCreate?: AnimalCreateOrConnectWithoutTransactionsInput
     upsert?: AnimalUpsertWithoutTransactionsInput
     connect?: AnimalWhereUniqueInput
     update?: XOR<XOR<AnimalUpdateToOneWithWhereWithoutTransactionsInput, AnimalUpdateWithoutTransactionsInput>, AnimalUncheckedUpdateWithoutTransactionsInput>
+  }
+
+  export type FarmCreateNestedOneWithoutEventsInput = {
+    create?: XOR<FarmCreateWithoutEventsInput, FarmUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutEventsInput
+    connect?: FarmWhereUniqueInput
   }
 
   export type EventAnimalCreateNestedManyWithoutEventInput = {
@@ -11668,6 +13727,14 @@ export namespace Prisma {
     connectOrCreate?: EventAnimalCreateOrConnectWithoutEventInput | EventAnimalCreateOrConnectWithoutEventInput[]
     createMany?: EventAnimalCreateManyEventInputEnvelope
     connect?: EventAnimalWhereUniqueInput | EventAnimalWhereUniqueInput[]
+  }
+
+  export type FarmUpdateOneRequiredWithoutEventsNestedInput = {
+    create?: XOR<FarmCreateWithoutEventsInput, FarmUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutEventsInput
+    upsert?: FarmUpsertWithoutEventsInput
+    connect?: FarmWhereUniqueInput
+    update?: XOR<XOR<FarmUpdateToOneWithWhereWithoutEventsInput, FarmUpdateWithoutEventsInput>, FarmUncheckedUpdateWithoutEventsInput>
   }
 
   export type EventAnimalUpdateManyWithoutEventNestedInput = {
@@ -11726,6 +13793,12 @@ export namespace Prisma {
     update?: XOR<XOR<AnimalUpdateToOneWithWhereWithoutEventsInput, AnimalUpdateWithoutEventsInput>, AnimalUncheckedUpdateWithoutEventsInput>
   }
 
+  export type FarmCreateNestedOneWithoutLotesInput = {
+    create?: XOR<FarmCreateWithoutLotesInput, FarmUncheckedCreateWithoutLotesInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutLotesInput
+    connect?: FarmWhereUniqueInput
+  }
+
   export type AnimalCreateNestedManyWithoutLoteInput = {
     create?: XOR<AnimalCreateWithoutLoteInput, AnimalUncheckedCreateWithoutLoteInput> | AnimalCreateWithoutLoteInput[] | AnimalUncheckedCreateWithoutLoteInput[]
     connectOrCreate?: AnimalCreateOrConnectWithoutLoteInput | AnimalCreateOrConnectWithoutLoteInput[]
@@ -11738,6 +13811,14 @@ export namespace Prisma {
     connectOrCreate?: AnimalCreateOrConnectWithoutLoteInput | AnimalCreateOrConnectWithoutLoteInput[]
     createMany?: AnimalCreateManyLoteInputEnvelope
     connect?: AnimalWhereUniqueInput | AnimalWhereUniqueInput[]
+  }
+
+  export type FarmUpdateOneRequiredWithoutLotesNestedInput = {
+    create?: XOR<FarmCreateWithoutLotesInput, FarmUncheckedCreateWithoutLotesInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutLotesInput
+    upsert?: FarmUpsertWithoutLotesInput
+    connect?: FarmWhereUniqueInput
+    update?: XOR<XOR<FarmUpdateToOneWithWhereWithoutLotesInput, FarmUpdateWithoutLotesInput>, FarmUncheckedUpdateWithoutLotesInput>
   }
 
   export type AnimalUpdateManyWithoutLoteNestedInput = {
@@ -11766,6 +13847,232 @@ export namespace Prisma {
     update?: AnimalUpdateWithWhereUniqueWithoutLoteInput | AnimalUpdateWithWhereUniqueWithoutLoteInput[]
     updateMany?: AnimalUpdateManyWithWhereWithoutLoteInput | AnimalUpdateManyWithWhereWithoutLoteInput[]
     deleteMany?: AnimalScalarWhereInput | AnimalScalarWhereInput[]
+  }
+
+  export type UserCreateNestedManyWithoutFarmInput = {
+    create?: XOR<UserCreateWithoutFarmInput, UserUncheckedCreateWithoutFarmInput> | UserCreateWithoutFarmInput[] | UserUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutFarmInput | UserCreateOrConnectWithoutFarmInput[]
+    createMany?: UserCreateManyFarmInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type AnimalCreateNestedManyWithoutFarmInput = {
+    create?: XOR<AnimalCreateWithoutFarmInput, AnimalUncheckedCreateWithoutFarmInput> | AnimalCreateWithoutFarmInput[] | AnimalUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: AnimalCreateOrConnectWithoutFarmInput | AnimalCreateOrConnectWithoutFarmInput[]
+    createMany?: AnimalCreateManyFarmInputEnvelope
+    connect?: AnimalWhereUniqueInput | AnimalWhereUniqueInput[]
+  }
+
+  export type LoteCreateNestedManyWithoutFarmInput = {
+    create?: XOR<LoteCreateWithoutFarmInput, LoteUncheckedCreateWithoutFarmInput> | LoteCreateWithoutFarmInput[] | LoteUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: LoteCreateOrConnectWithoutFarmInput | LoteCreateOrConnectWithoutFarmInput[]
+    createMany?: LoteCreateManyFarmInputEnvelope
+    connect?: LoteWhereUniqueInput | LoteWhereUniqueInput[]
+  }
+
+  export type EventCreateNestedManyWithoutFarmInput = {
+    create?: XOR<EventCreateWithoutFarmInput, EventUncheckedCreateWithoutFarmInput> | EventCreateWithoutFarmInput[] | EventUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutFarmInput | EventCreateOrConnectWithoutFarmInput[]
+    createMany?: EventCreateManyFarmInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
+  export type TransactionCreateNestedManyWithoutFarmInput = {
+    create?: XOR<TransactionCreateWithoutFarmInput, TransactionUncheckedCreateWithoutFarmInput> | TransactionCreateWithoutFarmInput[] | TransactionUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutFarmInput | TransactionCreateOrConnectWithoutFarmInput[]
+    createMany?: TransactionCreateManyFarmInputEnvelope
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type UserUncheckedCreateNestedManyWithoutFarmInput = {
+    create?: XOR<UserCreateWithoutFarmInput, UserUncheckedCreateWithoutFarmInput> | UserCreateWithoutFarmInput[] | UserUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutFarmInput | UserCreateOrConnectWithoutFarmInput[]
+    createMany?: UserCreateManyFarmInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type AnimalUncheckedCreateNestedManyWithoutFarmInput = {
+    create?: XOR<AnimalCreateWithoutFarmInput, AnimalUncheckedCreateWithoutFarmInput> | AnimalCreateWithoutFarmInput[] | AnimalUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: AnimalCreateOrConnectWithoutFarmInput | AnimalCreateOrConnectWithoutFarmInput[]
+    createMany?: AnimalCreateManyFarmInputEnvelope
+    connect?: AnimalWhereUniqueInput | AnimalWhereUniqueInput[]
+  }
+
+  export type LoteUncheckedCreateNestedManyWithoutFarmInput = {
+    create?: XOR<LoteCreateWithoutFarmInput, LoteUncheckedCreateWithoutFarmInput> | LoteCreateWithoutFarmInput[] | LoteUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: LoteCreateOrConnectWithoutFarmInput | LoteCreateOrConnectWithoutFarmInput[]
+    createMany?: LoteCreateManyFarmInputEnvelope
+    connect?: LoteWhereUniqueInput | LoteWhereUniqueInput[]
+  }
+
+  export type EventUncheckedCreateNestedManyWithoutFarmInput = {
+    create?: XOR<EventCreateWithoutFarmInput, EventUncheckedCreateWithoutFarmInput> | EventCreateWithoutFarmInput[] | EventUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutFarmInput | EventCreateOrConnectWithoutFarmInput[]
+    createMany?: EventCreateManyFarmInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
+  export type TransactionUncheckedCreateNestedManyWithoutFarmInput = {
+    create?: XOR<TransactionCreateWithoutFarmInput, TransactionUncheckedCreateWithoutFarmInput> | TransactionCreateWithoutFarmInput[] | TransactionUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutFarmInput | TransactionCreateOrConnectWithoutFarmInput[]
+    createMany?: TransactionCreateManyFarmInputEnvelope
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type UserUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<UserCreateWithoutFarmInput, UserUncheckedCreateWithoutFarmInput> | UserCreateWithoutFarmInput[] | UserUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutFarmInput | UserCreateOrConnectWithoutFarmInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutFarmInput | UserUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: UserCreateManyFarmInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutFarmInput | UserUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutFarmInput | UserUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type AnimalUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<AnimalCreateWithoutFarmInput, AnimalUncheckedCreateWithoutFarmInput> | AnimalCreateWithoutFarmInput[] | AnimalUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: AnimalCreateOrConnectWithoutFarmInput | AnimalCreateOrConnectWithoutFarmInput[]
+    upsert?: AnimalUpsertWithWhereUniqueWithoutFarmInput | AnimalUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: AnimalCreateManyFarmInputEnvelope
+    set?: AnimalWhereUniqueInput | AnimalWhereUniqueInput[]
+    disconnect?: AnimalWhereUniqueInput | AnimalWhereUniqueInput[]
+    delete?: AnimalWhereUniqueInput | AnimalWhereUniqueInput[]
+    connect?: AnimalWhereUniqueInput | AnimalWhereUniqueInput[]
+    update?: AnimalUpdateWithWhereUniqueWithoutFarmInput | AnimalUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: AnimalUpdateManyWithWhereWithoutFarmInput | AnimalUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: AnimalScalarWhereInput | AnimalScalarWhereInput[]
+  }
+
+  export type LoteUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<LoteCreateWithoutFarmInput, LoteUncheckedCreateWithoutFarmInput> | LoteCreateWithoutFarmInput[] | LoteUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: LoteCreateOrConnectWithoutFarmInput | LoteCreateOrConnectWithoutFarmInput[]
+    upsert?: LoteUpsertWithWhereUniqueWithoutFarmInput | LoteUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: LoteCreateManyFarmInputEnvelope
+    set?: LoteWhereUniqueInput | LoteWhereUniqueInput[]
+    disconnect?: LoteWhereUniqueInput | LoteWhereUniqueInput[]
+    delete?: LoteWhereUniqueInput | LoteWhereUniqueInput[]
+    connect?: LoteWhereUniqueInput | LoteWhereUniqueInput[]
+    update?: LoteUpdateWithWhereUniqueWithoutFarmInput | LoteUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: LoteUpdateManyWithWhereWithoutFarmInput | LoteUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: LoteScalarWhereInput | LoteScalarWhereInput[]
+  }
+
+  export type EventUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<EventCreateWithoutFarmInput, EventUncheckedCreateWithoutFarmInput> | EventCreateWithoutFarmInput[] | EventUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutFarmInput | EventCreateOrConnectWithoutFarmInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutFarmInput | EventUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: EventCreateManyFarmInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutFarmInput | EventUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutFarmInput | EventUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
+  export type TransactionUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<TransactionCreateWithoutFarmInput, TransactionUncheckedCreateWithoutFarmInput> | TransactionCreateWithoutFarmInput[] | TransactionUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutFarmInput | TransactionCreateOrConnectWithoutFarmInput[]
+    upsert?: TransactionUpsertWithWhereUniqueWithoutFarmInput | TransactionUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: TransactionCreateManyFarmInputEnvelope
+    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    update?: TransactionUpdateWithWhereUniqueWithoutFarmInput | TransactionUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: TransactionUpdateManyWithWhereWithoutFarmInput | TransactionUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<UserCreateWithoutFarmInput, UserUncheckedCreateWithoutFarmInput> | UserCreateWithoutFarmInput[] | UserUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutFarmInput | UserCreateOrConnectWithoutFarmInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutFarmInput | UserUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: UserCreateManyFarmInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutFarmInput | UserUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutFarmInput | UserUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type AnimalUncheckedUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<AnimalCreateWithoutFarmInput, AnimalUncheckedCreateWithoutFarmInput> | AnimalCreateWithoutFarmInput[] | AnimalUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: AnimalCreateOrConnectWithoutFarmInput | AnimalCreateOrConnectWithoutFarmInput[]
+    upsert?: AnimalUpsertWithWhereUniqueWithoutFarmInput | AnimalUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: AnimalCreateManyFarmInputEnvelope
+    set?: AnimalWhereUniqueInput | AnimalWhereUniqueInput[]
+    disconnect?: AnimalWhereUniqueInput | AnimalWhereUniqueInput[]
+    delete?: AnimalWhereUniqueInput | AnimalWhereUniqueInput[]
+    connect?: AnimalWhereUniqueInput | AnimalWhereUniqueInput[]
+    update?: AnimalUpdateWithWhereUniqueWithoutFarmInput | AnimalUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: AnimalUpdateManyWithWhereWithoutFarmInput | AnimalUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: AnimalScalarWhereInput | AnimalScalarWhereInput[]
+  }
+
+  export type LoteUncheckedUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<LoteCreateWithoutFarmInput, LoteUncheckedCreateWithoutFarmInput> | LoteCreateWithoutFarmInput[] | LoteUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: LoteCreateOrConnectWithoutFarmInput | LoteCreateOrConnectWithoutFarmInput[]
+    upsert?: LoteUpsertWithWhereUniqueWithoutFarmInput | LoteUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: LoteCreateManyFarmInputEnvelope
+    set?: LoteWhereUniqueInput | LoteWhereUniqueInput[]
+    disconnect?: LoteWhereUniqueInput | LoteWhereUniqueInput[]
+    delete?: LoteWhereUniqueInput | LoteWhereUniqueInput[]
+    connect?: LoteWhereUniqueInput | LoteWhereUniqueInput[]
+    update?: LoteUpdateWithWhereUniqueWithoutFarmInput | LoteUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: LoteUpdateManyWithWhereWithoutFarmInput | LoteUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: LoteScalarWhereInput | LoteScalarWhereInput[]
+  }
+
+  export type EventUncheckedUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<EventCreateWithoutFarmInput, EventUncheckedCreateWithoutFarmInput> | EventCreateWithoutFarmInput[] | EventUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutFarmInput | EventCreateOrConnectWithoutFarmInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutFarmInput | EventUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: EventCreateManyFarmInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutFarmInput | EventUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutFarmInput | EventUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
+  export type TransactionUncheckedUpdateManyWithoutFarmNestedInput = {
+    create?: XOR<TransactionCreateWithoutFarmInput, TransactionUncheckedCreateWithoutFarmInput> | TransactionCreateWithoutFarmInput[] | TransactionUncheckedCreateWithoutFarmInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutFarmInput | TransactionCreateOrConnectWithoutFarmInput[]
+    upsert?: TransactionUpsertWithWhereUniqueWithoutFarmInput | TransactionUpsertWithWhereUniqueWithoutFarmInput[]
+    createMany?: TransactionCreateManyFarmInputEnvelope
+    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    update?: TransactionUpdateWithWhereUniqueWithoutFarmInput | TransactionUpdateWithWhereUniqueWithoutFarmInput[]
+    updateMany?: TransactionUpdateManyWithWhereWithoutFarmInput | TransactionUpdateManyWithWhereWithoutFarmInput[]
+    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type FarmCreateNestedOneWithoutUsersInput = {
+    create?: XOR<FarmCreateWithoutUsersInput, FarmUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutUsersInput
+    connect?: FarmWhereUniqueInput
+  }
+
+  export type FarmUpdateOneWithoutUsersNestedInput = {
+    create?: XOR<FarmCreateWithoutUsersInput, FarmUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: FarmCreateOrConnectWithoutUsersInput
+    upsert?: FarmUpsertWithoutUsersInput
+    disconnect?: FarmWhereInput | boolean
+    delete?: FarmWhereInput | boolean
+    connect?: FarmWhereUniqueInput
+    update?: XOR<XOR<FarmUpdateToOneWithWhereWithoutUsersInput, FarmUpdateWithoutUsersInput>, FarmUncheckedUpdateWithoutUsersInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -11969,6 +14276,39 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type FarmCreateWithoutAnimalsInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phone?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserCreateNestedManyWithoutFarmInput
+    lotes?: LoteCreateNestedManyWithoutFarmInput
+    events?: EventCreateNestedManyWithoutFarmInput
+    transactions?: TransactionCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmUncheckedCreateWithoutAnimalsInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phone?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutFarmInput
+    lotes?: LoteUncheckedCreateNestedManyWithoutFarmInput
+    events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmCreateOrConnectWithoutAnimalsInput = {
+    where: FarmWhereUniqueInput
+    create: XOR<FarmCreateWithoutAnimalsInput, FarmUncheckedCreateWithoutAnimalsInput>
+  }
+
   export type BirthCreateWithoutMotherInput = {
     id?: string
     birthDate: Date | string
@@ -12060,6 +14400,7 @@ export namespace Prisma {
     person: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutTransactionsInput
   }
 
   export type TransactionUncheckedCreateWithoutAnimalInput = {
@@ -12070,6 +14411,7 @@ export namespace Prisma {
     person: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
   }
 
   export type TransactionCreateOrConnectWithoutAnimalInput = {
@@ -12140,6 +14482,7 @@ export namespace Prisma {
     finalidade: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutLotesInput
   }
 
   export type LoteUncheckedCreateWithoutAnimaisInput = {
@@ -12149,11 +14492,51 @@ export namespace Prisma {
     finalidade: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
   }
 
   export type LoteCreateOrConnectWithoutAnimaisInput = {
     where: LoteWhereUniqueInput
     create: XOR<LoteCreateWithoutAnimaisInput, LoteUncheckedCreateWithoutAnimaisInput>
+  }
+
+  export type FarmUpsertWithoutAnimalsInput = {
+    update: XOR<FarmUpdateWithoutAnimalsInput, FarmUncheckedUpdateWithoutAnimalsInput>
+    create: XOR<FarmCreateWithoutAnimalsInput, FarmUncheckedCreateWithoutAnimalsInput>
+    where?: FarmWhereInput
+  }
+
+  export type FarmUpdateToOneWithWhereWithoutAnimalsInput = {
+    where?: FarmWhereInput
+    data: XOR<FarmUpdateWithoutAnimalsInput, FarmUncheckedUpdateWithoutAnimalsInput>
+  }
+
+  export type FarmUpdateWithoutAnimalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUpdateManyWithoutFarmNestedInput
+    lotes?: LoteUpdateManyWithoutFarmNestedInput
+    events?: EventUpdateManyWithoutFarmNestedInput
+    transactions?: TransactionUpdateManyWithoutFarmNestedInput
+  }
+
+  export type FarmUncheckedUpdateWithoutAnimalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutFarmNestedInput
+    lotes?: LoteUncheckedUpdateManyWithoutFarmNestedInput
+    events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type BirthUpsertWithWhereUniqueWithoutMotherInput = {
@@ -12260,6 +14643,7 @@ export namespace Prisma {
     person?: StringFilter<"Transaction"> | string
     createdAt?: DateTimeFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeFilter<"Transaction"> | Date | string
+    farmId?: StringFilter<"Transaction"> | string
     animalId?: StringFilter<"Transaction"> | string
   }
 
@@ -12324,6 +14708,7 @@ export namespace Prisma {
     finalidade?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutLotesNestedInput
   }
 
   export type LoteUncheckedUpdateWithoutAnimaisInput = {
@@ -12333,6 +14718,7 @@ export namespace Prisma {
     finalidade?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
   }
 
   export type AnimalCreateWithoutMotherOfInput = {
@@ -12354,6 +14740,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutAnimalsInput
     fatherOf?: BirthCreateNestedManyWithoutFatherInput
     childOf?: BirthCreateNestedOneWithoutChildInput
     transactions?: TransactionCreateNestedManyWithoutAnimalInput
@@ -12381,6 +14768,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
     loteId?: string | null
     fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
     childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
@@ -12413,6 +14801,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutAnimalsInput
     motherOf?: BirthCreateNestedManyWithoutMotherInput
     childOf?: BirthCreateNestedOneWithoutChildInput
     transactions?: TransactionCreateNestedManyWithoutAnimalInput
@@ -12440,6 +14829,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
     loteId?: string | null
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
     childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
@@ -12472,6 +14862,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutAnimalsInput
     motherOf?: BirthCreateNestedManyWithoutMotherInput
     fatherOf?: BirthCreateNestedManyWithoutFatherInput
     transactions?: TransactionCreateNestedManyWithoutAnimalInput
@@ -12499,6 +14890,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
     loteId?: string | null
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
     fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
@@ -12531,6 +14923,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutAnimalsInput
     motherOf?: BirthCreateNestedManyWithoutMotherInput
     fatherOf?: BirthCreateNestedManyWithoutFatherInput
     childOf?: BirthCreateNestedOneWithoutChildInput
@@ -12558,6 +14951,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
     loteId?: string | null
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
     fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
@@ -12601,6 +14995,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutAnimalsNestedInput
     fatherOf?: BirthUpdateManyWithoutFatherNestedInput
     childOf?: BirthUpdateOneWithoutChildNestedInput
     transactions?: TransactionUpdateManyWithoutAnimalNestedInput
@@ -12628,6 +15023,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
     fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
     childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
@@ -12666,6 +15062,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutAnimalsNestedInput
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
     childOf?: BirthUpdateOneWithoutChildNestedInput
     transactions?: TransactionUpdateManyWithoutAnimalNestedInput
@@ -12693,6 +15090,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
     childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
@@ -12731,6 +15129,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutAnimalsNestedInput
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
     fatherOf?: BirthUpdateManyWithoutFatherNestedInput
     transactions?: TransactionUpdateManyWithoutAnimalNestedInput
@@ -12758,6 +15157,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
     fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
@@ -12796,6 +15196,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutAnimalsNestedInput
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
     fatherOf?: BirthUpdateManyWithoutFatherNestedInput
     childOf?: BirthUpdateOneWithoutChildNestedInput
@@ -12823,12 +15224,46 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
     fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
     childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutAnimalNestedInput
     events?: EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput
+  }
+
+  export type FarmCreateWithoutTransactionsInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phone?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserCreateNestedManyWithoutFarmInput
+    animals?: AnimalCreateNestedManyWithoutFarmInput
+    lotes?: LoteCreateNestedManyWithoutFarmInput
+    events?: EventCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmUncheckedCreateWithoutTransactionsInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phone?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutFarmInput
+    animals?: AnimalUncheckedCreateNestedManyWithoutFarmInput
+    lotes?: LoteUncheckedCreateNestedManyWithoutFarmInput
+    events?: EventUncheckedCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmCreateOrConnectWithoutTransactionsInput = {
+    where: FarmWhereUniqueInput
+    create: XOR<FarmCreateWithoutTransactionsInput, FarmUncheckedCreateWithoutTransactionsInput>
   }
 
   export type AnimalCreateWithoutTransactionsInput = {
@@ -12850,6 +15285,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutAnimalsInput
     motherOf?: BirthCreateNestedManyWithoutMotherInput
     fatherOf?: BirthCreateNestedManyWithoutFatherInput
     childOf?: BirthCreateNestedOneWithoutChildInput
@@ -12877,6 +15313,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
     loteId?: string | null
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
     fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
@@ -12888,6 +15325,45 @@ export namespace Prisma {
   export type AnimalCreateOrConnectWithoutTransactionsInput = {
     where: AnimalWhereUniqueInput
     create: XOR<AnimalCreateWithoutTransactionsInput, AnimalUncheckedCreateWithoutTransactionsInput>
+  }
+
+  export type FarmUpsertWithoutTransactionsInput = {
+    update: XOR<FarmUpdateWithoutTransactionsInput, FarmUncheckedUpdateWithoutTransactionsInput>
+    create: XOR<FarmCreateWithoutTransactionsInput, FarmUncheckedCreateWithoutTransactionsInput>
+    where?: FarmWhereInput
+  }
+
+  export type FarmUpdateToOneWithWhereWithoutTransactionsInput = {
+    where?: FarmWhereInput
+    data: XOR<FarmUpdateWithoutTransactionsInput, FarmUncheckedUpdateWithoutTransactionsInput>
+  }
+
+  export type FarmUpdateWithoutTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUpdateManyWithoutFarmNestedInput
+    animals?: AnimalUpdateManyWithoutFarmNestedInput
+    lotes?: LoteUpdateManyWithoutFarmNestedInput
+    events?: EventUpdateManyWithoutFarmNestedInput
+  }
+
+  export type FarmUncheckedUpdateWithoutTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutFarmNestedInput
+    animals?: AnimalUncheckedUpdateManyWithoutFarmNestedInput
+    lotes?: LoteUncheckedUpdateManyWithoutFarmNestedInput
+    events?: EventUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type AnimalUpsertWithoutTransactionsInput = {
@@ -12920,6 +15396,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutAnimalsNestedInput
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
     fatherOf?: BirthUpdateManyWithoutFatherNestedInput
     childOf?: BirthUpdateOneWithoutChildNestedInput
@@ -12947,12 +15424,46 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
     fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
     childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
     events?: EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput
     Birth?: BirthUncheckedUpdateManyWithoutAnimalNestedInput
+  }
+
+  export type FarmCreateWithoutEventsInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phone?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserCreateNestedManyWithoutFarmInput
+    animals?: AnimalCreateNestedManyWithoutFarmInput
+    lotes?: LoteCreateNestedManyWithoutFarmInput
+    transactions?: TransactionCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmUncheckedCreateWithoutEventsInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phone?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutFarmInput
+    animals?: AnimalUncheckedCreateNestedManyWithoutFarmInput
+    lotes?: LoteUncheckedCreateNestedManyWithoutFarmInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmCreateOrConnectWithoutEventsInput = {
+    where: FarmWhereUniqueInput
+    create: XOR<FarmCreateWithoutEventsInput, FarmUncheckedCreateWithoutEventsInput>
   }
 
   export type EventAnimalCreateWithoutEventInput = {
@@ -12976,6 +15487,45 @@ export namespace Prisma {
 
   export type EventAnimalCreateManyEventInputEnvelope = {
     data: EventAnimalCreateManyEventInput | EventAnimalCreateManyEventInput[]
+  }
+
+  export type FarmUpsertWithoutEventsInput = {
+    update: XOR<FarmUpdateWithoutEventsInput, FarmUncheckedUpdateWithoutEventsInput>
+    create: XOR<FarmCreateWithoutEventsInput, FarmUncheckedCreateWithoutEventsInput>
+    where?: FarmWhereInput
+  }
+
+  export type FarmUpdateToOneWithWhereWithoutEventsInput = {
+    where?: FarmWhereInput
+    data: XOR<FarmUpdateWithoutEventsInput, FarmUncheckedUpdateWithoutEventsInput>
+  }
+
+  export type FarmUpdateWithoutEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUpdateManyWithoutFarmNestedInput
+    animals?: AnimalUpdateManyWithoutFarmNestedInput
+    lotes?: LoteUpdateManyWithoutFarmNestedInput
+    transactions?: TransactionUpdateManyWithoutFarmNestedInput
+  }
+
+  export type FarmUncheckedUpdateWithoutEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutFarmNestedInput
+    animals?: AnimalUncheckedUpdateManyWithoutFarmNestedInput
+    lotes?: LoteUncheckedUpdateManyWithoutFarmNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type EventAnimalUpsertWithWhereUniqueWithoutEventInput = {
@@ -13002,6 +15552,7 @@ export namespace Prisma {
     description: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutEventsInput
   }
 
   export type EventUncheckedCreateWithoutAnimalsInput = {
@@ -13012,6 +15563,7 @@ export namespace Prisma {
     description: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
   }
 
   export type EventCreateOrConnectWithoutAnimalsInput = {
@@ -13038,6 +15590,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutAnimalsInput
     motherOf?: BirthCreateNestedManyWithoutMotherInput
     fatherOf?: BirthCreateNestedManyWithoutFatherInput
     childOf?: BirthCreateNestedOneWithoutChildInput
@@ -13065,6 +15618,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
     loteId?: string | null
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
     fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
@@ -13097,6 +15651,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutEventsNestedInput
   }
 
   export type EventUncheckedUpdateWithoutAnimalsInput = {
@@ -13107,6 +15662,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
   }
 
   export type AnimalUpsertWithoutEventsInput = {
@@ -13139,6 +15695,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutAnimalsNestedInput
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
     fatherOf?: BirthUpdateManyWithoutFatherNestedInput
     childOf?: BirthUpdateOneWithoutChildNestedInput
@@ -13166,12 +15723,46 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
     loteId?: NullableStringFieldUpdateOperationsInput | string | null
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
     fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
     childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutAnimalNestedInput
     Birth?: BirthUncheckedUpdateManyWithoutAnimalNestedInput
+  }
+
+  export type FarmCreateWithoutLotesInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phone?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserCreateNestedManyWithoutFarmInput
+    animals?: AnimalCreateNestedManyWithoutFarmInput
+    events?: EventCreateNestedManyWithoutFarmInput
+    transactions?: TransactionCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmUncheckedCreateWithoutLotesInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phone?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    users?: UserUncheckedCreateNestedManyWithoutFarmInput
+    animals?: AnimalUncheckedCreateNestedManyWithoutFarmInput
+    events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmCreateOrConnectWithoutLotesInput = {
+    where: FarmWhereUniqueInput
+    create: XOR<FarmCreateWithoutLotesInput, FarmUncheckedCreateWithoutLotesInput>
   }
 
   export type AnimalCreateWithoutLoteInput = {
@@ -13193,6 +15784,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farm: FarmCreateNestedOneWithoutAnimalsInput
     motherOf?: BirthCreateNestedManyWithoutMotherInput
     fatherOf?: BirthCreateNestedManyWithoutFatherInput
     childOf?: BirthCreateNestedOneWithoutChildInput
@@ -13220,6 +15812,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
     motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
     fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
     childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
@@ -13235,6 +15828,45 @@ export namespace Prisma {
 
   export type AnimalCreateManyLoteInputEnvelope = {
     data: AnimalCreateManyLoteInput | AnimalCreateManyLoteInput[]
+  }
+
+  export type FarmUpsertWithoutLotesInput = {
+    update: XOR<FarmUpdateWithoutLotesInput, FarmUncheckedUpdateWithoutLotesInput>
+    create: XOR<FarmCreateWithoutLotesInput, FarmUncheckedCreateWithoutLotesInput>
+    where?: FarmWhereInput
+  }
+
+  export type FarmUpdateToOneWithWhereWithoutLotesInput = {
+    where?: FarmWhereInput
+    data: XOR<FarmUpdateWithoutLotesInput, FarmUncheckedUpdateWithoutLotesInput>
+  }
+
+  export type FarmUpdateWithoutLotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUpdateManyWithoutFarmNestedInput
+    animals?: AnimalUpdateManyWithoutFarmNestedInput
+    events?: EventUpdateManyWithoutFarmNestedInput
+    transactions?: TransactionUpdateManyWithoutFarmNestedInput
+  }
+
+  export type FarmUncheckedUpdateWithoutLotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    users?: UserUncheckedUpdateManyWithoutFarmNestedInput
+    animals?: AnimalUncheckedUpdateManyWithoutFarmNestedInput
+    events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type AnimalUpsertWithWhereUniqueWithoutLoteInput = {
@@ -13275,7 +15907,392 @@ export namespace Prisma {
     active?: BoolFilter<"Animal"> | boolean
     createdAt?: DateTimeFilter<"Animal"> | Date | string
     updatedAt?: DateTimeFilter<"Animal"> | Date | string
+    farmId?: StringFilter<"Animal"> | string
     loteId?: StringNullableFilter<"Animal"> | string | null
+  }
+
+  export type UserCreateWithoutFarmInput = {
+    id?: string
+    username: string
+    email: string
+    password: string
+    fullName: string
+    role: string
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUncheckedCreateWithoutFarmInput = {
+    id?: string
+    username: string
+    email: string
+    password: string
+    fullName: string
+    role: string
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateOrConnectWithoutFarmInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFarmInput, UserUncheckedCreateWithoutFarmInput>
+  }
+
+  export type UserCreateManyFarmInputEnvelope = {
+    data: UserCreateManyFarmInput | UserCreateManyFarmInput[]
+  }
+
+  export type AnimalCreateWithoutFarmInput = {
+    id?: string
+    name: string
+    tag: string
+    breed: string
+    gender: string
+    birthDate: Date | string
+    status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    motherOf?: BirthCreateNestedManyWithoutMotherInput
+    fatherOf?: BirthCreateNestedManyWithoutFatherInput
+    childOf?: BirthCreateNestedOneWithoutChildInput
+    transactions?: TransactionCreateNestedManyWithoutAnimalInput
+    events?: EventAnimalCreateNestedManyWithoutAnimalInput
+    Birth?: BirthCreateNestedManyWithoutAnimalInput
+    lote?: LoteCreateNestedOneWithoutAnimaisInput
+  }
+
+  export type AnimalUncheckedCreateWithoutFarmInput = {
+    id?: string
+    name: string
+    tag: string
+    breed: string
+    gender: string
+    birthDate: Date | string
+    status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    loteId?: string | null
+    motherOf?: BirthUncheckedCreateNestedManyWithoutMotherInput
+    fatherOf?: BirthUncheckedCreateNestedManyWithoutFatherInput
+    childOf?: BirthUncheckedCreateNestedOneWithoutChildInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutAnimalInput
+    events?: EventAnimalUncheckedCreateNestedManyWithoutAnimalInput
+    Birth?: BirthUncheckedCreateNestedManyWithoutAnimalInput
+  }
+
+  export type AnimalCreateOrConnectWithoutFarmInput = {
+    where: AnimalWhereUniqueInput
+    create: XOR<AnimalCreateWithoutFarmInput, AnimalUncheckedCreateWithoutFarmInput>
+  }
+
+  export type AnimalCreateManyFarmInputEnvelope = {
+    data: AnimalCreateManyFarmInput | AnimalCreateManyFarmInput[]
+  }
+
+  export type LoteCreateWithoutFarmInput = {
+    id?: string
+    nome: string
+    descricao?: string | null
+    finalidade: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animais?: AnimalCreateNestedManyWithoutLoteInput
+  }
+
+  export type LoteUncheckedCreateWithoutFarmInput = {
+    id?: string
+    nome: string
+    descricao?: string | null
+    finalidade: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animais?: AnimalUncheckedCreateNestedManyWithoutLoteInput
+  }
+
+  export type LoteCreateOrConnectWithoutFarmInput = {
+    where: LoteWhereUniqueInput
+    create: XOR<LoteCreateWithoutFarmInput, LoteUncheckedCreateWithoutFarmInput>
+  }
+
+  export type LoteCreateManyFarmInputEnvelope = {
+    data: LoteCreateManyFarmInput | LoteCreateManyFarmInput[]
+  }
+
+  export type EventCreateWithoutFarmInput = {
+    id?: string
+    title: string
+    type: string
+    date: Date | string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animals?: EventAnimalCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUncheckedCreateWithoutFarmInput = {
+    id?: string
+    title: string
+    type: string
+    date: Date | string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animals?: EventAnimalUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type EventCreateOrConnectWithoutFarmInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutFarmInput, EventUncheckedCreateWithoutFarmInput>
+  }
+
+  export type EventCreateManyFarmInputEnvelope = {
+    data: EventCreateManyFarmInput | EventCreateManyFarmInput[]
+  }
+
+  export type TransactionCreateWithoutFarmInput = {
+    id?: string
+    type: string
+    date: Date | string
+    value: number
+    person: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animal: AnimalCreateNestedOneWithoutTransactionsInput
+  }
+
+  export type TransactionUncheckedCreateWithoutFarmInput = {
+    id?: string
+    type: string
+    date: Date | string
+    value: number
+    person: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animalId: string
+  }
+
+  export type TransactionCreateOrConnectWithoutFarmInput = {
+    where: TransactionWhereUniqueInput
+    create: XOR<TransactionCreateWithoutFarmInput, TransactionUncheckedCreateWithoutFarmInput>
+  }
+
+  export type TransactionCreateManyFarmInputEnvelope = {
+    data: TransactionCreateManyFarmInput | TransactionCreateManyFarmInput[]
+  }
+
+  export type UserUpsertWithWhereUniqueWithoutFarmInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutFarmInput, UserUncheckedUpdateWithoutFarmInput>
+    create: XOR<UserCreateWithoutFarmInput, UserUncheckedCreateWithoutFarmInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutFarmInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutFarmInput, UserUncheckedUpdateWithoutFarmInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutFarmInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutFarmInput>
+  }
+
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    id?: StringFilter<"User"> | string
+    username?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    fullName?: StringFilter<"User"> | string
+    role?: StringFilter<"User"> | string
+    active?: BoolFilter<"User"> | boolean
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
+    farmId?: StringNullableFilter<"User"> | string | null
+  }
+
+  export type AnimalUpsertWithWhereUniqueWithoutFarmInput = {
+    where: AnimalWhereUniqueInput
+    update: XOR<AnimalUpdateWithoutFarmInput, AnimalUncheckedUpdateWithoutFarmInput>
+    create: XOR<AnimalCreateWithoutFarmInput, AnimalUncheckedCreateWithoutFarmInput>
+  }
+
+  export type AnimalUpdateWithWhereUniqueWithoutFarmInput = {
+    where: AnimalWhereUniqueInput
+    data: XOR<AnimalUpdateWithoutFarmInput, AnimalUncheckedUpdateWithoutFarmInput>
+  }
+
+  export type AnimalUpdateManyWithWhereWithoutFarmInput = {
+    where: AnimalScalarWhereInput
+    data: XOR<AnimalUpdateManyMutationInput, AnimalUncheckedUpdateManyWithoutFarmInput>
+  }
+
+  export type LoteUpsertWithWhereUniqueWithoutFarmInput = {
+    where: LoteWhereUniqueInput
+    update: XOR<LoteUpdateWithoutFarmInput, LoteUncheckedUpdateWithoutFarmInput>
+    create: XOR<LoteCreateWithoutFarmInput, LoteUncheckedCreateWithoutFarmInput>
+  }
+
+  export type LoteUpdateWithWhereUniqueWithoutFarmInput = {
+    where: LoteWhereUniqueInput
+    data: XOR<LoteUpdateWithoutFarmInput, LoteUncheckedUpdateWithoutFarmInput>
+  }
+
+  export type LoteUpdateManyWithWhereWithoutFarmInput = {
+    where: LoteScalarWhereInput
+    data: XOR<LoteUpdateManyMutationInput, LoteUncheckedUpdateManyWithoutFarmInput>
+  }
+
+  export type LoteScalarWhereInput = {
+    AND?: LoteScalarWhereInput | LoteScalarWhereInput[]
+    OR?: LoteScalarWhereInput[]
+    NOT?: LoteScalarWhereInput | LoteScalarWhereInput[]
+    id?: StringFilter<"Lote"> | string
+    nome?: StringFilter<"Lote"> | string
+    descricao?: StringNullableFilter<"Lote"> | string | null
+    finalidade?: StringFilter<"Lote"> | string
+    createdAt?: DateTimeFilter<"Lote"> | Date | string
+    updatedAt?: DateTimeFilter<"Lote"> | Date | string
+    farmId?: StringFilter<"Lote"> | string
+  }
+
+  export type EventUpsertWithWhereUniqueWithoutFarmInput = {
+    where: EventWhereUniqueInput
+    update: XOR<EventUpdateWithoutFarmInput, EventUncheckedUpdateWithoutFarmInput>
+    create: XOR<EventCreateWithoutFarmInput, EventUncheckedCreateWithoutFarmInput>
+  }
+
+  export type EventUpdateWithWhereUniqueWithoutFarmInput = {
+    where: EventWhereUniqueInput
+    data: XOR<EventUpdateWithoutFarmInput, EventUncheckedUpdateWithoutFarmInput>
+  }
+
+  export type EventUpdateManyWithWhereWithoutFarmInput = {
+    where: EventScalarWhereInput
+    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyWithoutFarmInput>
+  }
+
+  export type EventScalarWhereInput = {
+    AND?: EventScalarWhereInput | EventScalarWhereInput[]
+    OR?: EventScalarWhereInput[]
+    NOT?: EventScalarWhereInput | EventScalarWhereInput[]
+    id?: StringFilter<"Event"> | string
+    title?: StringFilter<"Event"> | string
+    type?: StringFilter<"Event"> | string
+    date?: DateTimeFilter<"Event"> | Date | string
+    description?: StringFilter<"Event"> | string
+    createdAt?: DateTimeFilter<"Event"> | Date | string
+    updatedAt?: DateTimeFilter<"Event"> | Date | string
+    farmId?: StringFilter<"Event"> | string
+  }
+
+  export type TransactionUpsertWithWhereUniqueWithoutFarmInput = {
+    where: TransactionWhereUniqueInput
+    update: XOR<TransactionUpdateWithoutFarmInput, TransactionUncheckedUpdateWithoutFarmInput>
+    create: XOR<TransactionCreateWithoutFarmInput, TransactionUncheckedCreateWithoutFarmInput>
+  }
+
+  export type TransactionUpdateWithWhereUniqueWithoutFarmInput = {
+    where: TransactionWhereUniqueInput
+    data: XOR<TransactionUpdateWithoutFarmInput, TransactionUncheckedUpdateWithoutFarmInput>
+  }
+
+  export type TransactionUpdateManyWithWhereWithoutFarmInput = {
+    where: TransactionScalarWhereInput
+    data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutFarmInput>
+  }
+
+  export type FarmCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phone?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animals?: AnimalCreateNestedManyWithoutFarmInput
+    lotes?: LoteCreateNestedManyWithoutFarmInput
+    events?: EventCreateNestedManyWithoutFarmInput
+    transactions?: TransactionCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmUncheckedCreateWithoutUsersInput = {
+    id?: string
+    name: string
+    address?: string | null
+    phone?: string | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animals?: AnimalUncheckedCreateNestedManyWithoutFarmInput
+    lotes?: LoteUncheckedCreateNestedManyWithoutFarmInput
+    events?: EventUncheckedCreateNestedManyWithoutFarmInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutFarmInput
+  }
+
+  export type FarmCreateOrConnectWithoutUsersInput = {
+    where: FarmWhereUniqueInput
+    create: XOR<FarmCreateWithoutUsersInput, FarmUncheckedCreateWithoutUsersInput>
+  }
+
+  export type FarmUpsertWithoutUsersInput = {
+    update: XOR<FarmUpdateWithoutUsersInput, FarmUncheckedUpdateWithoutUsersInput>
+    create: XOR<FarmCreateWithoutUsersInput, FarmUncheckedCreateWithoutUsersInput>
+    where?: FarmWhereInput
+  }
+
+  export type FarmUpdateToOneWithWhereWithoutUsersInput = {
+    where?: FarmWhereInput
+    data: XOR<FarmUpdateWithoutUsersInput, FarmUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type FarmUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animals?: AnimalUpdateManyWithoutFarmNestedInput
+    lotes?: LoteUpdateManyWithoutFarmNestedInput
+    events?: EventUpdateManyWithoutFarmNestedInput
+    transactions?: TransactionUpdateManyWithoutFarmNestedInput
+  }
+
+  export type FarmUncheckedUpdateWithoutUsersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animals?: AnimalUncheckedUpdateManyWithoutFarmNestedInput
+    lotes?: LoteUncheckedUpdateManyWithoutFarmNestedInput
+    events?: EventUncheckedUpdateManyWithoutFarmNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutFarmNestedInput
   }
 
   export type BirthCreateManyMotherInput = {
@@ -13306,6 +16323,7 @@ export namespace Prisma {
     person: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
   }
 
   export type EventAnimalCreateManyAnimalInput = {
@@ -13393,6 +16411,7 @@ export namespace Prisma {
     person?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutTransactionsNestedInput
   }
 
   export type TransactionUncheckedUpdateWithoutAnimalInput = {
@@ -13403,6 +16422,7 @@ export namespace Prisma {
     person?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
   }
 
   export type TransactionUncheckedUpdateManyWithoutAnimalInput = {
@@ -13413,6 +16433,7 @@ export namespace Prisma {
     person?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
   }
 
   export type EventAnimalUpdateWithoutAnimalInput = {
@@ -13513,6 +16534,7 @@ export namespace Prisma {
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    farmId: string
   }
 
   export type AnimalUpdateWithoutLoteInput = {
@@ -13534,6 +16556,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farm?: FarmUpdateOneRequiredWithoutAnimalsNestedInput
     motherOf?: BirthUpdateManyWithoutMotherNestedInput
     fatherOf?: BirthUpdateManyWithoutFatherNestedInput
     childOf?: BirthUpdateOneWithoutChildNestedInput
@@ -13561,6 +16584,7 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
     motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
     fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
     childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
@@ -13588,6 +16612,279 @@ export namespace Prisma {
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    farmId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserCreateManyFarmInput = {
+    id?: string
+    username: string
+    email: string
+    password: string
+    fullName: string
+    role: string
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AnimalCreateManyFarmInput = {
+    id?: string
+    name: string
+    tag: string
+    breed: string
+    gender: string
+    birthDate: Date | string
+    status: string
+    reproductiveStatus?: string | null
+    inseminationDate?: Date | string | null
+    expectedBirthDate?: Date | string | null
+    abortionDate?: Date | string | null
+    weight?: number | null
+    notes?: string | null
+    purchaseDate?: Date | string | null
+    purchaseValue?: number | null
+    active?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    loteId?: string | null
+  }
+
+  export type LoteCreateManyFarmInput = {
+    id?: string
+    nome: string
+    descricao?: string | null
+    finalidade: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EventCreateManyFarmInput = {
+    id?: string
+    title: string
+    type: string
+    date: Date | string
+    description: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TransactionCreateManyFarmInput = {
+    id?: string
+    type: string
+    date: Date | string
+    value: number
+    person: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    animalId: string
+  }
+
+  export type UserUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateManyWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AnimalUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    motherOf?: BirthUpdateManyWithoutMotherNestedInput
+    fatherOf?: BirthUpdateManyWithoutFatherNestedInput
+    childOf?: BirthUpdateOneWithoutChildNestedInput
+    transactions?: TransactionUpdateManyWithoutAnimalNestedInput
+    events?: EventAnimalUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUpdateManyWithoutAnimalNestedInput
+    lote?: LoteUpdateOneWithoutAnimaisNestedInput
+  }
+
+  export type AnimalUncheckedUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loteId?: NullableStringFieldUpdateOperationsInput | string | null
+    motherOf?: BirthUncheckedUpdateManyWithoutMotherNestedInput
+    fatherOf?: BirthUncheckedUpdateManyWithoutFatherNestedInput
+    childOf?: BirthUncheckedUpdateOneWithoutChildNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutAnimalNestedInput
+    events?: EventAnimalUncheckedUpdateManyWithoutAnimalNestedInput
+    Birth?: BirthUncheckedUpdateManyWithoutAnimalNestedInput
+  }
+
+  export type AnimalUncheckedUpdateManyWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    tag?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    birthDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: StringFieldUpdateOperationsInput | string
+    reproductiveStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    inseminationDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expectedBirthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    abortionDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    purchaseDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purchaseValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    active?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    loteId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type LoteUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    finalidade?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animais?: AnimalUpdateManyWithoutLoteNestedInput
+  }
+
+  export type LoteUncheckedUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    finalidade?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animais?: AnimalUncheckedUpdateManyWithoutLoteNestedInput
+  }
+
+  export type LoteUncheckedUpdateManyWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nome?: StringFieldUpdateOperationsInput | string
+    descricao?: NullableStringFieldUpdateOperationsInput | string | null
+    finalidade?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animals?: EventAnimalUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animals?: EventAnimalUncheckedUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateManyWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TransactionUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    value?: FloatFieldUpdateOperationsInput | number
+    person?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animal?: AnimalUpdateOneRequiredWithoutTransactionsNestedInput
+  }
+
+  export type TransactionUncheckedUpdateWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    value?: FloatFieldUpdateOperationsInput | number
+    person?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animalId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TransactionUncheckedUpdateManyWithoutFarmInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    value?: FloatFieldUpdateOperationsInput | number
+    person?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    animalId?: StringFieldUpdateOperationsInput | string
   }
 
 

@@ -10,6 +10,7 @@
     "postinstall": "prisma generate",
     "prisma:seed": "npx ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
     "create-user": "npx tsx scripts/create-user.ts",
+    "create-admin": "node scripts/create-admin.js",
     "test": "jest",
     "test:watch": "jest --watch"
   },

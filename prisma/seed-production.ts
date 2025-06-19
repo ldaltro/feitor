@@ -7,8 +7,25 @@ async function main() {
   console.log("Starting production seed...");
 
   // Create user
-  const username = "feitor";
-  const password = "Feitor1234";
+  const username = process.env.ADMIN_USERNAME || "feitor";
+  const password = process.env.ADMIN_PASSWORD;
+  
+  if (!password) {
+    console.error("ERROR: ADMIN_PASSWORD environment variable is required");
+    console.error("Please set ADMIN_PASSWORD to a secure password before running this script");
+    process.exit(1);
+  }
+  
+  // Validate password strength
+  if (password.length < 8) {
+    console.error("ERROR: Password must be at least 8 characters long");
+    process.exit(1);
+  }
+  
+  if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/.test(password)) {
+    console.error("ERROR: Password must contain at least one lowercase letter, one uppercase letter, and one number");
+    process.exit(1);
+  }
   
   const existingUser = await prisma.user.findUnique({
     where: { username },

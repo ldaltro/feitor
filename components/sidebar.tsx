@@ -15,10 +15,12 @@ import {
   BoxesIcon,
   LogOut,
   User,
+  Settings,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useAuth } from "@/components/auth-provider";
+import { Badge } from "@/components/ui/badge";
 
 const routes = [
   {
@@ -56,7 +58,7 @@ const routes = [
 export function Sidebar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const { user, logout, isAdmin } = useAuth();
 
   return (
     <>
@@ -110,13 +112,53 @@ export function Sidebar() {
                 <span>{route.label}</span>
               </Link>
             ))}
+            
+            {isAdmin() && (
+              <>
+                <div className="h-px bg-white/10 mx-4 my-2" />
+                <Link
+                  href="/admin"
+                  onClick={() => setIsOpen(false)}
+                  prefetch={true}
+                  className={cn(
+                    "flex items-center gap-3 rounded-2xl px-4 py-3 transition-colors",
+                    pathname === "/admin"
+                      ? "bg-primary text-primary-foreground"
+                      : "text-white/80 hover:text-white hover:bg-white/10"
+                  )}
+                >
+                  <Settings className="h-5 w-5" />
+                  <span>Administração</span>
+                  <Badge variant="secondary" className="ml-auto text-xs">
+                    ADMIN
+                  </Badge>
+                </Link>
+              </>
+            )}
           </nav>
         </div>
         <div className="border-t border-white/10 p-4 space-y-4">
           {user && (
-            <div className="flex items-center gap-3 px-2">
-              <User className="h-5 w-5 text-white/60" />
-              <span className="text-sm text-white/80">{user.username}</span>
+            <div className="bg-white/10 rounded-lg p-3 space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center">
+                  <User className="h-4 w-4 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm text-white font-semibold truncate">{user.fullName}</p>
+                  <p className="text-xs text-white/80 truncate">@{user.username}</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-1">
+                <Badge variant="outline" className="text-xs bg-white/10 text-white border-white/30 hover:bg-white/20">
+                  {user.role === 'ADMIN' ? 'Admin' : user.role === 'OWNER' ? 'Proprietário' : 'Funcionário'}
+                </Badge>
+                {user.farmName && (
+                  <Badge variant="secondary" className="text-xs bg-white/20 text-white border-0 hover:bg-white/30 truncate max-w-[120px]">
+                    {user.farmName}
+                  </Badge>
+                )}
+              </div>
             </div>
           )}
           <Button

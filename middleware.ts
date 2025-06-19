@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { verifyToken } from "./lib/auth";
+import { verifyToken, isAdmin } from "./lib/middleware-auth";
 
 const publicPaths = ["/login", "/api/auth/login"];
+const adminPaths = ["/admin"];
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
@@ -30,8 +31,23 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  // Allow authenticated requests
-  return NextResponse.next();
+  // Check admin access for admin routes
+  const isAdminRoute = adminPaths.some(path => pathname.startsWith(path));
+  if (isAdminRoute && !isAdmin(payload.role)) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  // Add user info to request headers for API routes
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-user-id", payload.userId);
+  requestHeaders.set("x-user-role", payload.role);
+  requestHeaders.set("x-user-farm-id", payload.farmId || "");
+
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
 
 export const config = {

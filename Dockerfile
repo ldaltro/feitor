@@ -43,6 +43,10 @@ RUN mkdir -p /data
 # Expose port
 EXPOSE 3000
 
+# Environment variables (with defaults where appropriate)
+ENV DATABASE_URL="file:///data/production.db"
+ENV NODE_ENV="production"
+
 # Start script
 COPY --from=builder /app/start.sh ./
 RUN chmod +x ./start.sh
