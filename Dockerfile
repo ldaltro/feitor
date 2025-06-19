@@ -7,8 +7,8 @@ WORKDIR /app
 COPY package*.json ./
 COPY prisma ./prisma/
 
-# Install dependencies
-RUN npm ci
+# Install dependencies with legacy peer deps
+RUN npm ci --legacy-peer-deps
 
 # Copy source files
 COPY . .
@@ -27,12 +27,15 @@ WORKDIR /app
 # Install required packages for SQLite
 RUN apk add --no-cache sqlite
 
-# Copy built application
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/.next ./.next
+# Copy standalone output
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
+
+# Copy Prisma files and binaries
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/lib ./lib
+COPY --from=builder /app/lib/generated/prisma/*.node ./lib/generated/prisma/
 
 # Create data directory for SQLite
 RUN mkdir -p /data

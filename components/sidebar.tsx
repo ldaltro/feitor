@@ -13,9 +13,12 @@ import {
   Menu,
   X,
   BoxesIcon,
+  LogOut,
+  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useAuth } from "@/components/auth-provider";
 
 const routes = [
   {
@@ -53,6 +56,7 @@ const routes = [
 export function Sidebar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   return (
     <>
@@ -108,9 +112,26 @@ export function Sidebar() {
             ))}
           </nav>
         </div>
-        <div className="p-6">
+        <div className="border-t border-white/10 p-4 space-y-4">
+          {user && (
+            <div className="flex items-center gap-3 px-2">
+              <User className="h-5 w-5 text-white/60" />
+              <span className="text-sm text-white/80">{user.username}</span>
+            </div>
+          )}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start text-white/80 hover:text-white hover:bg-white/10"
+            onClick={logout}
+          >
+            <LogOut className="mr-2 h-4 w-4" />
+            Sair
+          </Button>
+        </div>
+        <div className="p-4 pt-0">
           <p className="text-xs text-white/60 text-center">
-            © 2024 Vida de Gado
+            © 2024 VDG
           </p>
         </div>
       </div>

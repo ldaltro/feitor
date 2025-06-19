@@ -4,12 +4,12 @@
 if [ ! -f /data/production.db ]; then
   echo "Database not found. Creating and running migrations..."
   npx prisma migrate deploy
-  # Optionally seed the database
-  # npx prisma db seed
+  echo "Seeding database with initial data..."
+  npx tsx prisma/seed-production.ts
 else
   echo "Database exists. Running any pending migrations..."
   npx prisma migrate deploy
 fi
 
-# Start the Next.js application
-npm start
+# Start the Next.js application (standalone)
+node server.js
