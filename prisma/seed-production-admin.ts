@@ -4,7 +4,7 @@ import { hashPassword } from "@/lib/auth";
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("Starting production seed...");
+  console.log("Starting production admin seed...");
 
   // Get admin credentials from environment
   const username = process.env.ADMIN_USERNAME;
@@ -31,13 +31,19 @@ async function main() {
     process.exit(1);
   }
 
-  // Check if user already exists
-  const existingUser = await prisma.user.findUnique({
-    where: { username },
-  });
+  try {
+    // Check if user already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { username },
+    });
 
-  if (!existingUser) {
-    // Create farm first
+    if (existingUser) {
+      console.log(`User ${username} already exists`);
+      process.exit(0);
+    }
+
+    // Create farm
+    console.log("Creating farm...");
     const farm = await prisma.farm.create({
       data: {
         name: "Fazenda Vista Alegre",
@@ -46,9 +52,10 @@ async function main() {
         active: true,
       },
     });
-    console.log(`Farm created: ${farm.name}`);
+    console.log(`✅ Farm created: ${farm.name}`);
 
     // Create admin user
+    console.log("Creating admin user...");
     const hashedPassword = await hashPassword(password);
     const user = await prisma.user.create({
       data: {
@@ -61,13 +68,13 @@ async function main() {
         active: true,
       },
     });
-    console.log(`Admin user created: ${user.username}`);
-  } else {
-    console.log(`User ${username} already exists`);
+    console.log(`✅ Admin user created: ${user.username}`);
+    console.log("\n🎉 Production setup completed successfully!");
+    
+  } catch (error) {
+    console.error("❌ Error during seed:", error);
+    process.exit(1);
   }
-
-
-  console.log("Production seed completed!");
 }
 
 main()
