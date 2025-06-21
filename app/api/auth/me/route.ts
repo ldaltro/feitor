@@ -9,7 +9,7 @@ export async function GET() {
 
   if (!token) {
     return NextResponse.json(
-      { error: "Not authenticated" },
+      { error: "Não autenticado" },
       { status: 401 }
     );
   }
@@ -18,7 +18,7 @@ export async function GET() {
 
   if (!payload) {
     return NextResponse.json(
-      { error: "Invalid token" },
+      { error: "Token inválido" },
       { status: 401 }
     );
   }
@@ -31,7 +31,7 @@ export async function GET() {
 
   if (!user || !user.active) {
     return NextResponse.json(
-      { error: "User not found or inactive" },
+      { error: "Usuário não encontrado ou inativo" },
       { status: 401 }
     );
   }

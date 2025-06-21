@@ -9,7 +9,7 @@ export async function POST(request: Request) {
 
     if (!username || !password) {
       return NextResponse.json(
-        { error: "Username and password are required" },
+        { error: "Usuário e senha são obrigatórios" },
         { status: 400 }
       );
     }
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
     if (!user || !user.active) {
       return NextResponse.json(
-        { error: "Invalid credentials" },
+        { error: "Usuário ou senha incorretos" },
         { status: 401 }
       );
     }
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
 
     if (!isValid) {
       return NextResponse.json(
-        { error: "Invalid credentials" },
+        { error: "Usuário ou senha incorretos" },
         { status: 401 }
       );
     }
@@ -69,7 +69,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: "Erro interno do servidor. Tente novamente em alguns minutos." },
       { status: 500 }
     );
   }
