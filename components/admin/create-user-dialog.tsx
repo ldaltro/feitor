@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -45,6 +45,22 @@ export function CreateUserDialog({ open, onOpenChange, onSuccess, farms }: Creat
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Reset form when dialog opens/closes
+  useEffect(() => {
+    if (!open) {
+      setFormData({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        fullName: "",
+        role: "",
+        farmId: "",
+      });
+      setError("");
+    }
+  }, [open]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

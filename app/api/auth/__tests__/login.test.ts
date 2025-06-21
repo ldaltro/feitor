@@ -72,6 +72,14 @@ describe("POST /api/auth/login", () => {
       id: "123",
       username: "testuser",
       password: hashedPassword,
+      email: "test@example.com",
+      fullName: "Test User",
+      role: "OWNER",
+      farmId: "farm123",
+      active: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      farm: { id: "farm123", name: "Test Farm" }
     };
 
     (prisma.user.findUnique as jest.Mock).mockResolvedValue(mockUser);
@@ -89,6 +97,11 @@ describe("POST /api/auth/login", () => {
     expect(data.user).toEqual({
       id: mockUser.id,
       username: mockUser.username,
+      email: mockUser.email,
+      fullName: mockUser.fullName,
+      role: mockUser.role,
+      farmId: mockUser.farmId,
+      farmName: mockUser.farm.name,
     });
 
     // Check if auth-token cookie is set

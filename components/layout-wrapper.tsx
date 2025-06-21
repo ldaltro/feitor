@@ -9,8 +9,8 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isLoginPage = pathname === "/login";
 
-  // Don't show sidebar on login page or when not authenticated
-  const showSidebar = !isLoginPage && user && !loading;
+  // Show sidebar when not on login page and not loading (even if user is null, let middleware handle redirects)
+  const showSidebar = !isLoginPage && !loading;
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row">

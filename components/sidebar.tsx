@@ -113,7 +113,7 @@ export function Sidebar() {
               </Link>
             ))}
             
-            {isAdmin() && (
+            {user && isAdmin() && (
               <>
                 <div className="h-px bg-white/10 mx-4 my-2" />
                 <Link

@@ -34,7 +34,7 @@ describe("LayoutWrapper", () => {
     expect(screen.getByText("Content")).toBeInTheDocument();
   });
 
-  it("should not show sidebar when not authenticated", () => {
+  it("should ALWAYS show sidebar when not authenticated but not loading (let middleware handle redirects)", () => {
     (usePathname as jest.Mock).mockReturnValue("/dashboard");
     (useAuth as jest.Mock).mockReturnValue({
       user: null,
@@ -47,7 +47,8 @@ describe("LayoutWrapper", () => {
       </LayoutWrapper>
     );
 
-    expect(screen.queryByTestId("sidebar")).not.toBeInTheDocument();
+    // CRITICAL: Sidebar should show even when user is null - middleware will handle auth redirects
+    expect(screen.getByTestId("sidebar")).toBeInTheDocument();
   });
 
   it("should not show sidebar while loading", () => {
@@ -115,5 +116,34 @@ describe("LayoutWrapper", () => {
 
     const main = container.querySelector("main");
     expect(main).not.toHaveClass("p-4", "pt-16", "md:p-8", "md:pt-8");
+  });
+
+  it("CRITICAL: should never hide sidebar unexpectedly on protected pages", () => {
+    const protectedPages = ["/", "/animais", "/admin", "/lotes", "/nascimentos"];
+    
+    protectedPages.forEach(pathname => {
+      (usePathname as jest.Mock).mockReturnValue(pathname);
+      
+      // Test various auth states that might cause sidebar to disappear
+      const authStates = [
+        { user: null, loading: false }, // No user but not loading
+        { user: { userId: "123", username: "test" }, loading: false }, // Authenticated
+      ];
+      
+      authStates.forEach(authState => {
+        (useAuth as jest.Mock).mockReturnValue(authState);
+        
+        const { unmount } = render(
+          <LayoutWrapper>
+            <div>Content</div>
+          </LayoutWrapper>
+        );
+        
+        // CRITICAL: Sidebar must ALWAYS be present when not loading
+        expect(screen.getByTestId("sidebar")).toBeInTheDocument();
+        
+        unmount();
+      });
+    });
   });
 });

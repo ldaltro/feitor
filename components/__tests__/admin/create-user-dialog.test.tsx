@@ -26,6 +26,16 @@ describe('CreateUserDialog', () => {
     jest.clearAllMocks();
   });
 
+  // Helper function to select from a dropdown
+  const selectOption = async (user: any, placeholder: string, optionText: string) => {
+    const triggers = screen.getAllByRole('combobox');
+    const trigger = triggers.find(t => t.textContent?.includes(placeholder));
+    if (trigger) {
+      await user.click(trigger);
+      await user.click(screen.getByText(optionText));
+    }
+  };
+
   it('should render the dialog when open', () => {
     render(<CreateUserDialog {...defaultProps} />);
 
@@ -53,8 +63,9 @@ describe('CreateUserDialog', () => {
     // Initially, farm selector should not be visible
     expect(screen.queryByLabelText('Fazenda')).not.toBeInTheDocument();
 
-    // Select owner role
-    await user.click(screen.getByText('Selecione a função'));
+    // Select owner role - find the trigger button and click it
+    const roleTriggers = screen.getAllByRole('combobox');
+    await user.click(roleTriggers[0]); // First combobox is the role selector
     await user.click(screen.getByText('Proprietário'));
 
     // Farm selector should now be visible
@@ -67,7 +78,8 @@ describe('CreateUserDialog', () => {
     render(<CreateUserDialog {...defaultProps} />);
 
     // Select admin role
-    await user.click(screen.getByText('Selecione a função'));
+    const roleTriggers = screen.getAllByRole('combobox');
+    await user.click(roleTriggers[0]);
     await user.click(screen.getByText('Administrador'));
 
     // Farm selector should not be visible
@@ -97,12 +109,10 @@ describe('CreateUserDialog', () => {
     await user.type(screen.getByLabelText('Nome completo'), 'Test User');
     
     // Select role
-    await user.click(screen.getByText('Selecione a função'));
-    await user.click(screen.getByText('Funcionário'));
+    await selectOption(user, 'Selecione a função', 'Funcionário');
     
     // Select farm
-    await user.click(screen.getByText('Selecione a fazenda'));
-    await user.click(screen.getByText('Farm One'));
+    await selectOption(user, 'Selecione a fazenda', 'Farm One');
     
     await user.type(screen.getByLabelText('Senha'), 'password123');
     await user.type(screen.getByLabelText('Confirmar senha'), 'password123');
@@ -156,8 +166,7 @@ describe('CreateUserDialog', () => {
     await user.type(screen.getByLabelText('Nome completo'), 'System Admin');
     
     // Select admin role
-    await user.click(screen.getByText('Selecione a função'));
-    await user.click(screen.getByText('Administrador'));
+    await selectOption(user, 'Selecione a função', 'Administrador');
     
     await user.type(screen.getByLabelText('Senha'), 'adminpass123');
     await user.type(screen.getByLabelText('Confirmar senha'), 'adminpass123');
@@ -193,11 +202,9 @@ describe('CreateUserDialog', () => {
     await user.type(screen.getByLabelText('Email'), 'test@farm.com');
     await user.type(screen.getByLabelText('Nome completo'), 'Test User');
     
-    await user.click(screen.getByText('Selecione a função'));
-    await user.click(screen.getByText('Funcionário'));
+    await selectOption(user, 'Selecione a função', 'Funcionário');
     
-    await user.click(screen.getByText('Selecione a fazenda'));
-    await user.click(screen.getByText('Farm One'));
+    await selectOption(user, 'Selecione a fazenda', 'Farm One');
     
     await user.type(screen.getByLabelText('Senha'), 'password123');
     await user.type(screen.getByLabelText('Confirmar senha'), 'different123');
@@ -222,11 +229,9 @@ describe('CreateUserDialog', () => {
     await user.type(screen.getByLabelText('Email'), 'test@farm.com');
     await user.type(screen.getByLabelText('Nome completo'), 'Test User');
     
-    await user.click(screen.getByText('Selecione a função'));
-    await user.click(screen.getByText('Funcionário'));
+    await selectOption(user, 'Selecione a função', 'Funcionário');
     
-    await user.click(screen.getByText('Selecione a fazenda'));
-    await user.click(screen.getByText('Farm One'));
+    await selectOption(user, 'Selecione a fazenda', 'Farm One');
     
     await user.type(screen.getByLabelText('Senha'), 'short');
     await user.type(screen.getByLabelText('Confirmar senha'), 'short');
@@ -256,11 +261,9 @@ describe('CreateUserDialog', () => {
     await user.type(screen.getByLabelText('Email'), 'test@farm.com');
     await user.type(screen.getByLabelText('Nome completo'), 'Test User');
     
-    await user.click(screen.getByText('Selecione a função'));
-    await user.click(screen.getByText('Funcionário'));
+    await selectOption(user, 'Selecione a função', 'Funcionário');
     
-    await user.click(screen.getByText('Selecione a fazenda'));
-    await user.click(screen.getByText('Farm One'));
+    await selectOption(user, 'Selecione a fazenda', 'Farm One');
     
     await user.type(screen.getByLabelText('Senha'), 'password123');
     await user.type(screen.getByLabelText('Confirmar senha'), 'password123');
@@ -291,11 +294,9 @@ describe('CreateUserDialog', () => {
     await user.type(screen.getByLabelText('Email'), 'test@farm.com');
     await user.type(screen.getByLabelText('Nome completo'), 'Test User');
     
-    await user.click(screen.getByText('Selecione a função'));
-    await user.click(screen.getByText('Funcionário'));
+    await selectOption(user, 'Selecione a função', 'Funcionário');
     
-    await user.click(screen.getByText('Selecione a fazenda'));
-    await user.click(screen.getByText('Farm One'));
+    await selectOption(user, 'Selecione a fazenda', 'Farm One');
     
     await user.type(screen.getByLabelText('Senha'), 'password123');
     await user.type(screen.getByLabelText('Confirmar senha'), 'password123');
@@ -333,14 +334,13 @@ describe('CreateUserDialog', () => {
     render(<CreateUserDialog {...defaultProps} />);
 
     // First select owner role and farm
-    await user.click(screen.getByText('Selecione a função'));
-    await user.click(screen.getByText('Proprietário'));
+    await selectOption(user, 'Selecione a função', 'Proprietário');
     
-    await user.click(screen.getByText('Selecione a fazenda'));
-    await user.click(screen.getByText('Farm One'));
+    await selectOption(user, 'Selecione a fazenda', 'Farm One');
 
-    // Then switch to admin role
-    await user.click(screen.getByText('Proprietário'));
+    // Then switch to admin role - need to click the trigger again
+    const triggers = screen.getAllByRole('combobox');
+    await user.click(triggers[0]); // Role selector
     await user.click(screen.getByText('Administrador'));
 
     // Farm selector should be hidden

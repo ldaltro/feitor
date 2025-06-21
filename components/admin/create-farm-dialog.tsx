@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -28,6 +28,14 @@ export function CreateFarmDialog({ open, onOpenChange, onSuccess }: CreateFarmDi
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Reset form when dialog opens/closes
+  useEffect(() => {
+    if (!open) {
+      setFormData({ name: "", address: "", phone: "" });
+      setError("");
+    }
+  }, [open]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
