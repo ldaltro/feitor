@@ -16,10 +16,5 @@ primary_region = "gru"
   cpu_kind = "shared"
   cpus = 1
 
-[mounts]
-  source = "vdg_data"
-  destination = "/data"
-
 [env]
   NODE_ENV = "production"
-  DATABASE_URL = "file:/data/production.db"
