@@ -5,19 +5,24 @@ import { UserRole } from "@/lib/types/auth";
 
 export async function POST(request: Request) {
   try {
+    console.log("🔐 Login attempt started");
     const { username, password } = await request.json();
+    console.log("📝 Received credentials for username:", username);
 
     if (!username || !password) {
+      console.log("❌ Missing username or password");
       return NextResponse.json(
         { error: "Usuário e senha são obrigatórios" },
         { status: 400 }
       );
     }
 
+    console.log("🔍 Searching for user in database...");
     const user = await prisma.user.findUnique({
       where: { username },
       include: { farm: true },
     });
+    console.log("👤 User found:", user ? "YES" : "NO");
 
     if (!user || !user.active) {
       return NextResponse.json(
@@ -67,7 +72,10 @@ export async function POST(request: Request) {
 
     return response;
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("❌ Login error details:");
+    console.error("Error message:", error.message);
+    console.error("Error code:", error.code);
+    console.error("Full error:", error);
     return NextResponse.json(
       { error: "Erro interno do servidor. Tente novamente em alguns minutos." },
       { status: 500 }

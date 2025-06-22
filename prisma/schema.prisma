@@ -140,18 +140,24 @@ model Farm {
   transactions Transaction[]
 }
 
+enum UserRole {
+  ADMIN
+  OWNER
+  EMPLOYEE
+}
+
 model User {
   id        String   @id @default(cuid())
   username  String   @unique
   email     String   @unique
   password  String
   fullName  String
-  role      String   // ADMIN, OWNER, EMPLOYEE
+  role      UserRole @default(EMPLOYEE)
   active    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relations
-  farmId    String?
-  farm      Farm?    @relation(fields: [farmId], references: [id])
+  farmId    String
+  farm      Farm     @relation(fields: [farmId], references: [id])
 }

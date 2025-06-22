@@ -24,8 +24,8 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Install required packages for SQLite
-RUN apk add --no-cache sqlite
+# Install required packages for SQLite and PostgreSQL client
+RUN apk add --no-cache sqlite postgresql-client
 
 # Copy standalone output
 COPY --from=builder /app/.next/standalone ./
@@ -36,6 +36,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/lib ./lib
 COPY --from=builder /app/lib/generated/prisma/*.node ./lib/generated/prisma/
+COPY --from=builder /app/scripts ./scripts
 
 # Create data directory for SQLite
 RUN mkdir -p /data

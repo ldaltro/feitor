@@ -11,7 +11,16 @@ const globalForPrisma = global as unknown as { prisma: PrismaClient };
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+    log: ["error", "warn", "info"],
   });
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+
+// Add connection test
+prisma.$connect()
+  .then(() => {
+    console.log("✅ Prisma client initialized successfully");
+  })
+  .catch((error) => {
+    console.error("❌ Prisma client initialization failed:", error);
+  });

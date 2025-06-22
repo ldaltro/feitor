@@ -55,6 +55,24 @@ export type Farm = $Result.DefaultSelection<Prisma.$FarmPayload>
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 
 /**
+ * Enums
+ */
+export namespace $Enums {
+  export const UserRole: {
+  ADMIN: 'ADMIN',
+  OWNER: 'OWNER',
+  EMPLOYEE: 'EMPLOYEE'
+};
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+}
+
+export type UserRole = $Enums.UserRole
+
+export const UserRole: typeof $Enums.UserRole
+
+/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
@@ -10007,7 +10025,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     fullName: string | null
-    role: string | null
+    role: $Enums.UserRole | null
     active: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -10020,7 +10038,7 @@ export namespace Prisma {
     email: string | null
     password: string | null
     fullName: string | null
-    role: string | null
+    role: $Enums.UserRole | null
     active: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -10160,11 +10178,11 @@ export namespace Prisma {
     email: string
     password: string
     fullName: string
-    role: string
+    role: $Enums.UserRole
     active: boolean
     createdAt: Date
     updatedAt: Date
-    farmId: string | null
+    farmId: string
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -10195,7 +10213,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     farmId?: boolean
-    farm?: boolean | User$farmArgs<ExtArgs>
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10209,7 +10227,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     farmId?: boolean
-    farm?: boolean | User$farmArgs<ExtArgs>
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10223,7 +10241,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     farmId?: boolean
-    farm?: boolean | User$farmArgs<ExtArgs>
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -10241,19 +10259,19 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "email" | "password" | "fullName" | "role" | "active" | "createdAt" | "updatedAt" | "farmId", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    farm?: boolean | User$farmArgs<ExtArgs>
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    farm?: boolean | User$farmArgs<ExtArgs>
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
   }
   export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    farm?: boolean | User$farmArgs<ExtArgs>
+    farm?: boolean | FarmDefaultArgs<ExtArgs>
   }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      farm: Prisma.$FarmPayload<ExtArgs> | null
+      farm: Prisma.$FarmPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10261,11 +10279,11 @@ export namespace Prisma {
       email: string
       password: string
       fullName: string
-      role: string
+      role: $Enums.UserRole
       active: boolean
       createdAt: Date
       updatedAt: Date
-      farmId: string | null
+      farmId: string
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -10660,7 +10678,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    farm<T extends User$farmArgs<ExtArgs> = {}>(args?: Subset<T, User$farmArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    farm<T extends FarmDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FarmDefaultArgs<ExtArgs>>): Prisma__FarmClient<$Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10695,7 +10713,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly fullName: FieldRef<"User", 'String'>
-    readonly role: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'UserRole'>
     readonly active: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
@@ -11096,25 +11114,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.farm
-   */
-  export type User$farmArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Farm
-     */
-    select?: FarmSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Farm
-     */
-    omit?: FarmOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: FarmInclude<ExtArgs> | null
-    where?: FarmWhereInput
-  }
-
-  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11344,6 +11343,20 @@ export namespace Prisma {
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'UserRole'
+   */
+  export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'UserRole[]'
+   */
+  export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
     
 
 
@@ -11963,12 +11976,12 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     fullName?: StringFilter<"User"> | string
-    role?: StringFilter<"User"> | string
+    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     active?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    farmId?: StringNullableFilter<"User"> | string | null
-    farm?: XOR<FarmNullableScalarRelationFilter, FarmWhereInput> | null
+    farmId?: StringFilter<"User"> | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
   }
 
   export type UserOrderByWithRelationInput = {
@@ -11981,7 +11994,7 @@ export namespace Prisma {
     active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    farmId?: SortOrderInput | SortOrder
+    farmId?: SortOrder
     farm?: FarmOrderByWithRelationInput
   }
 
@@ -11994,12 +12007,12 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringFilter<"User"> | string
     fullName?: StringFilter<"User"> | string
-    role?: StringFilter<"User"> | string
+    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     active?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    farmId?: StringNullableFilter<"User"> | string | null
-    farm?: XOR<FarmNullableScalarRelationFilter, FarmWhereInput> | null
+    farmId?: StringFilter<"User"> | string
+    farm?: XOR<FarmScalarRelationFilter, FarmWhereInput>
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -12012,7 +12025,7 @@ export namespace Prisma {
     active?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    farmId?: SortOrderInput | SortOrder
+    farmId?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -12027,11 +12040,11 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     fullName?: StringWithAggregatesFilter<"User"> | string
-    role?: StringWithAggregatesFilter<"User"> | string
+    role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     active?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
-    farmId?: StringNullableWithAggregatesFilter<"User"> | string | null
+    farmId?: StringWithAggregatesFilter<"User"> | string
   }
 
   export type AnimalCreateInput = {
@@ -12675,11 +12688,11 @@ export namespace Prisma {
     email: string
     password: string
     fullName: string
-    role: string
+    role?: $Enums.UserRole
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    farm?: FarmCreateNestedOneWithoutUsersInput
+    farm: FarmCreateNestedOneWithoutUsersInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -12688,11 +12701,11 @@ export namespace Prisma {
     email: string
     password: string
     fullName: string
-    role: string
+    role?: $Enums.UserRole
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    farmId?: string | null
+    farmId: string
   }
 
   export type UserUpdateInput = {
@@ -12701,11 +12714,11 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    farm?: FarmUpdateOneWithoutUsersNestedInput
+    farm?: FarmUpdateOneRequiredWithoutUsersNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -12714,11 +12727,11 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    farmId?: NullableStringFieldUpdateOperationsInput | string | null
+    farmId?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserCreateManyInput = {
@@ -12727,11 +12740,11 @@ export namespace Prisma {
     email: string
     password: string
     fullName: string
-    role: string
+    role?: $Enums.UserRole
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    farmId?: string | null
+    farmId: string
   }
 
   export type UserUpdateManyMutationInput = {
@@ -12740,7 +12753,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12752,11 +12765,11 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    farmId?: NullableStringFieldUpdateOperationsInput | string | null
+    farmId?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -13330,9 +13343,11 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type FarmNullableScalarRelationFilter = {
-    is?: FarmWhereInput | null
-    isNot?: FarmWhereInput | null
+  export type EnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -13372,6 +13387,16 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     farmId?: SortOrder
+  }
+
+  export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
   export type FarmCreateNestedOneWithoutAnimalsInput = {
@@ -14124,12 +14149,14 @@ export namespace Prisma {
     connect?: FarmWhereUniqueInput
   }
 
-  export type FarmUpdateOneWithoutUsersNestedInput = {
+  export type EnumUserRoleFieldUpdateOperationsInput = {
+    set?: $Enums.UserRole
+  }
+
+  export type FarmUpdateOneRequiredWithoutUsersNestedInput = {
     create?: XOR<FarmCreateWithoutUsersInput, FarmUncheckedCreateWithoutUsersInput>
     connectOrCreate?: FarmCreateOrConnectWithoutUsersInput
     upsert?: FarmUpsertWithoutUsersInput
-    disconnect?: FarmWhereInput | boolean
-    delete?: FarmWhereInput | boolean
     connect?: FarmWhereUniqueInput
     update?: XOR<XOR<FarmUpdateToOneWithWhereWithoutUsersInput, FarmUpdateWithoutUsersInput>, FarmUncheckedUpdateWithoutUsersInput>
   }
@@ -14333,6 +14360,23 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  }
+
+  export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
   export type FarmCreateWithoutAnimalsInput = {
@@ -15983,7 +16027,7 @@ export namespace Prisma {
     email: string
     password: string
     fullName: string
-    role: string
+    role?: $Enums.UserRole
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15995,7 +16039,7 @@ export namespace Prisma {
     email: string
     password: string
     fullName: string
-    role: string
+    role?: $Enums.UserRole
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16196,11 +16240,11 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     fullName?: StringFilter<"User"> | string
-    role?: StringFilter<"User"> | string
+    role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     active?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    farmId?: StringNullableFilter<"User"> | string | null
+    farmId?: StringFilter<"User"> | string
   }
 
   export type AnimalUpsertWithWhereUniqueWithoutFarmInput = {
@@ -16692,7 +16736,7 @@ export namespace Prisma {
     email: string
     password: string
     fullName: string
-    role: string
+    role?: $Enums.UserRole
     active?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -16756,7 +16800,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16768,7 +16812,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16780,7 +16824,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     fullName?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     active?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
