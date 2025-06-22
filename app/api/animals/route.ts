@@ -6,16 +6,9 @@ export async function GET(request: Request) {
   console.log("🐄 GET /api/animals - Request started");
   
   try {
-    // Log all headers for debugging
-    console.log("📋 Request headers:");
-    request.headers.forEach((value, key) => {
-      if (key.startsWith('x-user-')) {
-        console.log(`  ${key}: ${value}`);
-      }
-    });
-
     // Get farm ID from headers (set by middleware)
-    const farmId = request.headers.get("x-user-farm-id");
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
     console.log("🏠 Farm ID from headers:", farmId);
     
     if (!farmId) {
