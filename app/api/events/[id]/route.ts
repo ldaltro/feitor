@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
+import { headers } from "next/headers";
 
 interface RouteParams {
   params: {
@@ -10,9 +11,21 @@ interface RouteParams {
 export async function GET(request: Request, { params }: RouteParams) {
   try {
     const { id } = params;
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return NextResponse.json(
+        { error: "Farm ID not found" },
+        { status: 400 }
+      );
+    }
 
-    const event = await db.event.findUnique({
-      where: { id },
+    const event = await prisma.event.findFirst({
+      where: {
+        id,
+        farmId,
+      },
       include: {
         animals: {
           include: {
@@ -46,23 +59,52 @@ export async function PUT(request: Request, { params }: RouteParams) {
   try {
     const { id } = params;
     const { title, type, date, description, animals } = await request.json();
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return NextResponse.json(
+        { error: "Farm ID not found" },
+        { status: 400 }
+      );
+    }
 
-    // First check if the event exists
-    const existingEvent = await db.event.findUnique({
-      where: { id },
+    // First check if the event exists and belongs to the farm
+    const existingEvent = await prisma.event.findFirst({
+      where: {
+        id,
+        farmId,
+      },
     });
 
     if (!existingEvent) {
       return NextResponse.json({ error: "Event not found" }, { status: 404 });
     }
 
+    // Verify that all animals belong to the user's farm
+    if (animals && animals.length > 0) {
+      const validAnimals = await prisma.animal.findMany({
+        where: {
+          id: { in: animals },
+          farmId,
+        },
+      });
+
+      if (validAnimals.length !== animals.length) {
+        return NextResponse.json(
+          { error: "Some animals not found or access denied" },
+          { status: 400 }
+        );
+      }
+    }
+
     // Delete existing animal relations
-    await db.eventAnimal.deleteMany({
+    await prisma.eventAnimal.deleteMany({
       where: { eventId: id },
     });
 
     // Update the event with new data
-    const updatedEvent = await db.event.update({
+    const updatedEvent = await prisma.event.update({
       where: { id },
       data: {
         title,
@@ -107,10 +149,22 @@ export async function PUT(request: Request, { params }: RouteParams) {
 export async function DELETE(request: Request, { params }: RouteParams) {
   try {
     const { id } = params;
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return NextResponse.json(
+        { error: "Farm ID not found" },
+        { status: 400 }
+      );
+    }
 
-    // Check if the event exists
-    const existingEvent = await db.event.findUnique({
-      where: { id },
+    // Check if the event exists and belongs to the farm
+    const existingEvent = await prisma.event.findFirst({
+      where: {
+        id,
+        farmId,
+      },
     });
 
     if (!existingEvent) {
@@ -118,7 +172,7 @@ export async function DELETE(request: Request, { params }: RouteParams) {
     }
 
     // Delete the event
-    await db.event.delete({
+    await prisma.event.delete({
       where: { id },
     });
 

@@ -1,9 +1,28 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
+import { headers } from "next/headers";
 
 export async function GET() {
   try {
-    const events = await db.event.findMany({
+    console.log("📅 GET events - Starting to fetch events");
+    
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    console.log("🏠 Farm ID from headers:", farmId);
+    
+    if (!farmId) {
+      console.log("❌ No farm ID found in headers");
+      return NextResponse.json(
+        { error: "Farm ID not found" },
+        { status: 400 }
+      );
+    }
+
+    const events = await prisma.event.findMany({
+      where: {
+        farmId,
+      },
       include: {
         animals: {
           include: {
@@ -22,9 +41,10 @@ export async function GET() {
       },
     });
 
+    console.log("📊 Found events:", events.length);
     return NextResponse.json(events);
   } catch (error) {
-    console.error("Error fetching events:", error);
+    console.error("❌ Error fetching events:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
@@ -34,14 +54,42 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return NextResponse.json(
+        { error: "Farm ID not found" },
+        { status: 400 }
+      );
+    }
+
     const { title, type, date, description, animals } = await request.json();
 
-    const event = await db.event.create({
+    // Verify that all animals belong to the user's farm
+    if (animals && animals.length > 0) {
+      const validAnimals = await prisma.animal.findMany({
+        where: {
+          id: { in: animals },
+          farmId,
+        },
+      });
+
+      if (validAnimals.length !== animals.length) {
+        return NextResponse.json(
+          { error: "Some animals not found or access denied" },
+          { status: 400 }
+        );
+      }
+    }
+
+    const event = await prisma.event.create({
       data: {
         title,
         type,
         date: new Date(date),
         description,
+        farmId,
         animals: {
           create: animals.map((animalId: string) => ({
             animal: {

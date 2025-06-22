@@ -1,8 +1,9 @@
 "use server";
 
 import { z } from "zod";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 
 // Schema validators
 const createBirthSchema = z.object({
@@ -17,7 +18,23 @@ const createBirthSchema = z.object({
 // Get all births
 export async function getBirths() {
   try {
-    const births = await db.birth.findMany({
+    console.log("👶 getBirths - Starting to fetch births");
+    
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    console.log("🏠 Farm ID from headers:", farmId);
+    
+    if (!farmId) {
+      console.log("❌ No farm ID found in headers");
+      return { births: [], error: "Farm ID not found" };
+    }
+
+    const births = await prisma.birth.findMany({
+      where: {
+        mother: { farmId },
+        father: { farmId },
+      },
       include: {
         mother: true,
         father: true,
@@ -25,40 +42,69 @@ export async function getBirths() {
       orderBy: { birthDate: "desc" },
     });
 
-    return { births };
+    console.log("📊 Found births:", births.length);
+    return { births, error: null };
   } catch (error) {
-    console.error("Failed to fetch births:", error);
-    return { error: "Failed to fetch births" };
+    console.error("❌ Failed to fetch births:", error);
+    return { births: [], error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }
 
 // Get birth by ID
 export async function getBirthById(id: string) {
   try {
-    const birth = await db.birth.findUnique({
-      where: { id },
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return { birth: null, error: "Farm ID not found" };
+    }
+
+    const birth = await prisma.birth.findFirst({
+      where: {
+        id,
+        mother: { farmId },
+        father: { farmId },
+      },
       include: {
         mother: true,
         father: true,
       },
     });
 
-    return { birth };
+    return { birth, error: null };
   } catch (error) {
     console.error(`Failed to fetch birth with ID ${id}:`, error);
-    return { error: `Failed to fetch birth with ID ${id}` };
+    return { birth: null, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }
 
 // Create birth
 export async function createBirth(data: z.infer<typeof createBirthSchema>) {
   try {
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return { error: "Farm ID not found" };
+    }
+
     const validatedData = createBirthSchema.parse(data);
 
     // Extract newbornCount as it's not in the Prisma schema
     const { newbornCount, ...birthData } = validatedData;
 
-    const birth = await db.birth.create({
+    // Verify that both mother and father belong to the user's farm
+    const [mother, father] = await Promise.all([
+      prisma.animal.findFirst({ where: { id: birthData.motherId, farmId } }),
+      prisma.animal.findFirst({ where: { id: birthData.fatherId, farmId } })
+    ]);
+
+    if (!mother || !father) {
+      return { error: "Mother or father animal not found or access denied" };
+    }
+
+    const birth = await prisma.birth.create({
       data: birthData,
     });
 
@@ -77,7 +123,27 @@ export async function createBirth(data: z.infer<typeof createBirthSchema>) {
 // Delete birth
 export async function deleteBirth(id: string) {
   try {
-    await db.birth.delete({
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return { error: "Farm ID not found" };
+    }
+
+    // First check if the birth record belongs to the user's farm
+    const existingBirth = await prisma.birth.findFirst({
+      where: {
+        id,
+        mother: { farmId },
+        father: { farmId },
+      },
+    });
+
+    if (!existingBirth) {
+      return { error: "Birth record not found or access denied" };
+    }
+
+    await prisma.birth.delete({
       where: { id },
     });
 

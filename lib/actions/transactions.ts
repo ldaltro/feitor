@@ -1,8 +1,9 @@
 "use server";
 
 import { z } from "zod";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 
 // Schema validators
 const createTransactionSchema = z.object({
@@ -17,34 +18,60 @@ const createTransactionSchema = z.object({
 // Get all transactions
 export async function getTransactions() {
   try {
-    const transactions = await db.transaction.findMany({
+    console.log("💰 getTransactions - Starting to fetch transactions");
+    
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    console.log("🏠 Farm ID from headers:", farmId);
+    
+    if (!farmId) {
+      console.log("❌ No farm ID found in headers");
+      return { transactions: [], error: "Farm ID not found" };
+    }
+
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        animal: { farmId },
+      },
       include: {
         animal: true,
       },
       orderBy: { date: "desc" },
     });
 
-    return { transactions };
+    console.log("📊 Found transactions:", transactions.length);
+    return { transactions, error: null };
   } catch (error) {
-    console.error("Failed to fetch transactions:", error);
-    return { error: "Failed to fetch transactions" };
+    console.error("❌ Failed to fetch transactions:", error);
+    return { transactions: [], error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }
 
 // Get transaction by ID
 export async function getTransactionById(id: string) {
   try {
-    const transaction = await db.transaction.findUnique({
-      where: { id },
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return { transaction: null, error: "Farm ID not found" };
+    }
+
+    const transaction = await prisma.transaction.findFirst({
+      where: {
+        id,
+        animal: { farmId },
+      },
       include: {
         animal: true,
       },
     });
 
-    return { transaction };
+    return { transaction, error: null };
   } catch (error) {
     console.error(`Failed to fetch transaction with ID ${id}:`, error);
-    return { error: `Failed to fetch transaction with ID ${id}` };
+    return { transaction: null, error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }
 
@@ -53,9 +80,25 @@ export async function createTransaction(
   data: z.infer<typeof createTransactionSchema>
 ) {
   try {
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return { error: "Farm ID not found" };
+    }
+
     const validatedData = createTransactionSchema.parse(data);
 
-    const transaction = await db.transaction.create({
+    // Verify that the animal belongs to the user's farm
+    const animal = await prisma.animal.findFirst({
+      where: { id: validatedData.animalId, farmId },
+    });
+
+    if (!animal) {
+      return { error: "Animal not found or access denied" };
+    }
+
+    const transaction = await prisma.transaction.create({
       data: validatedData,
     });
 
@@ -74,7 +117,26 @@ export async function createTransaction(
 // Delete transaction
 export async function deleteTransaction(id: string) {
   try {
-    await db.transaction.delete({
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return { error: "Farm ID not found" };
+    }
+
+    // First check if the transaction belongs to the user's farm
+    const existingTransaction = await prisma.transaction.findFirst({
+      where: {
+        id,
+        animal: { farmId },
+      },
+    });
+
+    if (!existingTransaction) {
+      return { error: "Transaction not found or access denied" };
+    }
+
+    await prisma.transaction.delete({
       where: { id },
     });
 
