@@ -86,16 +86,48 @@ export function AnimalForm({ id }: { id?: string }) {
     }
   }, [id, form])
 
-  function onSubmit(values: AnimalFormValues) {
+  async function onSubmit(values: AnimalFormValues) {
     setIsLoading(true)
 
-    // In a real app, send data to API
-    console.log(values)
+    try {
+      // Convert weight and purchaseValue to proper types
+      const animalData = {
+        ...values,
+        weight: values.weight ? parseFloat(values.weight) || 0 : 0,
+        purchaseValue: values.purchaseValue ? parseFloat(values.purchaseValue) || 0 : 0,
+      }
 
-    setTimeout(() => {
-      setIsLoading(false)
+      // Use FormData to submit the data as a server action would expect
+      const formData = new FormData()
+      Object.entries(animalData).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          if (value instanceof Date) {
+            formData.append(key, value.toISOString())
+          } else {
+            formData.append(key, value.toString())
+          }
+        }
+      })
+
+      const response = await fetch('/api/animals', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(animalData),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to create animal')
+      }
+
       router.push("/animais")
-    }, 1000)
+    } catch (error) {
+      console.error('Error creating animal:', error)
+      // You could add a toast notification here
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
