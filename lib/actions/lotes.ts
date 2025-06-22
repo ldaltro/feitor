@@ -1,8 +1,9 @@
 "use server";
 
 import { z } from "zod";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 
 // Schema validators
 const createLoteSchema = z.object({
@@ -21,7 +22,20 @@ const updateLoteSchema = z.object({
 // Get all lotes with animal counts
 export async function getLotes() {
   try {
-    const lotes = await db.lote.findMany({
+    console.log("🔢 getLotes - Starting to fetch lotes");
+    
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    console.log("🏠 Farm ID from headers:", farmId);
+    
+    if (!farmId) {
+      console.log("❌ No farm ID found in headers");
+      return { lotes: [], error: "Farm ID not found" };
+    }
+
+    const lotes = await prisma.lote.findMany({
+      where: { farmId },
       include: {
         _count: {
           select: { animais: true },
@@ -49,8 +63,10 @@ export async function getLotes() {
       };
     });
 
+    console.log("📊 Found lotes:", lotes.length);
     return { lotes: lotesWithBreedCount, error: null };
   } catch (error) {
+    console.error("❌ Failed to fetch lotes:", error);
     return { lotes: [], error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }
@@ -58,8 +74,18 @@ export async function getLotes() {
 // Get lote by ID with animals
 export async function getLoteById(id: string) {
   try {
-    const lote = await db.lote.findUnique({
-      where: { id },
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return { lote: null, error: "Farm ID not found" };
+    }
+
+    const lote = await prisma.lote.findFirst({
+      where: { 
+        id,
+        farmId // Ensure user can only access lotes from their farm
+      },
       include: {
         animais: true,
       },
@@ -74,10 +100,20 @@ export async function getLoteById(id: string) {
 // Create lote
 export async function createLote(data: z.infer<typeof createLoteSchema>) {
   try {
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return { error: "Farm ID not found" };
+    }
+
     const validatedData = createLoteSchema.parse(data);
 
-    const lote = await db.lote.create({
-      data: validatedData,
+    const lote = await prisma.lote.create({
+      data: {
+        ...validatedData,
+        farmId, // Add farmId to the lote
+      },
     });
 
     revalidatePath("/lotes");
@@ -95,10 +131,26 @@ export async function createLote(data: z.infer<typeof createLoteSchema>) {
 // Update lote
 export async function updateLote(data: z.infer<typeof updateLoteSchema>) {
   try {
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return { error: "Farm ID not found" };
+    }
+
     const validatedData = updateLoteSchema.parse(data);
     const { id, ...updateData } = validatedData;
 
-    const lote = await db.lote.update({
+    // First check if the lote belongs to the user's farm
+    const existingLote = await prisma.lote.findFirst({
+      where: { id, farmId },
+    });
+
+    if (!existingLote) {
+      return { error: "Lote not found or access denied" };
+    }
+
+    const lote = await prisma.lote.update({
       where: { id },
       data: updateData,
     });
@@ -119,14 +171,30 @@ export async function updateLote(data: z.infer<typeof updateLoteSchema>) {
 // Delete lote
 export async function deleteLote(id: string) {
   try {
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return { error: "Farm ID not found" };
+    }
+
+    // First check if the lote belongs to the user's farm
+    const existingLote = await prisma.lote.findFirst({
+      where: { id, farmId },
+    });
+
+    if (!existingLote) {
+      return { error: "Lote not found or access denied" };
+    }
+
     // First update all animals to remove them from the lote
-    await db.animal.updateMany({
+    await prisma.animal.updateMany({
       where: { loteId: id },
       data: { loteId: null },
     });
 
     // Then delete the lote
-    await db.lote.delete({
+    await prisma.lote.delete({
       where: { id },
     });
 
@@ -141,7 +209,24 @@ export async function deleteLote(id: string) {
 // Add animal to lote
 export async function addAnimalToLote(loteId: string, animalId: string) {
   try {
-    await db.animal.update({
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return { error: "Farm ID not found" };
+    }
+
+    // Check both animal and lote belong to the user's farm
+    const [animal, lote] = await Promise.all([
+      prisma.animal.findFirst({ where: { id: animalId, farmId } }),
+      prisma.lote.findFirst({ where: { id: loteId, farmId } })
+    ]);
+
+    if (!animal || !lote) {
+      return { error: "Animal or lote not found or access denied" };
+    }
+
+    await prisma.animal.update({
       where: { id: animalId },
       data: { loteId },
     });
@@ -158,14 +243,30 @@ export async function addAnimalToLote(loteId: string, animalId: string) {
 // Remove animal from lote
 export async function removeAnimalFromLote(animalId: string) {
   try {
-    const animal = await db.animal.update({
+    const headersList = headers();
+    const farmId = headersList.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return { error: "Farm ID not found" };
+    }
+
+    // Check animal belongs to the user's farm
+    const existingAnimal = await prisma.animal.findFirst({
+      where: { id: animalId, farmId },
+    });
+
+    if (!existingAnimal) {
+      return { error: "Animal not found or access denied" };
+    }
+
+    const animal = await prisma.animal.update({
       where: { id: animalId },
       data: { loteId: null },
     });
 
     revalidatePath("/lotes");
-    if (animal.loteId) {
-      revalidatePath(`/lotes/${animal.loteId}`);
+    if (existingAnimal.loteId) {
+      revalidatePath(`/lotes/${existingAnimal.loteId}`);
     }
     return { success: true };
   } catch (error) {
