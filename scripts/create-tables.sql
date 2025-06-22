@@ -154,16 +154,7 @@ BEGIN
   
   -- Check if admin user exists
   IF NOT EXISTS (SELECT 1 FROM "User" WHERE username = 'gustavo') THEN
-    -- Create admin user with bcrypt hash of 'ForteCavalo89@'
-    INSERT INTO "User" (username, email, password, "fullName", role, "farmId", active)
-    VALUES (
-      'gustavo', 
-      'gustavo@fazendavistaalegre.com.br', 
-      '$2b$12$7Z4IMx8Desc9tD2oy4bkBuTiM6hEqnz/cdh09kj5G/VoEXv2h2OwC', 
-      'Gustavo Silva', 
-      'ADMIN', 
-      farm_id, 
-      true
-    );
+    -- Admin user should be created manually or through environment variables
+    -- Do not store passwords in source code
   END IF;
 END $$;

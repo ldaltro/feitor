@@ -3,37 +3,38 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 
-export function RecentAnimals() {
-  const animals = [
-    {
-      id: "1",
-      name: "Mimosa",
-      breed: "Nelore",
-      age: "3 anos",
-      status: "Saudável",
-    },
-    {
-      id: "2",
-      name: "Estrela",
-      breed: "Gir",
-      age: "2 anos",
-      status: "Gestante",
-    },
-    {
-      id: "3",
-      name: "Trovão",
-      breed: "Angus",
-      age: "4 anos",
-      status: "Saudável",
-    },
-    {
-      id: "4",
-      name: "Boneca",
-      breed: "Holandesa",
-      age: "1 ano",
-      status: "Em tratamento",
-    },
-  ]
+interface Animal {
+  id: string
+  name: string
+  breed: string
+  birthDate: Date
+  status: string
+}
+
+interface RecentAnimalsProps {
+  animals?: Animal[]
+}
+
+export function RecentAnimals({ animals = [] }: RecentAnimalsProps) {
+  if (animals.length === 0) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Animais Recentes</CardTitle>
+          <CardDescription>Últimos animais adicionados ao sistema</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground">Nenhum animal cadastrado ainda.</p>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  const getAge = (birthDate: Date) => {
+    const today = new Date()
+    const age = today.getFullYear() - birthDate.getFullYear()
+    return `${age} ${age === 1 ? 'ano' : 'anos'}`
+  }
 
   return (
     <Card>
@@ -53,7 +54,7 @@ export function RecentAnimals() {
                   {animal.name}
                 </Link>
                 <p className="text-sm text-muted-foreground">
-                  {animal.breed} • {animal.age}
+                  {animal.breed} • {getAge(animal.birthDate)}
                 </p>
               </div>
               <Badge

@@ -1,16 +1,31 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const animals = await db.animal.findMany({
+    // Get farm ID from headers (set by middleware)
+    const farmId = request.headers.get("x-user-farm-id");
+    
+    if (!farmId) {
+      return NextResponse.json(
+        { error: "Farm ID not found" },
+        { status: 400 }
+      );
+    }
+
+    const animals = await prisma.animal.findMany({
+      where: { farmId },
       select: {
         id: true,
         name: true,
         tag: true,
+        breed: true,
+        status: true,
+        birthDate: true,
+        createdAt: true,
       },
       orderBy: {
-        name: "asc",
+        createdAt: "desc",
       },
     });
 
@@ -18,7 +33,7 @@ export async function GET() {
   } catch (error) {
     console.error("Error fetching animals:", error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: "Failed to fetch animals" },
       { status: 500 }
     );
   }

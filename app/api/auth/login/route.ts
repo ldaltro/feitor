@@ -31,9 +31,15 @@ export async function POST(request: Request) {
       );
     }
 
+    console.log("🔐 Verifying password...");
+    console.log("Password from request:", password.length, "characters");
+    console.log("Hash from database:", user.password.substring(0, 10) + "...");
+    
     const isValid = await verifyPassword(password, user.password);
+    console.log("🔐 Password verification result:", isValid);
 
     if (!isValid) {
+      console.log("❌ Password verification failed");
       return NextResponse.json(
         { error: "Usuário ou senha incorretos" },
         { status: 401 }
