@@ -8,21 +8,26 @@ export async function GET() {
     
     const headersList = headers();
     const farmId = headersList.get("x-user-farm-id");
+    const userRole = headersList.get("x-user-role");
     
     console.log("🏠 Farm ID from headers:", farmId);
+    console.log("👤 User role from headers:", userRole);
     
-    if (!farmId) {
-      console.log("❌ No farm ID found in headers");
-      return NextResponse.json(
-        { error: "Farm ID not found" },
-        { status: 400 }
-      );
+    // Create where clause based on user role and farmId
+    let whereClause = {};
+    if (userRole === "ADMIN") {
+      // Admins can see all events
+      whereClause = {};
+    } else if (farmId) {
+      // Regular users with farmId see their farm's events
+      whereClause = { farmId };
+    } else {
+      // Users without farmId see events with default-farm-id (for backwards compatibility)
+      whereClause = { farmId: "default-farm-id" };
     }
 
     const events = await prisma.event.findMany({
-      where: {
-        farmId,
-      },
+      where: whereClause,
       include: {
         animals: {
           include: {

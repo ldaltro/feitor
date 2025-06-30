@@ -1,9 +1,7 @@
-"use server";
-
+import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { subMonths } from "date-fns";
 import { headers } from "next/headers";
-import { getUserFromRequest } from "@/lib/auth";
 
 export type DashboardStats = {
   totalAnimals: number;
@@ -17,12 +15,17 @@ export type DashboardStats = {
   upcomingEvents: number;
 };
 
-export async function getDashboardStats(): Promise<DashboardStats> {
+export async function GET() {
   try {
+    console.log("📊 GET /api/dashboard/stats - Starting to fetch dashboard stats");
+    
     // Get user context for farm filtering
     const headersList = headers();
     const farmId = headersList.get("x-user-farm-id");
     const userRole = headersList.get("x-user-role");
+    
+    console.log("🏠 Farm ID from headers:", farmId);
+    console.log("👤 User role from headers:", userRole);
     
     // Get total animals and new animals in the last month
     const now = new Date();
@@ -39,6 +42,8 @@ export async function getDashboardStats(): Promise<DashboardStats> {
       // Users without farmId see data with default-farm-id (for backwards compatibility)
       baseWhere = { farmId: "default-farm-id" };
     }
+
+    console.log("🔍 Using where clause:", baseWhere);
 
     const totalAnimals = await db.animal.count({
       where: baseWhere,
@@ -109,7 +114,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
       },
     });
 
-    return {
+    const stats: DashboardStats = {
       totalAnimals,
       newAnimalsLastMonth,
       births: totalBirths,
@@ -120,19 +125,14 @@ export async function getDashboardStats(): Promise<DashboardStats> {
       },
       upcomingEvents,
     };
+
+    console.log("✅ Dashboard stats computed:", stats);
+    return NextResponse.json(stats);
   } catch (error) {
-    console.error("Failed to fetch dashboard stats:", error);
-    // Return default values in case of error
-    return {
-      totalAnimals: 0,
-      newAnimalsLastMonth: 0,
-      births: 0,
-      birthsLastMonth: 0,
-      transactions: {
-        total: 0,
-        percentageChange: 0,
-      },
-      upcomingEvents: 0,
-    };
+    console.error("❌ Failed to fetch dashboard stats:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch dashboard stats", details: error.message },
+      { status: 500 }
+    );
   }
 }
