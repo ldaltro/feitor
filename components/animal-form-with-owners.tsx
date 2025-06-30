@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, PlusCircle } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
@@ -17,6 +17,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils"
+import { getOwners } from "@/lib/actions/owners"
+import Link from "next/link"
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -40,16 +42,23 @@ const formSchema = z.object({
   status: z.string({
     required_error: "Selecione o status do animal.",
   }),
+  ownerId: z.string().optional(),
   notes: z.string().optional(),
 })
 
 type AnimalFormValues = z.infer<typeof formSchema>
 
-export function AnimalForm({ id }: { id?: string }) {
+interface Owner {
+  id: string;
+  name: string;
+  cpfCnpj?: string | null;
+}
+
+export function AnimalFormWithOwners({ id }: { id?: string }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [owners, setOwners] = useState<Owner[]>([])
 
-  // Initialize form with default values or fetch existing animal data if id is provided
   const form = useForm<AnimalFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,54 +69,31 @@ export function AnimalForm({ id }: { id?: string }) {
       birthDate: new Date(),
       weight: "",
       status: "Saudável",
+      ownerId: "",
       notes: "",
     },
   })
 
   useEffect(() => {
-    if (id) {
-      // In a real app, fetch animal data from API
-      // This is mock data for demonstration
-      const mockAnimal = {
-        id: "1",
-        name: "Mimosa",
-        tag: "A001",
-        breed: "Nelore",
-        gender: "Fêmea",
-        birthDate: new Date("2020-03-10"),
-        purchaseDate: new Date("2020-05-15"),
-        purchaseValue: "2500",
-        weight: "450",
-        status: "Saudável",
-        notes: "Animal saudável e produtivo.",
+    async function loadOwners() {
+      const { owners, error } = await getOwners()
+      if (!error && owners) {
+        setOwners(owners)
       }
-
-      form.reset(mockAnimal)
     }
-  }, [id, form])
+    loadOwners()
+  }, [])
 
   async function onSubmit(values: AnimalFormValues) {
     setIsLoading(true)
 
     try {
-      // Convert weight and purchaseValue to proper types
       const animalData = {
         ...values,
         weight: values.weight ? parseFloat(values.weight) || 0 : 0,
         purchaseValue: values.purchaseValue ? parseFloat(values.purchaseValue) || 0 : 0,
+        ownerId: values.ownerId || undefined,
       }
-
-      // Use FormData to submit the data as a server action would expect
-      const formData = new FormData()
-      Object.entries(animalData).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          if (value instanceof Date) {
-            formData.append(key, value.toISOString())
-          } else {
-            formData.append(key, value.toString())
-          }
-        }
-      })
 
       const response = await fetch('/api/animals', {
         method: 'POST',
@@ -125,7 +111,7 @@ export function AnimalForm({ id }: { id?: string }) {
       router.refresh()
     } catch (error) {
       console.error('Error creating animal:', error)
-      // You could add a toast notification here
+      alert("Erro ao criar animal")
     } finally {
       setIsLoading(false)
     }
@@ -326,8 +312,44 @@ export function AnimalForm({ id }: { id?: string }) {
                     <SelectItem value="Gestante">Gestante</SelectItem>
                     <SelectItem value="Lactante">Lactante</SelectItem>
                     <SelectItem value="Vendido">Vendido</SelectItem>
+                    <SelectItem value="Debilitado">Debilitado</SelectItem>
                   </SelectContent>
                 </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="ownerId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Proprietário</FormLabel>
+                <div className="flex gap-2">
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="flex-1">
+                        <SelectValue placeholder="Selecione o proprietário (opcional)" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="">Nenhum</SelectItem>
+                      {owners.map((owner) => (
+                        <SelectItem key={owner.id} value={owner.id}>
+                          {owner.name} {owner.cpfCnpj ? `(${owner.cpfCnpj})` : ''}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Link href="/proprietarios/adicionar">
+                    <Button type="button" variant="outline" size="icon">
+                      <PlusCircle className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                </div>
+                <FormDescription>
+                  Selecione o proprietário do animal ou adicione um novo
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

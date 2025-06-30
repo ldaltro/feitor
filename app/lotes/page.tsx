@@ -20,7 +20,7 @@ export default async function LotesPage() {
           <p className="text-muted-foreground">{t.description}</p>
         </div>
         <div className="flex justify-end">
-          <Link href="/lotes/criar">
+          <Link href="/lotes/adicionar">
             <Button>
               <PlusCircle className="mr-2 h-4 w-4" />
               {t.add}

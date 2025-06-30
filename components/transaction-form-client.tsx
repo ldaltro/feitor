@@ -68,6 +68,11 @@ export function TransactionFormClient({ animals }: TransactionFormClientProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Defensive check for animals prop
+  const safeAnimals = animals || [];
+  
+  console.log("TransactionFormClient rendered with animals:", safeAnimals.length);
+
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -103,6 +108,7 @@ export function TransactionFormClient({ animals }: TransactionFormClientProps) {
 
       // Redirect to transactions page after successful submission
       router.push("/transacoes");
+      router.refresh();
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Erro ao processar o formulário");
@@ -217,7 +223,7 @@ export function TransactionFormClient({ animals }: TransactionFormClientProps) {
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="">Nenhum</SelectItem>
-                    {animals.map((animal) => (
+                    {safeAnimals.map((animal) => (
                       <SelectItem key={animal.id} value={animal.id}>
                         {animal.name} ({animal.tag})
                       </SelectItem>

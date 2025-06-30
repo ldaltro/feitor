@@ -9,10 +9,9 @@ import { headers } from "next/headers";
 const createTransactionSchema = z.object({
   date: z.date(),
   type: z.string(),
-  value: z.number(),  // Changed from amount to value to match schema
-  person: z.string(),
-  description: z.string().optional(),
-  animalId: z.string(),
+  amount: z.number(),
+  description: z.string(),
+  animalId: z.string().optional(),
 });
 
 // Get all transactions
@@ -89,24 +88,48 @@ export async function createTransaction(
 
     const validatedData = createTransactionSchema.parse(data);
 
-    // Verify that the animal belongs to the user's farm
-    const animal = await prisma.animal.findFirst({
-      where: { id: validatedData.animalId, farmId },
-    });
+    // If animalId is provided, verify that the animal belongs to the user's farm
+    if (validatedData.animalId) {
+      const animal = await prisma.animal.findFirst({
+        where: { id: validatedData.animalId, farmId },
+      });
 
-    if (!animal) {
-      return { error: "Animal not found or access denied" };
+      if (!animal) {
+        return { error: "Animal not found or access denied" };
+      }
+    }
+
+    // For transactions without animals, we need a default animal from this farm
+    let finalAnimalId = validatedData.animalId;
+    if (!finalAnimalId) {
+      const defaultAnimal = await prisma.animal.findFirst({
+        where: { farmId },
+        select: { id: true },
+      });
+      
+      if (!defaultAnimal) {
+        return { error: "No animals found in farm. Create an animal first." };
+      }
+      
+      finalAnimalId = defaultAnimal.id;
     }
 
     const transaction = await prisma.transaction.create({
-      data: validatedData,
+      data: {
+        type: validatedData.type,
+        date: validatedData.date,
+        value: validatedData.amount, // Map amount to value
+        person: validatedData.description, // Map description to person for now
+        farmId,
+        animalId: finalAnimalId,
+      },
     });
 
     revalidatePath("/transacoes");
-    return { transaction };
+    return { transaction, error: null };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return { error: error.errors };
+      return { error: error.errors.map(e => e.message).join(", ") };
     }
 
     console.error("Failed to create transaction:", error);

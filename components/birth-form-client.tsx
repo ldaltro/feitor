@@ -34,8 +34,7 @@ import {
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
-import { createBirth } from "@/lib/actions/births";
-import { createAnimal } from "@/lib/actions/animals";
+import { createBirthWithAnimal } from "@/lib/actions/birth-with-animal";
 
 // Define Animal type
 type Animal = {
@@ -138,42 +137,33 @@ export function BirthFormClient({ animals }: BirthFormClientProps) {
     setIsSubmitting(true);
 
     try {
-      // First, create the animal
-      const animalResult = await createAnimal({
-        name: values.childName,
-        tag: values.childTag,
+      // Use transaction to create both animal and birth atomically
+      const result = await createBirthWithAnimal({
+        // Birth data
+        birthDate: values.birthDate,
+        motherId: values.motherId,
+        fatherId: values.fatherId || undefined,
+        notes: values.notes,
+        newbornCount: values.newbornCount,
+        
+        // Animal data
+        childName: values.childName,
+        childTag: values.childTag,
         breed: values.breed,
         gender: values.gender,
-        birthDate: values.birthDate,
         status: values.status,
       });
 
-      if (animalResult.error) {
-        console.error("Error creating animal:", animalResult.error);
-        alert("Erro ao registrar animal");
-        setIsSubmitting(false);
-        return;
-      }
-
-      // Then create the birth record with the child ID
-      const birthResult = await createBirth({
-        birthDate: values.birthDate,
-        motherId: values.motherId,
-        fatherId: values.fatherId,
-        childId: animalResult.animal.id, // Need the animal ID for the child
-        notes: values.notes,
-        newbornCount: values.newbornCount,
-      });
-
-      if (birthResult.error) {
-        console.error("Error creating birth:", birthResult.error);
-        alert("Erro ao registrar nascimento");
+      if (result.error) {
+        console.error("Error creating birth:", result.error);
+        alert(result.error);
         setIsSubmitting(false);
         return;
       }
 
       // Redirect to births page after successful submission
       router.push("/nascimentos");
+      router.refresh();
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Erro ao processar o formulário");

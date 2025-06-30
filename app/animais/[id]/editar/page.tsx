@@ -1,4 +1,4 @@
-import { AnimalForm } from "@/components/animal-form"
+import { AnimalEditForm } from "@/components/animal-edit-form"
 
 export default function EditAnimalPage({
   params,
@@ -11,7 +11,7 @@ export default function EditAnimalPage({
         <h1 className="text-3xl font-bold tracking-tight">Editar Animal</h1>
         <p className="text-muted-foreground">Atualize os dados do animal</p>
       </div>
-      <AnimalForm id={params.id} />
+      <AnimalEditForm animalId={params.id} />
     </div>
   )
 }

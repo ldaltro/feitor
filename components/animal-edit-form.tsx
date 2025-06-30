@@ -17,6 +17,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils"
+import { getAnimalById } from "@/lib/actions/get-animal-by-id"
+import { updateAnimal } from "@/lib/actions/animals"
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -35,21 +37,26 @@ const formSchema = z.object({
     required_error: "A data de nascimento é obrigatória.",
   }),
   purchaseDate: z.date().optional(),
-  purchaseValue: z.string().optional(),
-  weight: z.string().optional(),
+  purchaseValue: z.number().optional(),
+  weight: z.number().optional(),
   status: z.string({
     required_error: "Selecione o status do animal.",
   }),
+  reproductiveStatus: z.string().optional(),
   notes: z.string().optional(),
 })
 
 type AnimalFormValues = z.infer<typeof formSchema>
 
-export function AnimalForm({ id }: { id?: string }) {
+interface AnimalEditFormProps {
+  animalId: string
+}
+
+export function AnimalEditForm({ animalId }: AnimalEditFormProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingData, setIsLoadingData] = useState(true)
 
-  // Initialize form with default values or fetch existing animal data if id is provided
   const form = useForm<AnimalFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -58,77 +65,80 @@ export function AnimalForm({ id }: { id?: string }) {
       breed: "",
       gender: "",
       birthDate: new Date(),
-      weight: "",
+      weight: 0,
       status: "Saudável",
       notes: "",
     },
   })
 
   useEffect(() => {
-    if (id) {
-      // In a real app, fetch animal data from API
-      // This is mock data for demonstration
-      const mockAnimal = {
-        id: "1",
-        name: "Mimosa",
-        tag: "A001",
-        breed: "Nelore",
-        gender: "Fêmea",
-        birthDate: new Date("2020-03-10"),
-        purchaseDate: new Date("2020-05-15"),
-        purchaseValue: "2500",
-        weight: "450",
-        status: "Saudável",
-        notes: "Animal saudável e produtivo.",
-      }
+    async function loadAnimal() {
+      try {
+        const { animal, error } = await getAnimalById(animalId)
+        
+        if (error || !animal) {
+          console.error("Error loading animal:", error)
+          alert("Erro ao carregar dados do animal")
+          router.push("/animais")
+          return
+        }
 
-      form.reset(mockAnimal)
+        form.reset({
+          name: animal.name,
+          tag: animal.tag,
+          breed: animal.breed,
+          gender: animal.gender,
+          birthDate: new Date(animal.birthDate),
+          purchaseDate: animal.purchaseDate ? new Date(animal.purchaseDate) : undefined,
+          purchaseValue: animal.purchaseValue || undefined,
+          weight: animal.weight || undefined,
+          status: animal.status,
+          reproductiveStatus: animal.reproductiveStatus || undefined,
+          notes: animal.notes || "",
+        })
+      } catch (error) {
+        console.error("Error in loadAnimal:", error)
+        alert("Erro ao carregar dados do animal")
+        router.push("/animais")
+      } finally {
+        setIsLoadingData(false)
+      }
     }
-  }, [id, form])
+
+    loadAnimal()
+  }, [animalId, form, router])
 
   async function onSubmit(values: AnimalFormValues) {
     setIsLoading(true)
 
     try {
-      // Convert weight and purchaseValue to proper types
-      const animalData = {
-        ...values,
-        weight: values.weight ? parseFloat(values.weight) || 0 : 0,
-        purchaseValue: values.purchaseValue ? parseFloat(values.purchaseValue) || 0 : 0,
+      const result = await updateAnimal(animalId, values)
+
+      if (result.error) {
+        console.error('Error updating animal:', result.error)
+        alert("Erro ao atualizar animal")
+        return
       }
 
-      // Use FormData to submit the data as a server action would expect
-      const formData = new FormData()
-      Object.entries(animalData).forEach(([key, value]) => {
-        if (value !== undefined && value !== null) {
-          if (value instanceof Date) {
-            formData.append(key, value.toISOString())
-          } else {
-            formData.append(key, value.toString())
-          }
-        }
-      })
-
-      const response = await fetch('/api/animals', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(animalData),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to create animal')
-      }
-
-      router.push("/animais")
+      router.push(`/animais/${animalId}`)
       router.refresh()
     } catch (error) {
-      console.error('Error creating animal:', error)
-      // You could add a toast notification here
+      console.error('Error updating animal:', error)
+      alert("Erro ao atualizar animal")
     } finally {
       setIsLoading(false)
     }
+  }
+
+  if (isLoadingData) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-2 text-sm text-muted-foreground">Carregando dados do animal...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -255,55 +265,13 @@ export function AnimalForm({ id }: { id?: string }) {
               <FormItem>
                 <FormLabel>Peso (kg)</FormLabel>
                 <FormControl>
-                  <Input placeholder="Peso em kg" {...field} />
+                  <Input 
+                    type="number" 
+                    placeholder="Peso em kg" 
+                    {...field}
+                    onChange={e => field.onChange(parseFloat(e.target.value) || 0)}
+                  />
                 </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="purchaseDate"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel>Data de Compra</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn("w-full pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
-                      >
-                        {field.value ? format(field.value, "PPP", { locale: ptBR }) : <span>Selecione uma data</span>}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-                <FormDescription>Deixe em branco se o animal nasceu na fazenda</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="purchaseValue"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Valor de Compra (R$)</FormLabel>
-                <FormControl>
-                  <Input placeholder="Valor em R$" {...field} />
-                </FormControl>
-                <FormDescription>Deixe em branco se o animal nasceu na fazenda</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -326,12 +294,39 @@ export function AnimalForm({ id }: { id?: string }) {
                     <SelectItem value="Gestante">Gestante</SelectItem>
                     <SelectItem value="Lactante">Lactante</SelectItem>
                     <SelectItem value="Vendido">Vendido</SelectItem>
+                    <SelectItem value="Debilitado">Debilitado</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
               </FormItem>
             )}
           />
+          {form.watch("gender") === "Fêmea" && (
+            <FormField
+              control={form.control}
+              name="reproductiveStatus"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Status Reprodutivo</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o status reprodutivo" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="Não gestante">Não gestante</SelectItem>
+                      <SelectItem value="Inseminada">Inseminada</SelectItem>
+                      <SelectItem value="Gestante">Gestante</SelectItem>
+                      <SelectItem value="Parto">Parto recente</SelectItem>
+                      <SelectItem value="Aborto">Aborto</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
         </div>
         <FormField
           control={form.control}
@@ -347,11 +342,11 @@ export function AnimalForm({ id }: { id?: string }) {
           )}
         />
         <div className="flex gap-2">
-          <Button type="button" variant="outline" onClick={() => router.push("/animais")}>
+          <Button type="button" variant="outline" onClick={() => router.push(`/animais/${animalId}`)}>
             Cancelar
           </Button>
           <Button type="submit" disabled={isLoading}>
-            {isLoading ? "Salvando..." : id ? "Atualizar Animal" : "Adicionar Animal"}
+            {isLoading ? "Salvando..." : "Atualizar Animal"}
           </Button>
         </div>
       </form>

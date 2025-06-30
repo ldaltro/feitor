@@ -16,13 +16,17 @@ const createAnimalSchema = z.object({
 });
 
 const updateAnimalSchema = z.object({
-  id: z.string(),
   name: z.string(),
   tag: z.string(),
   breed: z.string(),
   gender: z.string(),
   birthDate: z.date(),
   status: z.string(),
+  purchaseDate: z.date().optional(),
+  purchaseValue: z.number().optional(),
+  weight: z.number().optional(),
+  reproductiveStatus: z.string().optional(),
+  notes: z.string().optional(),
 });
 
 // Get all animals
@@ -115,7 +119,7 @@ export async function createAnimal(data: z.infer<typeof createAnimalSchema>) {
 }
 
 // Update animal
-export async function updateAnimal(data: z.infer<typeof updateAnimalSchema>) {
+export async function updateAnimal(id: string, data: z.infer<typeof updateAnimalSchema>) {
   try {
     const headersList = headers();
     const farmId = headersList.get("x-user-farm-id");
@@ -125,7 +129,6 @@ export async function updateAnimal(data: z.infer<typeof updateAnimalSchema>) {
     }
 
     const validatedData = updateAnimalSchema.parse(data);
-    const { id, ...updateData } = validatedData;
 
     // First check if the animal belongs to the user's farm
     const existingAnimal = await prisma.animal.findFirst({
@@ -138,7 +141,7 @@ export async function updateAnimal(data: z.infer<typeof updateAnimalSchema>) {
 
     const animal = await prisma.animal.update({
       where: { id },
-      data: updateData,
+      data: validatedData,
     });
 
     revalidatePath("/animais");
