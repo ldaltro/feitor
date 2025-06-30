@@ -161,7 +161,7 @@ export function AnimalsListClient({ animals }: AnimalsListClientProps) {
             placeholder="Buscar por nome, tag, raça ou gênero..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="max-w-sm"
+            className="max-w-md"
           />
         </div>
 
