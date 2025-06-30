@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { verifyToken, isAdmin } from "./lib/middleware-auth";
 
-const publicPaths = ["/login", "/api/auth/login"];
+const publicPaths = ["/login", "/api/auth/login", "/api/auth/refresh"];
 const adminPaths = ["/admin"];
 
 export async function middleware(request: NextRequest) {
