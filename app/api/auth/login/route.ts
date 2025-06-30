@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { verifyPassword, createToken } from "@/lib/auth";
+import { verifyPassword, createToken, createAccessToken, createRefreshToken } from "@/lib/auth";
 import { UserRole } from "@/lib/types/auth";
 
 export async function POST(request: Request) {
@@ -46,12 +46,16 @@ export async function POST(request: Request) {
       );
     }
 
-    const token = await createToken({
+    const tokenPayload = {
       userId: user.id,
       username: user.username,
       role: user.role as UserRole,
       farmId: user.farmId,
-    });
+    };
+
+    const token = await createToken(tokenPayload);
+    const accessToken = await createAccessToken(tokenPayload);
+    const refreshToken = await createRefreshToken(tokenPayload);
 
     const response = NextResponse.json(
       { 
@@ -64,7 +68,11 @@ export async function POST(request: Request) {
           role: user.role,
           farmId: user.farmId,
           farmName: user.farm?.name || null,
-        } 
+        },
+        tokens: {
+          accessToken,
+          refreshToken,
+        }
       },
       { status: 200 }
     );

@@ -1,1 +1,0 @@
-- After finishing any change, create tests for it if needed and run the tests to ensure no regressions were made

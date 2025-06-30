@@ -22,6 +22,22 @@ export async function createToken(payload: JWTPayload) {
     .sign(secret);
 }
 
+export async function createAccessToken(payload: JWTPayload) {
+  return new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("24h")
+    .sign(secret);
+}
+
+export async function createRefreshToken(payload: JWTPayload) {
+  return new SignJWT({ ...payload, type: "refresh" })
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("7d")
+    .sign(secret);
+}
+
 export async function verifyToken(token: string) {
   try {
     const { payload } = await jwtVerify(token, secret);
